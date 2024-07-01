@@ -204,7 +204,7 @@ Transform:
   m_GameObject: {fileID: 235882714}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.084, y: -4.096, z: 0}
+  m_LocalPosition: {x: 0, y: -4.096, z: 0}
   m_LocalScale: {x: 0.888, y: 0.888, z: 0.888}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -609,7 +609,6 @@ MonoBehaviour:
   - {fileID: 3000195901687093016, guid: 809e32ff396b26a42ac6977082b7b027, type: 3}
   - {fileID: 3000195901687093016, guid: bbaf35636cd58fb4485311dbb8d544a4, type: 3}
   spawnRate: 2
-  spawnHeight: 6
   spawnPosition: {fileID: 1981205194}
 --- !u!1 &1981205193
 GameObject:
@@ -777,6 +776,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
+  - {fileID: 1775285922}
   - {fileID: 1068853348}
   - {fileID: 235882716}
-  - {fileID: 1775285922}
