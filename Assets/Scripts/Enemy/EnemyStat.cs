@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class EnemyStat : MonoBehaviour
 {
-    [SerializeField]
-    private int hp = 1;
+    EnemyUI enemyUI;
+
+    public int hp = 1;
 
     public int damage;
 
     void Start()
     {
-
+        enemyUI = GetComponent<EnemyUI>();
+        enemyUI.UpdateHPText(hp);
     }
 
     void Update()
@@ -23,9 +25,12 @@ public class EnemyStat : MonoBehaviour
     {
         hp -= damage;
 
+        enemyUI.UpdateHPText(hp);
+
         if (hp <= 0)
         {
             Destroy(gameObject);
+            GameManager.Instance.monCount++;
         }
     }
 

@@ -12,4 +12,9 @@ public class Swords : ScriptableObject
     [Header("½ºÅ³")]
     public int skillDamage;
     public float skillCool;
+    public int skillCount;
+
+    [Header("Åº¸·")]
+    public GameObject bulletPrefab;
+    public float bulletSpeed;
 }

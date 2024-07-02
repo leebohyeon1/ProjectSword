@@ -20,7 +20,11 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        Drag();
+        if (!GameManager.Instance.GetSkillBool())     
+        {
+            Drag();
+        }
+   
         HadleAttack();
     }
 
