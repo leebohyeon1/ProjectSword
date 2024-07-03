@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -11,7 +12,18 @@ public class GameManager : MonoBehaviour
     private bool isSkill;
     public float skillTimeScale;
 
-    public int monCount;
+    [SerializeField]
+    private int monsterCount;
+    public int monCount 
+    {
+        get { return monsterCount; } 
+        set 
+        {
+            monsterCount = value;
+            EventManager.Instance.PostNotification(EVENT_TYPE.KILL_MON,this,monsterCount);
+        } 
+    }
+
     //==================================
 
     private void Awake()
@@ -25,7 +37,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
-        monCount = 0;
+        monsterCount = 0;
     }
     // Start is called before the first frame update
     void Start()

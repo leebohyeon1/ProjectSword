@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public enum EVENT_TYPE
 {
    CHANGE_WEAPON,
-   Enemy,
+   SKILL_ON,
+   KILL_MON
 };
 public interface IListener
 {

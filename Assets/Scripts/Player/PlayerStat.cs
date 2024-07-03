@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 public class PlayerStat : MonoBehaviour,IListener
@@ -19,6 +20,7 @@ public class PlayerStat : MonoBehaviour,IListener
     public int skillDamage;
     public float skillCool;
     public int skillCount;
+    private int killMon;
 
     [Header("Åº¸·")]
     public GameObject bulletPrefab;
@@ -33,6 +35,7 @@ public class PlayerStat : MonoBehaviour,IListener
     private void Start()
     {
         EventManager.Instance.AddListener(EVENT_TYPE.CHANGE_WEAPON, this);
+        EventManager.Instance.AddListener(EVENT_TYPE.KILL_MON,this);
 
         SetWeapon();
 
@@ -42,7 +45,17 @@ public class PlayerStat : MonoBehaviour,IListener
 
     public void OnEvent(EVENT_TYPE Event_Type, Component Sender, object Param = null)
     {
-        ChangeWeapon();
+        switch (Event_Type)
+        {
+            case EVENT_TYPE.CHANGE_WEAPON:
+                ChangeWeapon();
+                break;
+            case EVENT_TYPE.KILL_MON:
+                killMon = (int)Param;
+                EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_ON, this, skillCount);
+                break;
+        }
+
     }
     //====================================================
 
@@ -102,6 +115,7 @@ public class PlayerStat : MonoBehaviour,IListener
         }
 
         InitializePool();
+        EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_ON, this,  skillCount);
     }
 
     void SetWeapon()

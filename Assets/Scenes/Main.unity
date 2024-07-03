@@ -238,6 +238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42c998fa043ab7a419d77f93649a9dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillBtn: {fileID: 1096062899}
+  skillDragBtn: {fileID: 1531920495}
 --- !u!1 &235882714
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,6 +832,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSkill: 0
   skillTimeScale: 0.3
+  monsterCount: 0
 --- !u!1 &636251835
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,10 +1102,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 1
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -1569,7 +1572,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1725,9 +1728,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pattern:
+  - {fileID: 3000195901687093016, guid: 8e0ac6aa37f6c2246bbe1d1efc78ed07, type: 3}
+  - {fileID: 3000195901687093016, guid: 06c8aa9c2bdb218499ab45773560c927, type: 3}
+  - {fileID: 3000195901687093016, guid: 3b69f32c2668f8e40afcf151fa835ffd, type: 3}
   - {fileID: 3000195901687093016, guid: 1c4589b92b217fe4f910a9e0f1466152, type: 3}
   - {fileID: 3000195901687093016, guid: 809e32ff396b26a42ac6977082b7b027, type: 3}
   - {fileID: 3000195901687093016, guid: bbaf35636cd58fb4485311dbb8d544a4, type: 3}
+  - {fileID: 3000195901687093016, guid: e71ffb48464658748ad56f2c282f571f, type: 3}
+  - {fileID: 3000195901687093016, guid: 2ac71eb72a4b25f438fa1fdad5500dc2, type: 3}
+  - {fileID: 3000195901687093016, guid: 09e960c018adead448c41db67fd31c56, type: 3}
+  - {fileID: 3000195901687093016, guid: 50f90921201ce9c4c91bc98b9a913529, type: 3}
+  - {fileID: 3000195901687093016, guid: 0af4f25c31aef5b44b7e590723e7fe59, type: 3}
+  - {fileID: 3000195901687093016, guid: 149f15eb4c877834586ae26fc0772f08, type: 3}
+  - {fileID: 3000195901687093016, guid: 76baf31ef130fd24d9cc5abd51c1f859, type: 3}
+  - {fileID: 3000195901687093016, guid: 36e4d5ecd821ec9468fbbfcca28f61a5, type: 3}
+  - {fileID: 3000195901687093016, guid: 3c56edadf85248546ace7cd72b8c8635, type: 3}
+  - {fileID: 3000195901687093016, guid: f622b2a75e5ee0c4fb9f9e25e9abc7fe, type: 3}
   spawnRate: 2
   spawnPosition: {fileID: 1981205194}
 --- !u!1 &1981205193
@@ -1954,9 +1970,9 @@ SceneRoots:
   m_Roots:
   - {fileID: 622364762}
   - {fileID: 7255162674171992420}
+  - {fileID: 1775285922}
   - {fileID: 519420032}
   - {fileID: 1634602938}
   - {fileID: 212102672}
-  - {fileID: 1775285922}
   - {fileID: 1068853348}
   - {fileID: 235882716}

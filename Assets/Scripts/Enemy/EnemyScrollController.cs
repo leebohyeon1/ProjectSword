@@ -5,6 +5,12 @@ using UnityEngine;
 public class EnemyScrollController : MonoBehaviour
 {
     public float moveSpeed = 2.0f;
+    public float baseSpawnRate;
+    public float curSpawnRate;
+
+    public int[] next50Pattern;
+    public int[] next35Pattern;
+    public int[] next15Pattern;
 
     void Update()
     {
