@@ -6,19 +6,21 @@ public class EnemyStat : MonoBehaviour
 {
     EnemyUI enemyUI;
 
-    public int hp = 1;
 
+    public int hp = 1;
+    public float speed;
     public int damage;
 
     void Start()
     {
         enemyUI = GetComponent<EnemyUI>();
         enemyUI.UpdateHPText(hp);
+
+        GetComponent<Rigidbody2D>().velocity = Vector2.down * speed;
     }
 
     void Update()
     {
-
     }
 
     public void TakeDamage(int damage)
@@ -41,5 +43,10 @@ public class EnemyStat : MonoBehaviour
             collision.GetComponent<PlayerStat>().TakeDamage(damage);
             Destroy(gameObject);
         }
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }

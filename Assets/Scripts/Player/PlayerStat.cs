@@ -133,8 +133,10 @@ public class PlayerStat : MonoBehaviour,IListener
     {
         curHp -= damage;
         Debug.Log("현재 체력: " + curHp);
+        GetComponent<PlayerUI>().UpdateHp(curHp);
         if (curHp <= 0)
         {
+            curHp = 0;
             Destroy(gameObject);
         }
     }
