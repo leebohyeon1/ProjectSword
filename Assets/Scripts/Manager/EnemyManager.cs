@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public GameObject[] Pattern; // 적 프리팹
+    public GameObject[] Patterns; // 적 프리팹
     private GameObject curPattern;
     public float spawnRate = 2.0f; // 적 생성 주기
     private float nextSpawnTime = 2.0f;
@@ -21,45 +21,58 @@ public class EnemyManager : MonoBehaviour
     {
         if (Time.time >= nextSpawnTime)
         {
-            Debug.Log("스폰");
             SpawnEnemy();
             nextSpawnTime = Time.time + spawnRate;            
         }
     }
 
 
-    void SpawnEnemy()
+    private void SpawnEnemy()
     {
-        int firstRate = Random.Range(0, 100);
-        int Secondindex;
-        if (firstRate < 50)
+        int randomRate = Random.Range(0, 100);
+        int nextPatternIndex = GetNextPatternIndex(ref randomRate);
+
+        if (nextPatternIndex >= 0 && nextPatternIndex < Patterns.Length)
         {
-            int index = Random.Range(0, curPattern.GetComponent<EnemyScrollController>().next50Pattern.Length);
-            Secondindex = curPattern.GetComponent<EnemyScrollController>().next50Pattern[index];
-            firstRate = 50;
-        }
-        else if(firstRate < 85)
-        {
-            int index = Random.Range(0, curPattern.GetComponent<EnemyScrollController>().next35Pattern.Length);
-            Secondindex = curPattern.GetComponent<EnemyScrollController>().next35Pattern[index];
-            firstRate = 35;
+            curPattern = Patterns[nextPatternIndex];
+            Debug.Log($"확률: {randomRate}% , 현재 패턴: {curPattern.name}");
+            Instantiate(curPattern, spawnPosition.position, Quaternion.identity);
         }
         else
         {
-            int index = Random.Range(0, curPattern.GetComponent<EnemyScrollController>().next15Pattern.Length);
-            Secondindex = curPattern.GetComponent<EnemyScrollController>().next15Pattern[index];
-            firstRate = 15;
+            Debug.LogError("유효하지 않은 패턴입니다.");
         }
+    }
 
-        curPattern = Pattern[Secondindex];
-        Debug.Log("확률: " + firstRate + "% , 현재 패턴: " + curPattern.name);
-        Instantiate(Pattern[Secondindex], spawnPosition.localPosition, Quaternion.identity);
+    private int GetNextPatternIndex(ref int randomRate)
+    {
+        var enemyScrollController = curPattern.GetComponent<EnemyScrollController>();
+
+        if (randomRate < 50)
+        {
+            int index = Random.Range(0, enemyScrollController.next50Pattern.Length);
+            randomRate = 50;
+            return enemyScrollController.next50Pattern[index];
+       
+        }
+        else if (randomRate < 85)
+        {
+            int index = Random.Range(0, enemyScrollController.next35Pattern.Length);
+            randomRate = 35;
+            return enemyScrollController.next35Pattern[index];
+        }
+        else
+        {
+            int index = Random.Range(0, enemyScrollController.next15Pattern.Length);
+            randomRate = 15;
+            return enemyScrollController.next15Pattern[index];
+        }
     }
 
     void StartSpawn()
     {
         int randomIndex = Random.Range(0, 3);
-        curPattern = Pattern[randomIndex];
-        Instantiate(Pattern[randomIndex], spawnPosition.localPosition, Quaternion.identity);
+        curPattern = Patterns[randomIndex];
+        Instantiate(Patterns[randomIndex], spawnPosition.localPosition, Quaternion.identity);
     }
 }
