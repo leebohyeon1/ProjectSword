@@ -10,9 +10,11 @@ public class PlayerStat : MonoBehaviour,IListener
 
     [Header("무기")]
     public Swords[] weapon;
+    private List<GameObject> magicSwords;
     public int weaponIndex;
+    public Transform[] swordPos;
 
-    [Header("공격")]
+   [Header("공격")]
     public int attackdamage = 1;
     public float attackSpeed = 1f;
 
@@ -36,11 +38,14 @@ public class PlayerStat : MonoBehaviour,IListener
     {
         EventManager.Instance.AddListener(EVENT_TYPE.CHANGE_WEAPON, this);
         EventManager.Instance.AddListener(EVENT_TYPE.KILL_MON,this);
-
-        SetWeapon();
+       
+        TrashPool = new List<GameObject>();
 
         InitializePool();
-        TrashPool = new List<GameObject>();
+
+        SpawnSwords();
+
+        SetWeapon();            
     }
 
     public void OnEvent(EVENT_TYPE Event_Type, Component Sender, object Param = null)
@@ -140,4 +145,15 @@ public class PlayerStat : MonoBehaviour,IListener
             Destroy(gameObject);
         }
     }
+
+    public void SpawnSwords()
+    {
+        for (int i = 0; i < weapon.Length; i++)
+        {         
+            GameObject magicSword = Instantiate(weapon[i].swordPrefab, swordPos[i].position, Quaternion.identity);
+            magicSword.GetComponent<MagicSword>().followPos = swordPos[i];
+        }
+    }
+
+
 }

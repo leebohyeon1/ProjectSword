@@ -19,3 +19,4 @@ MonoBehaviour:
   skillCount: 10
   bulletPrefab: {fileID: 2641036828859503304, guid: 4a97d522e9a5466468758b2fea965d66, type: 3}
   bulletSpeed: 20
+  swordPrefab: {fileID: 2341837304568887784, guid: 9f59953c12c741b419bc63df8785477e, type: 3}

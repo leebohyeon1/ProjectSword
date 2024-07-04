@@ -17,4 +17,7 @@ public class Swords : ScriptableObject
     [Header("Åº¸·")]
     public GameObject bulletPrefab;
     public float bulletSpeed;
+
+    [Header("¸¶°Ë")]
+    public GameObject swordPrefab;
 }
