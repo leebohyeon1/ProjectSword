@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sword1
   m_EditorClassIdentifier: 
   attackdamage: 3
-  attackSpeed: 0.7
+  attackSpeed: 0.3
   skillDamage: 0
   skillCool: 0
   skillCount: 10
