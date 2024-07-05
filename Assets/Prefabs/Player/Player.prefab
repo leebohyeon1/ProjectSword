@@ -38,7 +38,6 @@ Transform:
   - {fileID: 9039252375577752681}
   - {fileID: 7063179326464419884}
   - {fileID: 2720337345785299707}
-  - {fileID: 4391850297211373854}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3838034058741756864
@@ -138,7 +137,6 @@ MonoBehaviour:
   swordPos:
   - {fileID: 7063179326464419884}
   - {fileID: 2720337345785299707}
-  backPos: {fileID: 4391850297211373854}
   attackdamage: 1
   attackSpeed: 0.3
   skillDamage: 0
@@ -147,10 +145,6 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2641036828859503304, guid: 4a97d522e9a5466468758b2fea965d66, type: 3}
   poolSize: 10
   bulletSpeed: 10
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  wallDetectionDistance: 1
 --- !u!58 &6259532044742417244
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -270,37 +264,6 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.5, y: -1.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1940015974884664206}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5251997501410179867
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4391850297211373854}
-  m_Layer: 3
-  m_Name: SwordPos3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4391850297211373854
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5251997501410179867}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

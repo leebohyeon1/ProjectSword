@@ -32,7 +32,8 @@ public class EnemyStat : MonoBehaviour
         if (hp <= 0)
         {
             Destroy(gameObject);
-            GameManager.Instance.monCount++;
+            GameManager.Instance.skillCount++;
+            GameManager.Instance.swapCount++;
         }
     }
 

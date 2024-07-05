@@ -28,18 +28,18 @@ public class MagicSword : MonoBehaviour
     void Follow()
     {
 
-            if (positions.Count > maxPositions)
-            {
-                positions.Dequeue(); // 큐가 가득 찬 경우 가장 오래된 위치 제거
-            }
+        if (positions.Count > maxPositions)
+        {
+            positions.Dequeue(); // 큐가 가득 찬 경우 가장 오래된 위치 제거
+        }
 
-            positions.Enqueue(followPos.position);
+        positions.Enqueue(followPos.position);
 
-            // 위치가 일정 시간 이상 큐에 저장되었을 때 따라가도록 처리
-            if (positions.Count > (followDelay / Time.deltaTime))
-            {
-                followerTransform.position = positions.Dequeue();
-            }
+        // 위치가 일정 시간 이상 큐에 저장되었을 때 따라가도록 처리
+        if (positions.Count > (followDelay / Time.deltaTime))
+        {
+            followerTransform.position = positions.Dequeue();
+        }
      
     }
 }

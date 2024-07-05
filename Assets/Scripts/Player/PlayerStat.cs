@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.Intrinsics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerStat : MonoBehaviour,IListener
@@ -14,7 +15,7 @@ public class PlayerStat : MonoBehaviour,IListener
     public int weaponIndex;
     public Transform[] swordPos;
 
-   [Header("공격")]
+    [Header("공격")]
     public int attackdamage = 1;
     public float attackSpeed = 1f;
 
@@ -22,7 +23,9 @@ public class PlayerStat : MonoBehaviour,IListener
     public int skillDamage;
     public float skillCool;
     public int skillCount;
-    private int killMon;
+
+    [Header("스왑")]
+    public int swapCount;
 
     [Header("탄막")]
     public GameObject bulletPrefab;
@@ -37,7 +40,8 @@ public class PlayerStat : MonoBehaviour,IListener
     private void Start()
     {
         EventManager.Instance.AddListener(EVENT_TYPE.CHANGE_WEAPON, this);
-        EventManager.Instance.AddListener(EVENT_TYPE.KILL_MON,this);
+        EventManager.Instance.AddListener(EVENT_TYPE.SKILL_COUNT,this);
+        EventManager.Instance.AddListener(EVENT_TYPE.SWAP_COUNT,this);
        
         TrashPool = new List<GameObject>();
 
@@ -55,10 +59,13 @@ public class PlayerStat : MonoBehaviour,IListener
             case EVENT_TYPE.CHANGE_WEAPON:
                 ChangeWeapon();
                 break;
-            case EVENT_TYPE.KILL_MON:
-                killMon = (int)Param;
-                EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_ON, this, skillCount);
+            case EVENT_TYPE.SKILL_COUNT:
+                EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_ON, this,skillCount);
                 break;
+            case EVENT_TYPE.SWAP_COUNT:
+                EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_ON, this,swapCount);
+                break;
+                
         }
 
     }
@@ -121,6 +128,7 @@ public class PlayerStat : MonoBehaviour,IListener
 
         InitializePool();
         EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_ON, this,  skillCount);
+        EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_ON, this, swapCount);
     }
 
     void SetWeapon()
@@ -130,6 +138,7 @@ public class PlayerStat : MonoBehaviour,IListener
         skillDamage = weapon[weaponIndex].skillDamage;
         skillCool = weapon[weaponIndex].skillCool;
         skillCount = weapon[weaponIndex].skillCount;
+        swapCount = weapon[weaponIndex].swapCount;
         bulletPrefab = weapon[weaponIndex].bulletPrefab;
         bulletSpeed = weapon[weaponIndex].bulletSpeed;
     }

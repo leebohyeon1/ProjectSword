@@ -14,6 +14,9 @@ public class Swords : ScriptableObject
     public float skillCool;
     public int skillCount;
 
+    [Header("½º¿Ò")]
+    public int swapCount;
+
     [Header("Åº¸·")]
     public GameObject bulletPrefab;
     public float bulletSpeed;

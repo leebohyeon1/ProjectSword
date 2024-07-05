@@ -47,7 +47,7 @@ public class SkillBtn : MonoBehaviour,
         // 예를 들어, 드래그 앤 드롭 위치에 스킬을 사용합니다.
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         worldPosition.z = 0; 
-        GameManager.Instance.monCount = 0;
+        GameManager.Instance.skillCount = 0;
         Panel.SetActive(false);
         GameManager.Instance.SkillOnOff();
         // 스킬 프리팹을 스폰하거나, 해당 위치에 스킬 효과를 적용합니다.

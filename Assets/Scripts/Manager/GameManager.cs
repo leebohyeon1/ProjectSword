@@ -9,21 +9,34 @@ public class GameManager : MonoBehaviour
 
     [Header("스킬")]
     [SerializeField]
-    private bool isSkill;
+    private bool canSkill;
     public float skillTimeScale;
 
     [SerializeField]
-    private int monsterCount;
-    public int monCount 
+    private int skillCount_;
+    public int skillCount 
     {
-        get { return monsterCount; } 
+        get { return skillCount_; } 
         set 
         {
-            monsterCount = value;
-            EventManager.Instance.PostNotification(EVENT_TYPE.KILL_MON,this,monsterCount);
+            skillCount_ = value;
+            EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT,this);
         } 
     }
 
+    [Header("스왑")]
+
+    [SerializeField]
+    private int swapCount_;
+    public int swapCount
+    {
+        get { return swapCount_; }
+        set
+        {
+            swapCount_ = value;
+            EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this);
+        }
+    }
     //==================================
 
     private void Awake()
@@ -37,7 +50,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
-        monsterCount = 0;
+        skillCount_ = 0;
+        swapCount_ = 0;
     }
     // Start is called before the first frame update
     void Start()
@@ -53,9 +67,9 @@ public class GameManager : MonoBehaviour
 
     public void SkillOnOff()
     {
-        isSkill = !isSkill;
+        canSkill = !canSkill;
 
-        if (isSkill)
+        if (canSkill)
         {
             Time.timeScale = skillTimeScale;
         }
@@ -67,6 +81,6 @@ public class GameManager : MonoBehaviour
 
     public bool GetSkillBool()
     {
-        return isSkill;
+        return canSkill;
     }
 }
