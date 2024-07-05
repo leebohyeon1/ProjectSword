@@ -6,10 +6,13 @@ public class EnemyStat : MonoBehaviour
 {
     EnemyUI enemyUI;
 
-
     public int hp = 1;
     public float speed;
     public int damage;
+
+    [Header("∞‘¿Ã¡ˆ")]
+    public float skillGage;
+    public float swapGage;
 
     void Start()
     {
@@ -17,10 +20,6 @@ public class EnemyStat : MonoBehaviour
         enemyUI.UpdateHPText(hp);
 
         GetComponent<Rigidbody2D>().velocity = Vector2.down * speed;
-    }
-
-    void Update()
-    {
     }
 
     public void TakeDamage(int damage)
@@ -32,7 +31,8 @@ public class EnemyStat : MonoBehaviour
         if (hp <= 0)
         {
             Destroy(gameObject);
-            GameManager.Instance.monCount++;
+            EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT, this, skillGage);
+            EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT,this,swapGage);
         }
     }
 

@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 7287936830923356126}
   - component: {fileID: -5122804913110630036}
   m_Layer: 0
-  m_Name: GimmickMon
+  m_Name: GimmickMon 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -238,8 +238,8 @@ MonoBehaviour:
   hp: 17
   speed: 1.4
   damage: 20
-  skillGage: 20
-  swapGage: 50
+  skillGage: 30
+  swapGage: 70
 --- !u!114 &-7740092943958659329
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,20 +9,8 @@ public class GameManager : MonoBehaviour
 
     [Header("½ºÅ³")]
     [SerializeField]
-    private bool isSkill;
+    private bool canSkill;
     public float skillTimeScale;
-
-    [SerializeField]
-    private int monsterCount;
-    public int monCount 
-    {
-        get { return monsterCount; } 
-        set 
-        {
-            monsterCount = value;
-            EventManager.Instance.PostNotification(EVENT_TYPE.KILL_MON,this,monsterCount);
-        } 
-    }
 
     //==================================
 
@@ -36,8 +24,6 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
-
-        monsterCount = 0;
     }
     // Start is called before the first frame update
     void Start()
@@ -53,9 +39,9 @@ public class GameManager : MonoBehaviour
 
     public void SkillOnOff()
     {
-        isSkill = !isSkill;
+        canSkill = !canSkill;
 
-        if (isSkill)
+        if (canSkill)
         {
             Time.timeScale = skillTimeScale;
         }
@@ -67,6 +53,6 @@ public class GameManager : MonoBehaviour
 
     public bool GetSkillBool()
     {
-        return isSkill;
+        return canSkill;
     }
 }

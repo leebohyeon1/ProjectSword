@@ -7,7 +7,9 @@ public enum EVENT_TYPE
 {
    CHANGE_WEAPON,
    SKILL_ON,
-   KILL_MON
+   SWAP_ON,
+   SKILL_COUNT,
+   SWAP_COUNT
 };
 public interface IListener
 {
