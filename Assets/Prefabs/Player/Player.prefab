@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1664854229024136090}
   - component: {fileID: 4260712795892517455}
   - component: {fileID: 2284149096743789701}
+  - component: {fileID: 6340777690407495934}
   - component: {fileID: 6259532044742417244}
   - component: {fileID: 8889532065471979762}
   m_Layer: 3
@@ -146,6 +147,26 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2641036828859503304, guid: 4a97d522e9a5466468758b2fea965d66, type: 3}
   poolSize: 10
   bulletSpeed: 10
+--- !u!114 &6340777690407495934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337809136751114260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46767eabdff4be84486f15c3afe518e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftFollower: {fileID: 3442762542596929003}
+  rightFollower: {fileID: 4911440691305720266}
+  followDelay: 0.3
+  maxPositions: 100
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  wallDetectionRadius: 1.3
 --- !u!58 &6259532044742417244
 CircleCollider2D:
   m_ObjectHideFlags: 0

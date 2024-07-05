@@ -98,11 +98,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followPos: {fileID: 0}
-  backPos: {fileID: 0}
   followDelay: 0.1
   maxPositions: 50
   isNearWall: 0
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  wallDetectionDistance: 1

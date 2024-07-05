@@ -6,7 +6,7 @@ public class MagicSword : MonoBehaviour
 {
     public Transform followPos; // 플레이어 오브젝트
  
-    public float followDelay = 0.5f; // 따라오는 시간 차
+    public float followDelay = 0.1f; // 따라오는 시간 차
     public int maxPositions = 50; // 최대 저장할 위치 수
     
     public bool isNearWall = false;
