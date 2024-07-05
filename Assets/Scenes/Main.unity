@@ -647,8 +647,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canSkill: 0
   skillTimeScale: 0.3
-  skillCount_: 0
-  swapCount_: 0
 --- !u!1 &636251835
 GameObject:
   m_ObjectHideFlags: 0

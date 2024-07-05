@@ -74,6 +74,5 @@ public class PlayerController : MonoBehaviour
         bulletRb.velocity = Vector2.up * playerStat.bulletSpeed;
 
     }
-
-  
+ 
 }

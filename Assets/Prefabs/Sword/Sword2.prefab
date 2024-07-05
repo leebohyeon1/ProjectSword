@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4297308276510447069}
   - component: {fileID: 947637672238178540}
-  - component: {fileID: 3539813234171082662}
+  - component: {fileID: 1600750296036283501}
   m_Layer: 0
   m_Name: Sword2
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3539813234171082662
+--- !u!114 &1600750296036283501
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,10 +94,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1755657448561907817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 419845eea19872a479b5f7c678b55449, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c9972bd750cef24da82907322f29184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActPower: 0
+  ActSpeed: 0
   followPos: {fileID: 0}
   followDelay: 0.1
   maxPositions: 50
-  isNearWall: 0

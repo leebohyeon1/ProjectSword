@@ -22,10 +22,6 @@ public class EnemyStat : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = Vector2.down * speed;
     }
 
-    void Update()
-    {
-    }
-
     public void TakeDamage(int damage)
     {
         hp -= damage;
@@ -35,8 +31,8 @@ public class EnemyStat : MonoBehaviour
         if (hp <= 0)
         {
             Destroy(gameObject);
-            GameManager.Instance.skillCount += skillGage;
-            GameManager.Instance.swapCount += swapGage;
+            EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT, this, skillGage);
+            EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT,this,swapGage);
         }
     }
 

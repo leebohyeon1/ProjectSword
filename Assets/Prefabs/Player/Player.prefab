@@ -142,8 +142,9 @@ MonoBehaviour:
   attackSpeed: 0.3
   skillDamage: 0
   skillCool: 0
-  skillCount: 100
-  swapCount: 100
+  maxSkillCount: 100
+  maxExtraSkillCount: 150
+  swapCount: 0
   bulletPrefab: {fileID: 2641036828859503304, guid: 4a97d522e9a5466468758b2fea965d66, type: 3}
   poolSize: 10
   bulletSpeed: 10

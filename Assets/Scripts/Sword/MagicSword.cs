@@ -2,30 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class MagicSword : MonoBehaviour
 {
+    [Header("행동")]
+    public int ActPower;
+    public float ActSpeed;
+    
+    [Header("추적")]
     public Transform followPos; // 플레이어 오브젝트
  
     public float followDelay = 0.1f; // 따라오는 시간 차
     public int maxPositions = 50; // 최대 저장할 위치 수
-    
-    public bool isNearWall = false;
 
-    private Queue<Vector3> positions;
-    private Transform followerTransform;
+    protected Queue<Vector3> positions;
+    protected Transform followerTransform;
 
-    void Start()
+
+    void Update()
+    {
+       
+    }
+
+    protected virtual void Set()
     {
         positions = new Queue<Vector3>();
         followerTransform = transform;
     }
 
-    void Update()
-    {
-        Follow();
-    }
-
-    void Follow()
+    protected virtual void Follow()
     {
 
         if (positions.Count > maxPositions)
@@ -40,6 +46,5 @@ public class MagicSword : MonoBehaviour
         {
             followerTransform.position = positions.Dequeue();
         }
-     
     }
 }

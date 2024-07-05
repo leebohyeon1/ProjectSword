@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1509313269363276334}
   - component: {fileID: 2596904378180188885}
-  - component: {fileID: -2612081897629471167}
+  - component: {fileID: -2755126125778967756}
   m_Layer: 0
   m_Name: Sword1
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-2612081897629471167
+--- !u!114 &-2755126125778967756
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,10 +94,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2341837304568887784}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 419845eea19872a479b5f7c678b55449, type: 3}
+  m_Script: {fileID: 11500000, guid: a2d757c0635250645ac20fa2d894e487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActPower: 0
+  ActSpeed: 0
   followPos: {fileID: 0}
   followDelay: 0.1
   maxPositions: 50
-  isNearWall: 0
