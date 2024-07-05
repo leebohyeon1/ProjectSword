@@ -238,6 +238,8 @@ MonoBehaviour:
   hp: 10
   speed: 2.5
   damage: 20
+  skillGage: 11
+  swapGage: 20
 --- !u!114 &-7740092943958659329
 MonoBehaviour:
   m_ObjectHideFlags: 0

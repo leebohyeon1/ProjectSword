@@ -147,9 +147,9 @@ GameObject:
   - component: {fileID: 257596698737819045}
   - component: {fileID: -7740092943958659329}
   - component: {fileID: 7287936830923356126}
-  - component: {fileID: -5122804913110630036}
+  - component: {fileID: 4649542568297393081}
   m_Layer: 0
-  m_Name: GimmickMon
+  m_Name: CommonEnemy 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,7 +165,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6562820436237093001}
@@ -213,7 +213,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 0, g: 0.052019008, b: 0.41509432, a: 1}
+  m_Color: {r: 1, g: 0.3075471, b: 0.3075471, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -235,11 +235,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bfc451a4f1c6541b83ba6483345fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 17
-  speed: 1.4
-  damage: 20
-  skillGage: 20
-  swapGage: 50
+  hp: 5
+  speed: 2
+  damage: 10
+  skillGage: 8
+  swapGage: 15
 --- !u!114 &-7740092943958659329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,7 +301,7 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.28866667}
       - {x: 0.5, y: -0.28866667}
   m_UseDelaunayMesh: 0
---- !u!50 &-5122804913110630036
+--- !u!50 &4649542568297393081
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0

@@ -12,10 +12,6 @@ public class Swords : ScriptableObject
     [Header("스킬")]
     public int skillDamage;
     public float skillCool;
-    public int skillCount;
-
-    [Header("스왑")]
-    public int swapCount;
 
     [Header("탄막")]
     public GameObject bulletPrefab;

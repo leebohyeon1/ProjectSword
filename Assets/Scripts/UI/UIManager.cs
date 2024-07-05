@@ -37,9 +37,9 @@ public class UIManager : MonoBehaviour, IListener
         switch (Event_type)
         {
             case EVENT_TYPE.SKILL_ON:
-                float skillFillAmount = (float)GameManager.Instance.skillCount / (int)Param;
+                float skillFillAmount = GameManager.Instance.skillCount / (float)Param;
 
-                if (skillFillAmount >= 1)
+                if (skillFillAmount >= 1f)
                 {
                     skillDragBtn.gameObject.SetActive(true);
                 }
@@ -52,9 +52,9 @@ public class UIManager : MonoBehaviour, IListener
                 break;
 
             case EVENT_TYPE.SWAP_ON:
-                float swapFillAmount = (float)GameManager.Instance.swapCount / (int)Param;
+                float swapFillAmount = GameManager.Instance.swapCount / (float)Param;
                 
-                if (swapFillAmount >= 1)
+                if (swapFillAmount >= 1f)
                 {
                     canSwap =true;  
                 }
@@ -69,7 +69,7 @@ public class UIManager : MonoBehaviour, IListener
         if(canSwap)
         {
             EventManager.Instance.PostNotification(EVENT_TYPE.CHANGE_WEAPON, this);
-            GameManager.Instance.swapCount = 0;
+            GameManager.Instance.swapCount = 0f;
         }
         
     }

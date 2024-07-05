@@ -22,10 +22,10 @@ public class PlayerStat : MonoBehaviour,IListener
     [Header("스킬")]
     public int skillDamage;
     public float skillCool;
-    public int skillCount;
+    public float skillCount;
 
     [Header("스왑")]
-    public int swapCount;
+    public float swapCount;
 
     [Header("탄막")]
     public GameObject bulletPrefab;
@@ -137,8 +137,6 @@ public class PlayerStat : MonoBehaviour,IListener
         attackSpeed = weapon[weaponIndex].attackSpeed;
         skillDamage = weapon[weaponIndex].skillDamage;
         skillCool = weapon[weaponIndex].skillCool;
-        skillCount = weapon[weaponIndex].skillCount;
-        swapCount = weapon[weaponIndex].swapCount;
         bulletPrefab = weapon[weaponIndex].bulletPrefab;
         bulletSpeed = weapon[weaponIndex].bulletSpeed;
     }

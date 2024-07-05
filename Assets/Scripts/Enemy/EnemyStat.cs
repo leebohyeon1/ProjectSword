@@ -6,10 +6,13 @@ public class EnemyStat : MonoBehaviour
 {
     EnemyUI enemyUI;
 
-
     public int hp = 1;
     public float speed;
     public int damage;
+
+    [Header("°ÔÀÌÁö")]
+    public float skillGage;
+    public float swapGage;
 
     void Start()
     {
@@ -32,8 +35,8 @@ public class EnemyStat : MonoBehaviour
         if (hp <= 0)
         {
             Destroy(gameObject);
-            GameManager.Instance.skillCount++;
-            GameManager.Instance.swapCount++;
+            GameManager.Instance.skillCount += skillGage;
+            GameManager.Instance.swapCount += swapGage;
         }
     }
 

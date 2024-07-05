@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour
     public float skillTimeScale;
 
     [SerializeField]
-    private int skillCount_;
-    public int skillCount 
+    private float skillCount_;
+    public float skillCount 
     {
         get { return skillCount_; } 
         set 
@@ -27,8 +27,8 @@ public class GameManager : MonoBehaviour
     [Header("½º¿Ò")]
 
     [SerializeField]
-    private int swapCount_;
-    public int swapCount
+    private float swapCount_;
+    public float swapCount
     {
         get { return swapCount_; }
         set
@@ -50,8 +50,8 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
-        skillCount_ = 0;
-        swapCount_ = 0;
+        skillCount_ = 0f;
+        swapCount_ = 0f;
     }
     // Start is called before the first frame update
     void Start()
