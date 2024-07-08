@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
     private bool canSkill;
     public float skillTimeScale;
 
-    //==================================
+    //==================================================================================
+
 
     private void Awake()
     {

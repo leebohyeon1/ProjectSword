@@ -62,13 +62,15 @@ public class SkillBtn : MonoBehaviour,
     {
         // 여기서 스킬 사용 로직을 구현합니다.
         // 예를 들어, 드래그 앤 드롭 위치에 스킬을 사용합니다.
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        worldPosition.z = 0;       
-        Panel.SetActive(false);
-        GameManager.Instance.SkillOnOff();
-        // 스킬 프리팹을 스폰하거나, 해당 위치에 스킬 효과를 적용합니다.
-        playerStat.UseSkill();
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);    
+        worldPosition.z = 0;
         Debug.Log("스킬 사용 위치: " + worldPosition);
+
+        // 스킬 프리팹을 스폰하거나, 해당 위치에 스킬 효과를 적용합니다.
+        GameManager.Instance.SkillOnOff();
+        playerStat.UseSkill();
+
+        Panel.SetActive(false);
     }
 }
 

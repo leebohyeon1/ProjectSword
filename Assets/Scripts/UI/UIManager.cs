@@ -11,58 +11,81 @@ public class UIManager : MonoBehaviour, IListener
 
     [Header("스왑 버튼")]
     public Image swapBtn;
+    public GameObject[] keepSwapUI;
+    private int keepSwap = 0;
     private bool canSwap = false;
+    //==================================================================================
 
     void Awake()
     {
-        skillDragBtn.gameObject.SetActive(false);
         skillBtn.fillAmount = 0f;
-        swapBtn.fillAmount= 0f;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        EventManager.Instance.AddListener(EVENT_TYPE.SKILL_ON, this);
-        EventManager.Instance.AddListener(EVENT_TYPE.SWAP_ON, this);
+        swapBtn.fillAmount = 0f;
+
+        skillDragBtn.gameObject.SetActive(false);
+        
+        for (int i = 0; i < keepSwapUI.Length; i++)
+        {
+            keepSwapUI[i].gameObject.SetActive(false);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        
+        EventManager.Instance.AddListener(EVENT_TYPE.SKILL_COUNT, this);
+        EventManager.Instance.AddListener(EVENT_TYPE.SWAP_COUNT, this);
+
+        EventManager.Instance.AddListener(EVENT_TYPE.SKILL_ON, this);
+        EventManager.Instance.AddListener(EVENT_TYPE.SWAP_ON, this);
+
+        EventManager.Instance.AddListener(EVENT_TYPE.KEEP_SWAP, this);
     }
 
     public void OnEvent(EVENT_TYPE Event_type, Component Sender, object Param = null)
     {
         switch (Event_type)
         {
-            case EVENT_TYPE.SKILL_ON:
-                float skillFillAmount = (float)Param;
-
-                if (skillFillAmount >= 1f)
+            case EVENT_TYPE.SKILL_COUNT:
+                if(Sender.GetComponent<PlayerStat>() != null)
                 {
-                    skillDragBtn.gameObject.SetActive(true);
-                }
-                else
-                {
-                    skillDragBtn.gameObject.SetActive(false);
-                }
+                    float skillFillAmount = (float)Param;
 
-                skillBtn.fillAmount = skillFillAmount;
+                    skillBtn.fillAmount = skillFillAmount;
+                }        
                 break;
 
-            case EVENT_TYPE.SWAP_ON:
-                float swapFillAmount =  (float)Param;
-                
-                if (swapFillAmount >= 1f)
-                {
-                    canSwap =true;  
-                }
+            case EVENT_TYPE.SKILL_ON:
+                skillDragBtn.gameObject.SetActive((bool)Param);
+                break;
 
-                swapBtn.fillAmount = swapFillAmount;
+            case EVENT_TYPE.SWAP_COUNT:
+                if (Sender.GetComponent<PlayerStat>() != null)
+                {
+                    float swapFillAmount = (float)Param;
+
+                    swapBtn.fillAmount = swapFillAmount;
+                }
+                break;
+            case EVENT_TYPE.SWAP_ON:
+                    canSwap = (bool)Param;      
+                break;
+            case EVENT_TYPE.KEEP_SWAP:
+                keepSwap = (int)Param;
+                
+                for(int i = 0; i < keepSwapUI.Length; i ++ )
+                {
+                    if(i < keepSwap)
+                    {
+                        keepSwapUI[i].SetActive(true);
+                    }
+                    else
+                    {
+                        keepSwapUI[i].SetActive(false);
+                    }                   
+                }
                 break;
         }
     }
+    //==================================================================================
 
     public void ChangeWeapon()
     {

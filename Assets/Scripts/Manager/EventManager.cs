@@ -9,7 +9,8 @@ public enum EVENT_TYPE
    SKILL_ON,
    SWAP_ON,
    SKILL_COUNT,
-   SWAP_COUNT
+   SWAP_COUNT,
+   KEEP_SWAP
 };
 public interface IListener
 {

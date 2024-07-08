@@ -240,6 +240,9 @@ MonoBehaviour:
   damage: 10
   skillGage: 8
   swapGage: 15
+  blessRate: 5
+  isBless: 0
+  multiplyGage: 2
 --- !u!114 &-7740092943958659329
 MonoBehaviour:
   m_ObjectHideFlags: 0
