@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour, IListener
+public class GameUIManager : MonoBehaviour, IListener
 {
     [Header("스킬 버튼")]
     public Image skillBtn;
@@ -14,6 +15,11 @@ public class UIManager : MonoBehaviour, IListener
     public GameObject[] keepSwapUI;
     private int keepSwap = 0;
     private bool canSwap = false;
+
+    [Header("일시정지 버튼")]
+    public GameObject pausePanel;
+    private bool isPause =false;
+
     //==================================================================================
 
     void Awake()
@@ -22,14 +28,15 @@ public class UIManager : MonoBehaviour, IListener
         swapBtn.fillAmount = 0f;
 
         skillDragBtn.gameObject.SetActive(false);
-        
+        pausePanel.SetActive(false);
+
         for (int i = 0; i < keepSwapUI.Length; i++)
         {
             keepSwapUI[i].gameObject.SetActive(false);
         }
     }
 
-    void Start()
+    private void Start()
     {
         EventManager.Instance.AddListener(EVENT_TYPE.SKILL_COUNT, this);
         EventManager.Instance.AddListener(EVENT_TYPE.SWAP_COUNT, this);
@@ -87,12 +94,25 @@ public class UIManager : MonoBehaviour, IListener
     }
     //==================================================================================
 
-    public void ChangeWeapon()
+    public void ChangeWeaponBtn()
     {
         if(canSwap)
         {
             EventManager.Instance.PostNotification(EVENT_TYPE.CHANGE_WEAPON, this);
         }
         
+    }
+
+    public void PauseBtn()
+    {
+        isPause = !isPause;
+        GameManager.Instance.SetPause(isPause);
+        pausePanel.SetActive(isPause);
+    }
+
+    public void ExitGameBtn()
+    {
+        PauseBtn();
+        SceneManager.LoadScene(0);
     }
 }

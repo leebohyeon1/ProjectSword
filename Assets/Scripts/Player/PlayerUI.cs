@@ -5,15 +5,29 @@ using UnityEngine;
 
 public class PlayerUI : MonoBehaviour
 {
-    public TMP_Text hpText;
+    [SerializeField]
+    private HealthBar healthBar;
+
+    private float Hp;
+    private float MaxHp;
 
     private void Start()
     {
-        UpdateHp(GetComponent<PlayerStat>().curHp);
+        healthBar = FindObjectOfType<HealthBar>();
+
+        Hp = GetComponent<PlayerStat>().curHp;
+        MaxHp = GetComponent<PlayerStat>().maxHp;
     }
 
-    public void UpdateHp(int hp)
+    private void Update()
     {
-        hpText.text = hp.ToString();
+        healthBar.UpdateHp(Hp, MaxHp, 0);
     }
+
+    public void UpdateHp(float hp, float maxHp)
+    {
+       Hp = hp;
+        MaxHp = maxHp;
+    }
+
 }
