@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
         {
             Drag();
         }
-   
+
         HadleAttack();
     }
 

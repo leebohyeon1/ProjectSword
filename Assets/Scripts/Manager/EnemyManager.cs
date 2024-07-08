@@ -7,10 +7,15 @@ public class EnemyManager : MonoBehaviour
     public GameObject[] Patterns; // 利 橇府普
     private GameObject curPattern;
     public float spawnRate = 2.0f; // 利 积己 林扁
-    private float nextSpawnTime = 2.0f;
+    private float spawnTimer = 0.0f;
 
     [SerializeField]
     private Transform spawnPosition;
+
+    private void Awake()
+    {
+        spawnTimer = 0f;
+    }
 
     private void Start()
     {
@@ -19,10 +24,11 @@ public class EnemyManager : MonoBehaviour
 
     void Update()
     {
-        if (Time.time >= nextSpawnTime)
+        spawnTimer += Time.deltaTime;
+        if (spawnTimer >= spawnRate)
         {
             SpawnEnemy();
-            nextSpawnTime = Time.time + spawnRate;            
+            spawnTimer = 0f;            
         }
     }
 

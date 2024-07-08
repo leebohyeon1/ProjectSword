@@ -8,7 +8,8 @@ using UnityEngine;
 public class PlayerStat : MonoBehaviour,IListener
 {
     [Header("체력")]
-    public int curHp = 50;
+    public float maxHp = 100f;
+    public float curHp ;
 
     [Header("무기")]
     public Swords[] weapon;
@@ -81,6 +82,11 @@ public class PlayerStat : MonoBehaviour,IListener
     private List<GameObject> TrashPool = new List<GameObject>();
     //==================================================================================
 
+    void Awake()
+    {
+        curHp = maxHp;
+    }
+
     private void Start()
     {
         EventManager.Instance.AddListener(EVENT_TYPE.CHANGE_WEAPON, this);
@@ -90,6 +96,8 @@ public class PlayerStat : MonoBehaviour,IListener
         InitializePool();
         SpawnSwords();
         SetWeapon();
+
+        //GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
     }
 
     void Update()
@@ -211,18 +219,28 @@ public class PlayerStat : MonoBehaviour,IListener
         bulletSpeed = currentWeapon.bulletSpeed;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         curHp -= damage;
-        Debug.Log("현재 체력: " + curHp);
-        GetComponent<PlayerUI>().UpdateHp(curHp);
-        if (curHp <= 0)
+
+        GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
+        if (curHp <= 0f)
         {
-            curHp = 0;
+            curHp = 0f;
             Destroy(gameObject);
         }
     }
 
+    public void HealHp(float heal)
+    {
+        curHp += heal;
+        if (curHp >= maxHp)
+        {
+            maxHp = curHp;
+        }
+
+        GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
+    }
     public void SpawnSwords()
     {
         for (int i = 0; i < weapon.Length; i++)
@@ -239,8 +257,8 @@ public class PlayerStat : MonoBehaviour,IListener
     {
         Debug.Log("스킬 사용");
         skillCount -= skillCost;
-        skillTimer = 0;
-        if (extraSkillCount > 0)
+        skillTimer = 0f;
+        if (extraSkillCount > 0f)
         {
             CalculationCount();
         }
@@ -259,7 +277,7 @@ public class PlayerStat : MonoBehaviour,IListener
         else
         {
             skillCount += extraSkillCount;
-            extraSkillCount = 0;
+            extraSkillCount = 0f;
         }
     }
 }
