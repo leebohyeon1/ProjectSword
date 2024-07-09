@@ -13,7 +13,7 @@ public class Swords : ScriptableObject
     public int skillDamage;
     public float skillCost;
     public float skillCool;
-    public SwordSkill skill;
+    public Vector2[] skillSize;
 
     [Header("Åº¸·")]
     public GameObject bulletPrefab;
@@ -23,4 +23,5 @@ public class Swords : ScriptableObject
     public GameObject swordPrefab;
     public int swordActPower;
     public float swordActSpeed;
+
 }

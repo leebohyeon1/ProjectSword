@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEditor.Rendering;
 using UnityEngine;
 
@@ -97,6 +98,8 @@ public class PlayerStat : MonoBehaviour,IListener
         SpawnSwords();
         SetWeapon();
 
+
+       
         //GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
     }
 
@@ -217,8 +220,17 @@ public class PlayerStat : MonoBehaviour,IListener
         skillCost = currentWeapon.skillCost;
         bulletPrefab = currentWeapon.bulletPrefab;
         bulletSpeed = currentWeapon.bulletSpeed;
+
+        for (int i = 0; i < currentWeapon.skillSize.Length; i++)
+        {
+            weapon[weaponIndex].swordPrefab.GetComponent<SwordSkill>().skillSize[i] = currentWeapon.skillSize[i];
+        }
     }
 
+    public Vector2 SetWeaponSize(int i)
+    {
+        return weapon[weaponIndex].swordPrefab.GetComponent<SwordSkill>().skillSize[i];
+    }
     public void TakeDamage(float damage)
     {
         curHp -= damage;
@@ -253,7 +265,7 @@ public class PlayerStat : MonoBehaviour,IListener
         }
     }
 
-    public void UseSkill()
+    public void UseSkill(int skillIndex)
     {
         Debug.Log("스킬 사용");
         skillCount -= skillCost;
@@ -262,7 +274,7 @@ public class PlayerStat : MonoBehaviour,IListener
         {
             CalculationCount();
         }
-
+        weapon[weaponIndex].swordPrefab.GetComponent<SwordSkill>().Skill(skillIndex);
         EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT, this, skillCount / maxSkillCount);
     }
 

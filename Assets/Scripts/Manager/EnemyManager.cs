@@ -41,7 +41,7 @@ public class EnemyManager : MonoBehaviour
         if (nextPatternIndex >= 0 && nextPatternIndex < Patterns.Length)
         {
             curPattern = Patterns[nextPatternIndex];
-            Debug.Log($"확률: {randomRate}% , 현재 패턴: {curPattern.name}");
+            //Debug.Log($"확률: {randomRate}% , 현재 패턴: {curPattern.name}");
             Instantiate(curPattern, spawnPosition.position, Quaternion.identity);
         }
         else
