@@ -12,16 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862fa96b88725d349aa7d0d959eec9ee, type: 3}
   m_Name: Dandelion
   m_EditorClassIdentifier: 
-  attackdamage: 3
-  attackSpeed: 0.7
-  skillDamage: 0
+  attackdamage: 2
+  attackSpeed: 0.5
   skillCost: 40
   skillCool: 7
-  skillSize:
-  - {x: 10, y: 10}
-  - {x: 0, y: 0}
-  bulletPrefab: {fileID: 2641036828859503304, guid: 4a97d522e9a5466468758b2fea965d66, type: 3}
-  bulletSpeed: 20
+  bulletSpeed: 5
   swordPrefab: {fileID: 2341837304568887784, guid: 9f59953c12c741b419bc63df8785477e, type: 3}
   swordActPower: 0
   swordActSpeed: 0
+  skillImage: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}

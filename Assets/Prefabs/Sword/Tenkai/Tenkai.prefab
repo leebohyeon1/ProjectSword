@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 4297308276510447069}
   - component: {fileID: 947637672238178540}
   - component: {fileID: 1600750296036283501}
+  - component: {fileID: -8257161528908764260}
   m_Layer: 0
-  m_Name: Sword2
+  m_Name: Tenkai
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.9490197, g: 0.38431376, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.8117647, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -97,8 +98,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c9972bd750cef24da82907322f29184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bullet: {fileID: 2641036828859503304, guid: 48eb373d600ee0840baf7e8afb1cdc00, type: 3}
   ActPower: 0
   ActSpeed: 0
   followPos: {fileID: 0}
   followDelay: 0.1
   maxPositions: 50
+--- !u!114 &-8257161528908764260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755657448561907817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49706385d2bb19b4183d7584435a54a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillSize:
+  - {x: 8, y: 4}
+  - {x: 0, y: 0}
+  skillPoint: {fileID: 0}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  power:
+  - 1
+  - 0
+  duration:
+  - 3
+  - 3
+  slowRate: 25
+  damageInterval: 0.5
+  Panel: {fileID: 8251858154578419569, guid: 5f9b514a58768244c852363a742dd065, type: 3}

@@ -5,28 +5,26 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     public int damage;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public float damageRate;
+    public float TotalDamage;
 
     void OnBecameInvisible()
     {
         gameObject.SetActive(false);
     }
 
+    public virtual void SetDamagebuff(float rate)
+    {
+        damageRate = rate;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Enemy"))
+
+        TotalDamage = damage * damageRate;
+        if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<EnemyStat>().TakeDamage(damage);
+            collision.GetComponent<EnemyStat>().TakeDamage((int)TotalDamage);
             gameObject.SetActive(false);
         }
     }

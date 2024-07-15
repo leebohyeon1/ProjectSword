@@ -14,6 +14,7 @@ public class PlayerStat : MonoBehaviour,IListener
 
     [Header("무기")]
     public Swords[] weapon;
+    private List<GameObject> weaponList = new List<GameObject>();
     public int weaponIndex;
     public Transform[] swordPos;
 
@@ -22,7 +23,6 @@ public class PlayerStat : MonoBehaviour,IListener
     public float attackSpeed = 1f;
 
     [Header("스킬")]
-    public int skillDamage;
     public float skillCool;
     public float maxSkillCount = 100f;
     public float skillCount
@@ -44,6 +44,8 @@ public class PlayerStat : MonoBehaviour,IListener
     [SerializeField]
     private float extraSkillCount = 0f;
     private float skillTimer;
+    [SerializeField]
+    private Vector2[] skillSize = new Vector2[2];
 
     [Header("스왑")]
     [SerializeField]
@@ -54,16 +56,18 @@ public class PlayerStat : MonoBehaviour,IListener
         get => swapCount_;
         set
         {
-            swapCount_ = Mathf.Min(value, maxSwapCount);
-            if (keepSwap == maxkeepSwap)
+            if (keepSwap != maxkeepSwap)
             {
-                swapCount = 0f;
-            }
-            if (swapCount_ >= maxSwapCount)
-            {
-                swapCount = 0f;
-                keepSwap += keepSwap < maxkeepSwap ? 1 : 0;
-                EventManager.Instance.PostNotification(EVENT_TYPE.KEEP_SWAP,this,keepSwap);
+                swapCount_ = Mathf.Min(value, maxSwapCount);
+
+               
+
+                if (swapCount_ >= maxSwapCount)
+                {
+                    swapCount = 0f;
+                    keepSwap += keepSwap < maxkeepSwap ? 1 : 0;
+                    EventManager.Instance.PostNotification(EVENT_TYPE.KEEP_SWAP, this, keepSwap);
+                }
             }
         }
     }
@@ -79,6 +83,11 @@ public class PlayerStat : MonoBehaviour,IListener
     public int poolSize = 20;
     public float bulletSpeed;
 
+    public List<GameObject> bulletPool_
+    { 
+        get { return bulletPool; }
+        set { bulletPool = value; }
+    }
     private List<GameObject> bulletPool = new List<GameObject>();
     private List<GameObject> TrashPool = new List<GameObject>();
     //==================================================================================
@@ -94,12 +103,11 @@ public class PlayerStat : MonoBehaviour,IListener
         EventManager.Instance.AddListener(EVENT_TYPE.SKILL_COUNT, this);
         EventManager.Instance.AddListener(EVENT_TYPE.SWAP_COUNT, this);
 
-        InitializePool();
         SpawnSwords();
         SetWeapon();
+        InitializePool();
 
 
-       
         //GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
     }
 
@@ -154,6 +162,7 @@ public class PlayerStat : MonoBehaviour,IListener
             if (!bullet.activeInHierarchy)
             {
                 bullet.GetComponent<BulletController>().damage = attackdamage;
+                bullet.GetComponent<BulletController>().damageRate = 1f;
                 return bullet;
             }
         }
@@ -161,6 +170,7 @@ public class PlayerStat : MonoBehaviour,IListener
         GameObject newBullet = Instantiate(bulletPrefab);
         newBullet.SetActive(false);
         newBullet.GetComponent<BulletController>().damage = attackdamage;
+        newBullet.GetComponent<BulletController>().damageRate = 1f;
         bulletPool.Add(newBullet);
         return newBullet;
     }
@@ -211,26 +221,30 @@ public class PlayerStat : MonoBehaviour,IListener
     }
 
     void SetWeapon()
-    {
+    {     
         var currentWeapon = weapon[weaponIndex];
         attackdamage = currentWeapon.attackdamage;
         attackSpeed = currentWeapon.attackSpeed;
-        skillDamage = currentWeapon.skillDamage;
         skillCool = currentWeapon.skillCool;
         skillCost = currentWeapon.skillCost;
-        bulletPrefab = currentWeapon.bulletPrefab;
+        bulletPrefab = currentWeapon.swordPrefab.GetComponent<MagicSword>().bullet;
         bulletSpeed = currentWeapon.bulletSpeed;
 
-        for (int i = 0; i < currentWeapon.skillSize.Length; i++)
+        for (int i = 0; i < skillSize.Length; i++)
         {
-            weapon[weaponIndex].swordPrefab.GetComponent<SwordSkill>().skillSize[i] = currentWeapon.skillSize[i];
+            skillSize[i] = weapon[weaponIndex].swordPrefab.GetComponent<SwordSkill>().skillSize[i];
         }
+
+        GameUIManager.Instance.skillProfile.sprite = weapon[weaponIndex].skillImage;
+        GameUIManager.Instance.swapProfile[0].sprite = weapon[weaponIndex].skillImage;
+        GameUIManager.Instance.swapProfile[1].sprite = weapon[(weaponIndex + 1) % weapon.Length].skillImage;
     }
 
     public Vector2 SetWeaponSize(int i)
     {
-        return weapon[weaponIndex].swordPrefab.GetComponent<SwordSkill>().skillSize[i];
+        return skillSize[i];
     }
+
     public void TakeDamage(float damage)
     {
         curHp -= damage;
@@ -253,28 +267,29 @@ public class PlayerStat : MonoBehaviour,IListener
 
         GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
     }
+
     public void SpawnSwords()
     {
         for (int i = 0; i < weapon.Length; i++)
         {
-            var swordInstance = Instantiate(weapon[i].swordPrefab, swordPos[i].position, Quaternion.identity);
-            var magicSword = swordInstance.GetComponent<MagicSword>();
+            GameObject swordInstance = Instantiate(weapon[i].swordPrefab, swordPos[i].position, Quaternion.identity);
+            MagicSword magicSword = swordInstance.GetComponent<MagicSword>();
             magicSword.followPos = swordPos[i];
             magicSword.ActPower = weapon[i].swordActPower;
             magicSword.ActSpeed = weapon[i].swordActSpeed;
+            weaponList.Add(swordInstance);
         }
     }
 
     public void UseSkill(int skillIndex)
     {
-        Debug.Log("스킬 사용");
         skillCount -= skillCost;
         skillTimer = 0f;
         if (extraSkillCount > 0f)
         {
             CalculationCount();
         }
-        weapon[weaponIndex].swordPrefab.GetComponent<SwordSkill>().Skill(skillIndex);
+        weaponList[weaponIndex].GetComponent<SwordSkill>().Skill(skillIndex);
         EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT, this, skillCount / maxSkillCount);
     }
 
@@ -292,6 +307,22 @@ public class PlayerStat : MonoBehaviour,IListener
             extraSkillCount = 0f;
         }
     }
+    
+    public void SetSKillTrans(Transform skillTransform)
+    {
+        weaponList[weaponIndex].GetComponent<SwordSkill>().SetTrans(skillTransform);
+    }
+
+    public Swords GetSwords()
+    {
+        return weapon[weaponIndex];
+    }
+
+    public List<GameObject> GetBulletPool()
+    {
+        return bulletPool;
+    }
+
 }
 
 

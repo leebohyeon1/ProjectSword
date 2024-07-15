@@ -26,7 +26,7 @@ public class PlayerUI : MonoBehaviour
 
     public void UpdateHp(float hp, float maxHp)
     {
-       Hp = hp;
+        Hp = hp;
         MaxHp = maxHp;
     }
 

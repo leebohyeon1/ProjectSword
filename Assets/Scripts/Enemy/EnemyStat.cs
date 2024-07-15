@@ -67,4 +67,10 @@ public class EnemyStat : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public void SetSpeed(float Rate)
+    {
+        GetComponent<Rigidbody2D>().velocity = Vector2.down *(speed - (speed * Rate /100f));
+        //Debug.Log(GetComponent<Rigidbody2D>().velocity);
+    }
 }

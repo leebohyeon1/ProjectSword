@@ -10,18 +10,19 @@ public class Swords : ScriptableObject
     public float attackSpeed;
 
     [Header("스킬")]
-    public int skillDamage;
     public float skillCost;
     public float skillCool;
-    public Vector2[] skillSize;
 
     [Header("탄막")]
-    public GameObject bulletPrefab;
     public float bulletSpeed;
 
     [Header("마검")]
     public GameObject swordPrefab;
     public int swordActPower;
     public float swordActSpeed;
+
+    [Header("이미지")]
+    public Sprite skillImage;
+    
 
 }

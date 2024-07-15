@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class MagicSword : MonoBehaviour
 {
+    [Header("Åº¸·")]
+    public GameObject bullet;
+
     [Header("Çàµ¿")]
     public int ActPower;
     public float ActSpeed;

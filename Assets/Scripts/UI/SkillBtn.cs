@@ -1,5 +1,7 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -13,7 +15,7 @@ public class SkillBtn : MonoBehaviour,
     private Vector2 startPosition;
     private CanvasGroup canvasGroup;
     //==========================================
-
+    
     public GameObject darkOverlay;
     public GameObject skillMask;
 
@@ -21,6 +23,7 @@ public class SkillBtn : MonoBehaviour,
     public Transform skillSpawnPoint;
     public int skill_Index = 0;
 
+    
     void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -48,7 +51,7 @@ public class SkillBtn : MonoBehaviour,
         Vector3 targetPosition;
         if (RectTransformUtility.ScreenPointToWorldPointInRectangle(canvasRectTransform, new Vector2(screenPoint.x + 75, screenPoint.y + 75), Camera.main, out targetPosition))
         {
-            skillMask.transform.position = targetPosition;
+            skillMask.transform.position = targetPosition;          
         }
 
         float screenHeight = Screen.height;
@@ -70,6 +73,8 @@ public class SkillBtn : MonoBehaviour,
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        playerStat.SetSKillTrans(skillMask.transform);
+
         transform.position = startPosition;
 
         canvasGroup.alpha = 1.0f;
@@ -92,24 +97,28 @@ public class SkillBtn : MonoBehaviour,
 
     private void CancelSkill()
     {
-        Debug.Log("스킬 사용 취소됨");
-        // 스킬 사용 취소 로직 추가
-        darkOverlay.SetActive(false);
         GameManager.Instance.SkillOnOff();
+
+        darkOverlay.SetActive(false);
     }
 
     void UseSkill()
     {
-        // 스킬 프리팹을 스폰하거나, 해당 위치에 스킬 효과를 적용합니다.
         GameManager.Instance.SkillOnOff();
         playerStat.UseSkill(skill_Index);
-
+        GameUIManager.Instance.MoveSkillBar();
         darkOverlay.SetActive(false);
     }
 
     void ChangeSkillSize(int index)
     {
+        Transform Parent = skillMask.transform.parent;
+
+        skillMask.transform.SetParent(null);  
         skillMask.transform.localScale = playerStat.SetWeaponSize(skill_Index);
+        skillMask.transform.SetParent(Parent);
+
     }
+
 }
 
