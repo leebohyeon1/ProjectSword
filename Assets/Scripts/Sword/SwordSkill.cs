@@ -10,6 +10,8 @@ public class SwordSkill : MonoBehaviour
 
     public LayerMask enemyLayer;
 
+    public float skillDamageUp;
+
     public virtual void Skill(int Index) { }
 
     public virtual Vector2 ChangeSkill(int Index) { return Vector2.zero; }

@@ -2,13 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+public class SpawnManager : MonoBehaviour
 {
+    [Header("적 스폰")]
     public GameObject[] Patterns; // 적 프리팹
     private GameObject curPattern;
     public float spawnRate = 2.0f; // 적 생성 주기
     private float spawnTimer = 0.0f;
+    
 
+    [Header("선택지")]
+    public GameObject enchantOption;
+    public int spawnCount = 5;
+    [SerializeField]
+    private int curCount = 0;
+    public float optionSpeed = 5f;
+
+    [Space(20f)]
     [SerializeField]
     private Transform spawnPosition;
 
@@ -30,8 +40,13 @@ public class EnemyManager : MonoBehaviour
             SpawnEnemy();
             spawnTimer = 0f;            
         }
-    }
 
+        if(spawnCount <= curCount)
+        {
+            SpawnEnchant();
+            curCount = 0;
+        }
+    }
 
     private void SpawnEnemy()
     {
@@ -48,6 +63,7 @@ public class EnemyManager : MonoBehaviour
         {
             Debug.LogError("유효하지 않은 패턴입니다.");
         }
+        curCount++;
     }
 
     private int GetNextPatternIndex(ref int randomRate)
@@ -80,5 +96,13 @@ public class EnemyManager : MonoBehaviour
         int randomIndex = Random.Range(0, 3);
         curPattern = Patterns[randomIndex];
         Instantiate(Patterns[randomIndex], spawnPosition.localPosition, Quaternion.identity);
+
+      
+    }
+
+    void SpawnEnchant()
+    {
+        GameObject option  = Instantiate(enchantOption, spawnPosition.localPosition, Quaternion.identity);
+        option.GetComponent<Rigidbody2D>().velocity = Vector2.down * optionSpeed;
     }
 }

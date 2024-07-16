@@ -2,11 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BulletController : MonoBehaviour
 {
+    public enum Type
+    {
+        None,
+        Ice,
+        Fire
+    }
+
     public int damage;
     public float damageRate;
     public float TotalDamage;
+
+    public Type bulletType;
 
     void OnBecameInvisible()
     {

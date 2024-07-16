@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3841417112552887217}
   - component: {fileID: 7997106555405713481}
   - component: {fileID: 9148645188510781627}
-  - component: {fileID: 533999136453879723}
+  - component: {fileID: 3947602255427621245}
   m_Layer: 6
   m_Name: TwinFlipBullet
   m_TagString: Bullet
@@ -149,7 +149,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &533999136453879723
+--- !u!114 &3947602255427621245
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,9 +158,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 2641036828859503304}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44e7aa30fb5d09447864021d1ac42066, type: 3}
+  m_Script: {fileID: 11500000, guid: df7b8df363e2d304ba930d283fe64aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
   damageRate: 0
   TotalDamage: 0
+  bulletType: 1
+  player: {fileID: 0}
+  isBSkill: 0
+  upDamage: 01000000020000000300000004000000
+  distance:
+  - 7
+  - 5
+  - 3
+  - 1

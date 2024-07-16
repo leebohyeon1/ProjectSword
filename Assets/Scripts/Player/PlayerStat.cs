@@ -19,7 +19,7 @@ public class PlayerStat : MonoBehaviour,IListener
     public Transform[] swordPos;
 
     [Header("공격")]
-    public int attackdamage = 1;
+    public int attackDamage = 1;
     public float attackSpeed = 1f;
 
     [Header("스킬")]
@@ -90,6 +90,13 @@ public class PlayerStat : MonoBehaviour,IListener
     }
     private List<GameObject> bulletPool = new List<GameObject>();
     private List<GameObject> TrashPool = new List<GameObject>();
+
+    [Header("업그레이드")]
+    public int upAttackDamage = 0;
+    public float upAttackSpeed = 0f;
+    public float upBulletSpeed = 0f;
+    public float upSkillDamage = 0f;
+
     //==================================================================================
 
     void Awake()
@@ -161,7 +168,7 @@ public class PlayerStat : MonoBehaviour,IListener
         {
             if (!bullet.activeInHierarchy)
             {
-                bullet.GetComponent<BulletController>().damage = attackdamage;
+                bullet.GetComponent<BulletController>().damage = (attackDamage + upAttackDamage);
                 bullet.GetComponent<BulletController>().damageRate = 1f;
                 return bullet;
             }
@@ -169,7 +176,7 @@ public class PlayerStat : MonoBehaviour,IListener
 
         GameObject newBullet = Instantiate(bulletPrefab);
         newBullet.SetActive(false);
-        newBullet.GetComponent<BulletController>().damage = attackdamage;
+        newBullet.GetComponent<BulletController>().damage = (attackDamage + upAttackDamage);
         newBullet.GetComponent<BulletController>().damageRate = 1f;
         bulletPool.Add(newBullet);
         return newBullet;
@@ -223,7 +230,7 @@ public class PlayerStat : MonoBehaviour,IListener
     void SetWeapon()
     {     
         var currentWeapon = weapon[weaponIndex];
-        attackdamage = currentWeapon.attackdamage;
+        attackDamage = currentWeapon.attackdamage;
         attackSpeed = currentWeapon.attackSpeed;
         skillCool = currentWeapon.skillCool;
         skillCost = currentWeapon.skillCost;
@@ -323,6 +330,13 @@ public class PlayerStat : MonoBehaviour,IListener
         return bulletPool;
     }
 
+    public void Upgrade(Enchant enchant)
+    {
+        upAttackDamage += enchant.attackDamage;
+        upAttackSpeed += enchant.attackSpeed;
+        upBulletSpeed += enchant.bulletSpeed;
+        upSkillDamage += enchant.skillDamage;
+    }
 }
 
 

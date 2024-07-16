@@ -7,16 +7,18 @@ public class TwinFlipSkill : SwordSkill
     PlayerStat playerStat;
 
     [Header("½ºÅ³")]
-    public float[] power;
     public float[] duration;
     private float[] skillTimer = new float[2];
     private bool[] skillActive = new bool[2];
 
     [Header("A")]
     public float slowRate;
-    public float damageUpRate;
     public float slowCheckTimer;
 
+    [Header("B")]
+    public float bulletSpeedSlow;
+
+    [Space(10f)]
     public GameObject Panel;
     private List<GameObject> enemyList = new List<GameObject>();
     private List<GameObject> ppp = new List<GameObject>();
@@ -48,7 +50,6 @@ public class TwinFlipSkill : SwordSkill
                         if (Enemy != null)
                         {
                             EnemyStat enemyStat = Enemy.GetComponent<EnemyStat>();
-                            enemyStat.TakeDamage((int)power[0]);
 
                             enemyList.Add(Enemy);
                             if (enemyStat != null)
@@ -71,6 +72,18 @@ public class TwinFlipSkill : SwordSkill
             RestoreAllEnemySpeeds();
             Destroy(ppp[0]);
         }
+
+        if (skillActive[1])
+        {
+            skillTimer[1] += Time.deltaTime;
+
+
+            if (skillTimer[1] >= duration[1])
+            {
+                SkillBOff();
+
+            }
+        }
     }
 
     public override void SkillA()
@@ -88,11 +101,38 @@ public class TwinFlipSkill : SwordSkill
         GameObject panel = Instantiate(Panel, skillPoint.position, Quaternion.identity);
         panel.transform.localScale = ChangeSkill(0);
         ppp.Add(panel);
+
+        foreach (GameObject bullet in playerStat.bulletPool_)
+        {
+            TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
+            bullets.bulletType = BulletController.Type.Ice;
+        }
+
     }
     public override void SkillB()
     {
+        playerStat.bulletSpeed -= bulletSpeedSlow;
+        foreach (GameObject bullet in playerStat.bulletPool_)
+        {
+            TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
+            bullets.isBSkill = true;
+            bullets.bulletType = BulletController.Type.Fire;
+        }
         skillTimer[1] = 0f;
         skillActive[1] = true;
+    }
+
+    public void SkillBOff()
+    {
+        playerStat.bulletSpeed += bulletSpeedSlow;
+        foreach (GameObject bullet in playerStat.bulletPool_)
+        {
+            TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
+            bullets.isBSkill = false;
+            bullets.bulletType = BulletController.Type.Ice;
+        }
+        skillTimer[1] = 0f;
+        skillActive[1] = false;
     }
 
     public override void Skill(int index)
@@ -131,7 +171,15 @@ public class TwinFlipSkill : SwordSkill
         enemyList.Clear();
     }
 
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(1, 0, 0.5f);
+        TwinFlipBullet bullet = playerStat.bulletPool_[0].GetComponent<TwinFlipBullet>();
+        for (int i = 0; i < bullet.distance.Length; i++)
+        {
+            Gizmos.DrawLine(new Vector3(100, playerStat.transform.position.y + bullet.distance[i], 0), new Vector3(-100, transform.position.y + bullet.distance[i], 0));
+        }
+    }
 }
 
 

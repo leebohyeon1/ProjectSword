@@ -123,13 +123,10 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
-  power:
-  - 0
-  - 0
   duration:
   - 5
-  - 0
+  - 10
   slowRate: 50
-  damageUpRate: 0
   slowCheckTimer: 0
+  bulletSpeedSlow: 5
   Panel: {fileID: 8251858154578419569, guid: aa95c3f9e743da2419e5c09fe13f3a88, type: 3}
