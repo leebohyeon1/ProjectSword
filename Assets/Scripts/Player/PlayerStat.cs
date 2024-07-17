@@ -98,7 +98,9 @@ public class PlayerStat : MonoBehaviour,IListener
     public float[] upSkillDamage = new float[2];
     public int[] skillBuff = new int[2];
     public int[] swapBuff = new int[2];
-    public float skillCoolDown;
+    public float skillCoolDown = 0f;
+    public float swapDamage = 0f;
+
 
     [Header("ÈíÇ÷")]
     public bool canDrain = false;
@@ -375,6 +377,8 @@ public class PlayerStat : MonoBehaviour,IListener
 
         canDrain = enchant.isDrain;
         hpRecoveryAmount += enchant.hpRecovery;
+        skillCoolDown += enchant.skillCoolDown;
+        swapDamage += enchant.swapDamage;
 
         for (int i = 0; i < weapon.Length; i++)
         {
