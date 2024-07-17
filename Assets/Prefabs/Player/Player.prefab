@@ -139,7 +139,7 @@ MonoBehaviour:
   swordPos:
   - {fileID: 7063179326464419884}
   - {fileID: 2720337345785299707}
-  attackdamage: 1
+  attackDamage: 1
   attackSpeed: 0.3
   skillCool: 0
   maxSkillCount: 100
@@ -157,6 +157,28 @@ MonoBehaviour:
   bulletParent: {fileID: 5344731023250198114}
   poolSize: 10
   bulletSpeed: 10
+  upAttackDamage: 0000000000000000
+  upAttackSpeed:
+  - 0
+  - 0
+  upBulletSpeed:
+  - 0
+  - 0
+  upSkillDamage:
+  - 0
+  - 0
+  skillBuff: 0000000000000000
+  swapBuff: 0000000000000000
+  skillCoolDown: 0
+  canDrain: 0
+  damageQuarter: 0300000008000000
+  drainAmount: 010000000200000003000000
+  hpReTimer: 0
+  hpRecoveryAmount: 0
+  skillReTimer: 0
+  skillRecoveryAmount: 0
+  swapReTimer: 0
+  swapRecoveryAmount: 0
 --- !u!114 &6340777690407495934
 MonoBehaviour:
   m_ObjectHideFlags: 0

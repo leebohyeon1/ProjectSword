@@ -14,6 +14,7 @@ public class TenkaiBullet : BulletController
     // Start is called before the first frame update
     void Start()
     {
+        playerStat = FindFirstObjectByType<PlayerStat>();
 
     }
 
@@ -94,6 +95,11 @@ public class TenkaiBullet : BulletController
             {
                 gameObject.SetActive(false);
                 diffusionCount_ = 0;
+            }
+
+            if (playerStat.canDrain)
+            {
+                playerStat.Drain((int)TotalDamage);
             }
 
             diffusionCount_--;

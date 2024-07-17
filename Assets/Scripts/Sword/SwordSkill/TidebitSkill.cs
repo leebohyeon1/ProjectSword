@@ -45,7 +45,7 @@ public class TidebitSkill : SwordSkill
                 EnemyStat enemyStat = enemy.GetComponent<EnemyStat>();
                 if (enemyStat != null)
                 {
-                    enemyStat.TakeDamage((int)power[0]);
+                    enemyStat.TakeDamage((int)(power[0] + skillDamageUp));
                 }
             }
         }
@@ -57,9 +57,10 @@ public class TidebitSkill : SwordSkill
 
         GameObject BigBullet =  Instantiate(Bullet,new Vector2(skillPoint.position.x,playerStat.transform.position.y - 5f),Quaternion.identity);
         BigBullet.transform.localScale *= 2;
-        BigBullet.GetComponent<BulletController>().damage = (int)power[1];
+        BigBullet.GetComponent<BulletController>().damage = (int)(power[1] + skillDamageUp);
         BigBullet.GetComponent<BulletController>().damageRate = 1f;
-        BigBullet.GetComponent<Rigidbody2D>().velocity = Vector2.up * playerStat.bulletSpeed* 1.2f;
+        BigBullet.GetComponent<BulletController>().isSubBullet = true;
+       BigBullet.GetComponent<Rigidbody2D>().velocity = Vector2.up * playerStat.bulletSpeed* 1.2f;
        
     }
 

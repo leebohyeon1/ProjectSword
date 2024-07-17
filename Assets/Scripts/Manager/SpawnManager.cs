@@ -104,5 +104,20 @@ public class SpawnManager : MonoBehaviour
     {
         GameObject option  = Instantiate(enchantOption, spawnPosition.localPosition, Quaternion.identity);
         option.GetComponent<Rigidbody2D>().velocity = Vector2.down * optionSpeed;
+
+        int randomRate = Random.Range(0, 4);
+
+        if(randomRate < 2)
+        {
+            option.transform.GetChild(0).gameObject.SetActive(true);
+        }
+        else if(randomRate < 3)
+        {
+            option.transform.GetChild(1).gameObject.SetActive(true);
+        }
+        else
+        {
+            option.transform.GetChild(2).gameObject.SetActive(true);
+        }
     }
 }

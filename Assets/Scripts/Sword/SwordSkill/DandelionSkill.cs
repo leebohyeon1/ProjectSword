@@ -47,7 +47,7 @@ public class DandelionSkill : SwordSkill
                         EnemyStat enemyStat = enemy.GetComponent<EnemyStat>();
                         if (enemyStat != null)
                         {
-                            enemyStat.TakeDamage((int)power[0]);
+                            enemyStat.TakeDamage((int)(power[0] + skillDamageUp));
                         }
                     }
                 }
