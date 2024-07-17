@@ -9,6 +9,7 @@ public class DandelionBullet : BulletController
     void Start()
     {
         damageRate = 1f;
+        playerStat = FindFirstObjectByType<PlayerStat>();
     }
 
 
@@ -31,6 +32,11 @@ public class DandelionBullet : BulletController
                 collision.GetComponent<EnemyStat>().TakeDamage((int)TotalDamage);
                 gameObject.SetActive(false);
             }
+
+            if (playerStat.canDrain)
+            {
+                playerStat.Drain((int)TotalDamage);
+            }
         }
      
     }
@@ -46,6 +52,12 @@ public class DandelionBullet : BulletController
                 {
                     collision.GetComponent<EnemyStat>().TakeDamage((int)TotalDamage);
                     gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+
+                    if (playerStat.canDrain)
+                    {
+                        playerStat.Drain((int)TotalDamage);
+                    }
+
                     yield return new WaitForSeconds(0.1f);
                 }
                 else

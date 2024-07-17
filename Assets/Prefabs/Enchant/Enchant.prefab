@@ -80,7 +80,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1706262670018074337
 Transform:
   m_ObjectHideFlags: 0
@@ -206,11 +206,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be82fa13fb969244c9185a53051dc6fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enchants:
+  percentage:
+  - 50
+  - 30
+  - 20
+  enchantsFirst:
   - {fileID: 11400000, guid: c525fd10aa7ac334c96974bf2f4439a9, type: 2}
-  - {fileID: 11400000, guid: b52ff058d1a220848b7299a5662f5d89, type: 2}
   - {fileID: 11400000, guid: 75b5208970e7b0b4db5f4502ba9a9da4, type: 2}
-  curEnchant: {fileID: 0}
+  - {fileID: 11400000, guid: b52ff058d1a220848b7299a5662f5d89, type: 2}
+  - {fileID: 11400000, guid: 3c05b9693d67f6c46b6308852031fd83, type: 2}
+  - {fileID: 11400000, guid: c7ca404a2ceea3b43986aacaedcd96ce, type: 2}
+  - {fileID: 11400000, guid: 8d4726ae8e21c084784765c4bf75c963, type: 2}
+  enchantsSecond:
+  - {fileID: 11400000, guid: b8137273227e4d74587d44569f95dbd8, type: 2}
+  - {fileID: 11400000, guid: 581b3604e12ad1046be254b3148b636a, type: 2}
+  - {fileID: 11400000, guid: cff4b1dd8b08b1c48a14749fd71eb612, type: 2}
+  - {fileID: 11400000, guid: fed5d16548baebd4eb616a1a28d7d758, type: 2}
+  enchantsThird:
+  - {fileID: 11400000, guid: e00843fff8540d14ebec15ede9be5fe8, type: 2}
   text: {fileID: 4832794006604657402}
 --- !u!1 &262795540334388589
 GameObject:
@@ -230,7 +243,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1535797836587699396
 Transform:
   m_ObjectHideFlags: 0
@@ -356,11 +369,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be82fa13fb969244c9185a53051dc6fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enchants:
-  - {fileID: 11400000, guid: c525fd10aa7ac334c96974bf2f4439a9, type: 2}
-  - {fileID: 11400000, guid: b52ff058d1a220848b7299a5662f5d89, type: 2}
-  - {fileID: 11400000, guid: 75b5208970e7b0b4db5f4502ba9a9da4, type: 2}
-  curEnchant: {fileID: 0}
+  percentage:
+  - 65
+  - 35
+  enchantsFirst:
+  - {fileID: 11400000, guid: aa213219ee3423d44ac30ea82ce9c603, type: 2}
+  - {fileID: 11400000, guid: 7ece5029cf0b7ec45b1722b5ba080e8c, type: 2}
+  - {fileID: 11400000, guid: 7be73c11defcb4343a15d65908af3420, type: 2}
+  enchantsSecond: []
+  enchantsThird: []
   text: {fileID: 2123984272095306040}
 --- !u!1 &1077859970604515370
 GameObject:
@@ -618,7 +635,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1901286091240083335
 Transform:
   m_ObjectHideFlags: 0
@@ -744,11 +761,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be82fa13fb969244c9185a53051dc6fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enchants:
-  - {fileID: 11400000, guid: c525fd10aa7ac334c96974bf2f4439a9, type: 2}
-  - {fileID: 11400000, guid: b52ff058d1a220848b7299a5662f5d89, type: 2}
-  - {fileID: 11400000, guid: 75b5208970e7b0b4db5f4502ba9a9da4, type: 2}
-  curEnchant: {fileID: 0}
+  percentage:
+  - 60
+  - 25
+  - 15
+  enchantsFirst:
+  - {fileID: 11400000, guid: 567e46bfe10274d4997bfae7b1fc8057, type: 2}
+  - {fileID: 11400000, guid: 5d679da51dbf7b5448383fd198b62b66, type: 2}
+  - {fileID: 11400000, guid: 85e6f81a9939065429536a58ca0b077a, type: 2}
+  enchantsSecond:
+  - {fileID: 11400000, guid: 8baed06d87527ca4f9115654e31823ab, type: 2}
+  - {fileID: 11400000, guid: 85e6f81a9939065429536a58ca0b077a, type: 2}
+  - {fileID: 11400000, guid: ac00ce83a5210da46b2e2db2e9088529, type: 2}
+  - {fileID: 11400000, guid: 063fcade0eeea264fb66ef1970c8a4d9, type: 2}
+  enchantsThird:
+  - {fileID: 11400000, guid: a32bccd435e55c841aa8b19975b97ec1, type: 2}
+  - {fileID: 11400000, guid: 393407997aff526459f1c29d725f8a78, type: 2}
   text: {fileID: 1644259104465000283}
 --- !u!1 &4313308867197613030
 GameObject:

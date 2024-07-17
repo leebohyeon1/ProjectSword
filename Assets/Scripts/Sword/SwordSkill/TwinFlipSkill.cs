@@ -23,6 +23,7 @@ public class TwinFlipSkill : SwordSkill
     private List<GameObject> enemyList = new List<GameObject>();
     private List<GameObject> ppp = new List<GameObject>();
     // Start is called before the first frame update
+
     void Start()
     {
         playerStat = FindObjectOfType<PlayerStat>();
@@ -124,12 +125,16 @@ public class TwinFlipSkill : SwordSkill
 
     public void SkillBOff()
     {
+        
         playerStat.bulletSpeed += bulletSpeedSlow;
         foreach (GameObject bullet in playerStat.bulletPool_)
         {
-            TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
-            bullets.isBSkill = false;
-            bullets.bulletType = BulletController.Type.Ice;
+            if (bullet.GetComponent<TwinFlipBullet>() != null)
+            {
+                TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
+                bullets.isBSkill = false;
+                bullets.bulletType = BulletController.Type.Ice;
+            }
         }
         skillTimer[1] = 0f;
         skillActive[1] = false;
@@ -171,7 +176,7 @@ public class TwinFlipSkill : SwordSkill
         enemyList.Clear();
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = new Color(1, 0, 0.5f);
         TwinFlipBullet bullet = playerStat.bulletPool_[0].GetComponent<TwinFlipBullet>();

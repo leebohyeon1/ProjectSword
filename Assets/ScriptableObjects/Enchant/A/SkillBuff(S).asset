@@ -10,10 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a31796f5bfd0a7e4aa8469fe46467471, type: 3}
-  m_Name: AttackUp
+  m_Name: SkillBuff(S)
   m_EditorClassIdentifier: 
-  attackDamage: 1
+  isMain: 0
+  isSub: 0
+  attackDamage: 0
   attackSpeed: 0
   bulletSpeed: 0
   skillDamage: 0
-  name: attack +1
+  skillCoolDown: 0
+  skillBuff: 0
+  swapBuff: 0
+  hpUp: 0
+  isDrain: 0
+  hpRecovery: 0
+  swapRecovery: 0
+  skillRecovery: 0
+  enchantName: SkillBuff +1 [S]

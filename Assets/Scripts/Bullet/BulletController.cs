@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
+    protected PlayerStat playerStat;
     public enum Type
     {
         None,
@@ -17,6 +18,13 @@ public class BulletController : MonoBehaviour
     public float TotalDamage;
 
     public Type bulletType;
+
+    private bool isSkillBullet;
+    public bool isSubBullet;
+    private void Start()
+    {
+        playerStat = FindFirstObjectByType<PlayerStat>();
+    }
 
     void OnBecameInvisible()
     {
@@ -35,7 +43,15 @@ public class BulletController : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             collision.GetComponent<EnemyStat>().TakeDamage((int)TotalDamage);
+
+            if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
+            {
+                playerStat.Drain((int)TotalDamage);
+            }
+
             gameObject.SetActive(false);
+
+
         }
     }
 }

@@ -6,7 +6,10 @@ using UnityEngine;
 
 public class ChoiceEnchant : MonoBehaviour
 {
-    public Enchant[] enchants;
+    public float[] percentage;
+    public Enchant[] enchantsFirst;
+    public Enchant[] enchantsSecond;
+    public Enchant[] enchantsThird;
     private Enchant curEnchant;
     // Start is called before the first frame update
     
@@ -14,8 +17,8 @@ public class ChoiceEnchant : MonoBehaviour
 
     private void OnEnable()
     {
-        int num = Random.Range(0, enchants.Length);
-        curEnchant = enchants[num];
+        int randomNum = Random.Range(0, 100);
+        RandomEnchant(randomNum);
         text.text = curEnchant.name;
     }
 
@@ -39,5 +42,26 @@ public class ChoiceEnchant : MonoBehaviour
     void OnBecameInvisible()
     {
         Destroy(transform.parent.gameObject);
+    }
+
+    public void RandomEnchant(int randomRate)
+    {
+        if (randomRate <= percentage[0])
+        {
+            int num = Random.Range(0, enchantsFirst.Length);
+            curEnchant = enchantsFirst[num];
+
+        }
+        else if( randomRate <= percentage[0] + percentage[1]) 
+        {
+            int num = Random.Range(0, enchantsSecond.Length);
+            curEnchant = enchantsSecond[num];
+        }
+        else
+        {
+            int num = Random.Range(0, enchantsThird.Length);
+            curEnchant = enchantsThird[num];
+
+        }
     }
 }

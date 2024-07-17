@@ -48,7 +48,7 @@ public class TenkaiSkill : SwordSkill
                         if (Enemy != null)
                         {
                             EnemyStat enemyStat = Enemy.GetComponent<EnemyStat>();
-                            enemyStat.TakeDamage((int)power[0]);
+                            enemyStat.TakeDamage((int)(power[0] + skillDamageUp));
                      
                             enemyList.Add(Enemy);
                             if (enemyStat != null)

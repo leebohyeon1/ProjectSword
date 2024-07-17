@@ -14,7 +14,9 @@ public class TwinFlipBullet : BulletController
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<PlayerStat>().transform;
+        playerStat = FindFirstObjectByType<PlayerStat>();
+        player = playerStat.transform;
+        
     }
 
     // Update is called once per frame
@@ -39,6 +41,11 @@ public class TwinFlipBullet : BulletController
             else
             {
                 collision.GetComponent<EnemyStat>().TakeDamage((int)TotalDamage);
+            }
+
+            if (playerStat.canDrain)
+            {
+                playerStat.Drain((int)TotalDamage);
             }
             gameObject.SetActive(false);
         }
