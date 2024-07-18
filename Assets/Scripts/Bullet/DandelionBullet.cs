@@ -33,7 +33,7 @@ public class DandelionBullet : BulletController
                 gameObject.SetActive(false);
             }
 
-            if (playerStat.canDrain)
+            if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
             {
                 playerStat.Drain((int)TotalDamage);
             }

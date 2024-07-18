@@ -6,13 +6,14 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public static SpawnManager Instance {  get; private set; }
+    //==================================================================================
 
     [Header("적 스폰")]
     public GameObject[] Patterns; // 적 프리팹
     private GameObject curPattern;
     public float spawnRate = 2.0f; // 적 생성 주기
     private float spawnTimer = 0.0f;
-    
+    public float plusAcceleration = 0;
 
     [Header("선택지")]
     public GameObject enchantOption;
@@ -31,7 +32,8 @@ public class SpawnManager : MonoBehaviour
     public GameObject[] bossPrefab;
     private int curEvent = 0;
     private bool isboss;
-    //=============================================================
+    //==================================================================================
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -65,7 +67,10 @@ public class SpawnManager : MonoBehaviour
             SpawnEnchant();
             curCount = 0;
         }
+
+        SpawnBoss();
     }
+    //==================================================================================
 
     private void SpawnEnemy()
     {
@@ -133,7 +138,7 @@ public class SpawnManager : MonoBehaviour
         if(bossCount >= bossSpawnCount[curEvent])
         {
             isboss = true;
-            Instantiate(bossPrefab[curEvent]);
+            //Instantiate(bossPrefab[curEvent]);
         }
     }
 }

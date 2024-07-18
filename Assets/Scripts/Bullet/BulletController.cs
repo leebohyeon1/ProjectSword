@@ -19,11 +19,16 @@ public class BulletController : MonoBehaviour
 
     public Type bulletType;
 
-    private bool isSkillBullet;
+    public bool isSkillBullet;
     public bool isSubBullet;
     private void Start()
     {
         playerStat = FindFirstObjectByType<PlayerStat>();
+    }
+
+    private void Update()
+    {
+
     }
 
     void OnBecameInvisible()
@@ -42,13 +47,14 @@ public class BulletController : MonoBehaviour
         TotalDamage = damage * damageRate;
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<EnemyStat>().TakeDamage((int)TotalDamage);
-
+            bool canCount = true;
             if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
             {
                 playerStat.Drain((int)TotalDamage);
+                canCount = false;   
             }
 
+            collision.GetComponent<EnemyStat>().TakeDamage((int)TotalDamage, canCount);
             gameObject.SetActive(false);
 
 

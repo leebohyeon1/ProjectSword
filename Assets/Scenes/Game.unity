@@ -2945,7 +2945,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: 0}
+  m_AnchoredPosition: {x: -300, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1295077262
@@ -4042,7 +4042,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 250, y: 0}
+  m_AnchoredPosition: {x: 300, y: 0}
   m_SizeDelta: {x: 105.9, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1775285921
@@ -4108,13 +4108,14 @@ MonoBehaviour:
   - {fileID: 3000195901687093016, guid: 3c56edadf85248546ace7cd72b8c8635, type: 3}
   - {fileID: 3000195901687093016, guid: f622b2a75e5ee0c4fb9f9e25e9abc7fe, type: 3}
   spawnRate: 2
+  plusAcceleration: 0
   enchantOption: {fileID: 76547456678739192, guid: b311e423518f8ea4aa8aa250b4fd1bfd, type: 3}
   spawnCount: 5
   curCount: 0
   optionSpeed: 2
   spawnPosition: {fileID: 1981205194}
   bossCount: 0
-  bossSpawnCount: 6400000064000000
+  bossSpawnCount: 0a0000001e00000064000000
   bossPrefab: []
 --- !u!1 &1818051702
 GameObject:

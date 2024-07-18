@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1509313269363276334}
   - component: {fileID: 2596904378180188885}
-  - component: {fileID: -2755126125778967756}
   - component: {fileID: -8526222824581271024}
+  - component: {fileID: -2003152093566401588}
   m_Layer: 0
   m_Name: Dandelion
   m_TagString: Untagged
@@ -28,10 +28,11 @@ Transform:
   m_GameObject: {fileID: 2341837304568887784}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.78, y: -3.94, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4659732989768760477}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2596904378180188885
@@ -86,24 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-2755126125778967756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2341837304568887784}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2d757c0635250645ac20fa2d894e487, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet: {fileID: 2641036828859503304, guid: 4a97d522e9a5466468758b2fea965d66, type: 3}
-  ActPower: 0
-  ActSpeed: 0
-  followPos: {fileID: 0}
-  followDelay: 0.1
-  maxPositions: 50
 --- !u!114 &-8526222824581271024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,6 +106,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
+  skillDamageUp: 4
   power:
   - 1
   - 0.5
@@ -131,3 +115,55 @@ MonoBehaviour:
   - 5
   damageInterval: 1
   Panel: {fileID: 8251858154578419569, guid: c1e2936bfd1239a438d5e457fb759bd9, type: 3}
+--- !u!114 &-2003152093566401588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2341837304568887784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c9972bd750cef24da82907322f29184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 2641036828859503304, guid: 4a97d522e9a5466468758b2fea965d66, type: 3}
+  bulletPoolTrans: {fileID: 4659732989768760477}
+  poolSize: 20
+  attckPower: 0
+  attackSpeed: 0
+  bulletSpeed: 0
+  followPos: {fileID: 0}
+  followDelay: 0.1
+  maxPositions: 50
+--- !u!1 &5682485270371804699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4659732989768760477}
+  m_Layer: 0
+  m_Name: BulletPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4659732989768760477
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5682485270371804699}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1509313269363276334}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

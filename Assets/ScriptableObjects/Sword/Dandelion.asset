@@ -18,6 +18,7 @@ MonoBehaviour:
   skillCool: 7
   bulletSpeed: 5
   swordPrefab: {fileID: 2341837304568887784, guid: 9f59953c12c741b419bc63df8785477e, type: 3}
-  swordActPower: 0
-  swordActSpeed: 0
+  swordAttackPower: 2
+  swordAttackSpeed: 4
+  swordBulletSpeed: 4
   skillImage: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}

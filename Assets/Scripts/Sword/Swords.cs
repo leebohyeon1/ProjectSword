@@ -18,11 +18,10 @@ public class Swords : ScriptableObject
 
     [Header("마검")]
     public GameObject swordPrefab;
-    public int swordActPower;
-    public float swordActSpeed;
+    public int swordAttackPower;
+    public float swordAttackSpeed;
+    public float swordBulletSpeed;
 
     [Header("이미지")]
     public Sprite skillImage;
-    
-
 }

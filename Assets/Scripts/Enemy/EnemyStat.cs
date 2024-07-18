@@ -29,7 +29,7 @@ public class EnemyStat : MonoBehaviour
         enemyUI = GetComponent<EnemyUI>();
         enemyUI.UpdateHPText(hp);
 
-        GetComponent<Rigidbody2D>().velocity = Vector2.down * speed;
+        GetComponent<Rigidbody2D>().velocity = Vector2.down * (speed + SpawnManager.Instance.plusAcceleration);
 
         if (isBless )
         {
@@ -38,7 +38,7 @@ public class EnemyStat : MonoBehaviour
     
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, bool Count = true)
     {
         hp -= damage;
         enemyUI.UpdateHPText(hp);
@@ -46,11 +46,14 @@ public class EnemyStat : MonoBehaviour
         if (hp <= 0)
         {
             Destroy(gameObject);
-            float finalSkillGage = isBless ? skillGage * multiplyGage : skillGage;
-            float finalSwapGage = isBless ? swapGage * multiplyGage : swapGage;
+            if (Count)
+            {
+                float finalSkillGage = isBless ? skillGage * multiplyGage : skillGage;
+                float finalSwapGage = isBless ? swapGage * multiplyGage : swapGage;
 
-            EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT, this, finalSkillGage);
-            EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, finalSwapGage);
+                EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT, this, finalSkillGage);
+                EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, finalSwapGage);
+            }
         }
     }
 

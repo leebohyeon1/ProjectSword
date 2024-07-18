@@ -111,9 +111,11 @@ public class GameUIManager : MonoBehaviour, IListener
                     swapBtn.fillAmount = swapFillAmount;
                 }
                 break;
+
             case EVENT_TYPE.SWAP_ON:
                     canSwap = (bool)Param;      
                 break;
+
             case EVENT_TYPE.KEEP_SWAP:
                 keepSwap = (int)Param;
                 
@@ -171,7 +173,6 @@ public class GameUIManager : MonoBehaviour, IListener
     public void MoveSwapBar(float delay)
     {
         int index = playerStat.weaponIndex;
-        Debug.Log(index);
         swapImageBar[index].transform.DOMoveX(swapEndPoint.position.x, 0.7f).SetDelay(delay)
               .SetEase(Ease.OutCirc).OnComplete(() => swapImageBar[index].transform.position = swapImageBar[index].transform.parent.transform.position);
     }

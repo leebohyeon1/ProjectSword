@@ -8,6 +8,7 @@ public class EnchantSetting : MonoBehaviour
     public Upgrade[] upgrades;
 
     public ChoiceEnchant[] choices;
+    //==================================================================================
 
     void Start()
     {
@@ -18,6 +19,7 @@ public class EnchantSetting : MonoBehaviour
             choices[i].TextSet();
         } 
     }
+    //==================================================================================
 
     public Enchant RandomEnchant(int randomRate)
     {

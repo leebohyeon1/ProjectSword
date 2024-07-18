@@ -10,17 +10,7 @@ public class ChoiceEnchant : MonoBehaviour
     // Start is called before the first frame update
     
     public TMP_Text text;
-
-    private void OnEnable()
-    {
-       
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //==================================================================================
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -37,6 +27,7 @@ public class ChoiceEnchant : MonoBehaviour
     {
         Destroy(transform.parent.gameObject);
     }
+    //==================================================================================
 
     public void TextSet()
     {

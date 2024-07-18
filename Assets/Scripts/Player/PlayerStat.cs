@@ -303,8 +303,10 @@ public class PlayerStat : MonoBehaviour,IListener
             GameObject swordInstance = Instantiate(weapon[i].swordPrefab, swordPos[i].position, Quaternion.identity);
             MagicSword magicSword = swordInstance.GetComponent<MagicSword>();
             magicSword.followPos = swordPos[i];
-            magicSword.ActPower = weapon[i].swordActPower;
-            magicSword.ActSpeed = weapon[i].swordActSpeed;
+            magicSword.attckPower = weapon[i].swordAttackPower;
+            magicSword.attackSpeed = weapon[i].swordAttackSpeed;
+            magicSword.bulletSpeed = weapon[i].swordBulletSpeed;
+            swordInstance.transform.SetParent(swordPos[i].transform, false);
             weaponList.Add(swordInstance);
         }
     }
