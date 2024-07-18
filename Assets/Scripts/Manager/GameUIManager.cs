@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class GameUIManager : MonoBehaviour, IListener
 {
     public static GameUIManager Instance {  get; private set; }
+
     private PlayerStat playerStat;
     //====================================================================
     
@@ -34,11 +35,12 @@ public class GameUIManager : MonoBehaviour, IListener
     public GameObject pausePanel;
     private bool isPause =false;
 
-    [Header("이미지")]
+    [Header("스킬/스왑 판때기")]
     public Image skillProfile;
     public Image[] swapProfile;
 
-    
+    [Header("진척도")]
+    public Slider gameProgress;
     //==================================================================================
 
     void Awake()
@@ -54,6 +56,7 @@ public class GameUIManager : MonoBehaviour, IListener
         }
         skillBtn.fillAmount = 0f;
         swapBtn.fillAmount = 0f;
+        gameProgress.value = 0f;
 
         skillDragBtn.gameObject.SetActive(false);
         pausePanel.SetActive(false);
@@ -62,6 +65,8 @@ public class GameUIManager : MonoBehaviour, IListener
         {
             keepSwapUI[i].gameObject.SetActive(false);
         }
+
+        
     }
 
     private void Start()
@@ -75,6 +80,11 @@ public class GameUIManager : MonoBehaviour, IListener
         EventManager.Instance.AddListener(EVENT_TYPE.SWAP_ON, this);
 
         EventManager.Instance.AddListener(EVENT_TYPE.KEEP_SWAP, this);
+    }
+
+    void Update()
+    {
+        DisplayProgress();
     }
 
     public void OnEvent(EVENT_TYPE Event_type, Component Sender, object Param = null)
@@ -98,7 +108,6 @@ public class GameUIManager : MonoBehaviour, IListener
                 if (Sender.GetComponent<PlayerStat>() != null)
                 {
                     float swapFillAmount = (float)Param;
-
                     swapBtn.fillAmount = swapFillAmount;
                 }
                 break;
@@ -124,6 +133,7 @@ public class GameUIManager : MonoBehaviour, IListener
     }
     //==================================================================================
 
+    #region Btn
     public void ChangeWeaponBtn()
     {
         if(canSwap)
@@ -150,7 +160,9 @@ public class GameUIManager : MonoBehaviour, IListener
         PauseBtn();
         SceneManager.LoadScene(0);
     }
+    #endregion
 
+    #region Skill/Swap UI
     public void MoveSkillBar()
     {
         skillImageBar.transform.DOMoveX(skillEndPoint.position.x, 0.7f)
@@ -163,5 +175,20 @@ public class GameUIManager : MonoBehaviour, IListener
         swapImageBar[index].transform.DOMoveX(swapEndPoint.position.x, 0.7f).SetDelay(delay)
               .SetEase(Ease.OutCirc).OnComplete(() => swapImageBar[index].transform.position = swapImageBar[index].transform.parent.transform.position);
     }
+    #endregion
+
+    #region GameProgress
+
+    public void DisplayProgress()
+    {
+        if (SpawnManager.Instance.bossCount != 0)
+        {
+            float progress = (float)SpawnManager.Instance.bossCount/SpawnManager.Instance.bossSpawnCount[SpawnManager.Instance.bossSpawnCount.Length - 1] ;
+            gameProgress.value = progress;
+        }
+  
+    }
+
+    #endregion
 
 }

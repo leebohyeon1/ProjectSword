@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
+    public static SpawnManager Instance {  get; private set; }
+
     [Header("적 스폰")]
     public GameObject[] Patterns; // 적 프리팹
     private GameObject curPattern;
@@ -22,8 +25,24 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private Transform spawnPosition;
 
+    [Header("보스")]
+    public int bossCount = 0;
+    public int[] bossSpawnCount;
+    public GameObject[] bossPrefab;
+    private int curEvent = 0;
+    private bool isboss;
+    //=============================================================
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            DestroyImmediate(this.gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+
         spawnTimer = 0f;
     }
 
@@ -41,7 +60,7 @@ public class SpawnManager : MonoBehaviour
             spawnTimer = 0f;            
         }
 
-        if(spawnCount <= curCount)
+        if(curCount >= spawnCount)
         {
             SpawnEnchant();
             curCount = 0;
@@ -63,7 +82,12 @@ public class SpawnManager : MonoBehaviour
         {
             Debug.LogError("유효하지 않은 패턴입니다.");
         }
-        curCount++;
+
+        if (!isboss)
+        {
+            curCount++;
+            bossCount++;
+        }
     }
 
     private int GetNextPatternIndex(ref int randomRate)
@@ -95,29 +119,23 @@ public class SpawnManager : MonoBehaviour
     {
         int randomIndex = Random.Range(0, 3);
         curPattern = Patterns[randomIndex];
-        Instantiate(Patterns[randomIndex], spawnPosition.localPosition, Quaternion.identity);
-
-      
+        Instantiate(Patterns[randomIndex], spawnPosition.localPosition, Quaternion.identity);    
     }
 
     void SpawnEnchant()
     {
         GameObject option  = Instantiate(enchantOption, spawnPosition.localPosition, Quaternion.identity);
         option.GetComponent<Rigidbody2D>().velocity = Vector2.down * optionSpeed;
+    }
 
-        int randomRate = Random.Range(0, 4);
-
-        if(randomRate < 2)
+    void SpawnBoss()
+    {
+        if(bossCount >= bossSpawnCount[curEvent])
         {
-            option.transform.GetChild(0).gameObject.SetActive(true);
-        }
-        else if(randomRate < 3)
-        {
-            option.transform.GetChild(1).gameObject.SetActive(true);
-        }
-        else
-        {
-            option.transform.GetChild(2).gameObject.SetActive(true);
+            isboss = true;
+            Instantiate(bossPrefab[curEvent]);
         }
     }
 }
+
+
