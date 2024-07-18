@@ -7,7 +7,7 @@ public class GuideSword : MagicSword
     // Start is called before the first frame update
     void Start()
     {
-        Set();
+        SetTrans();
     }
 
     // Update is called once per frame
@@ -16,9 +16,9 @@ public class GuideSword : MagicSword
         Follow();
     }
 
-    protected override void Set()
+    protected override void SetTrans()
     {
-        base.Set();
+        base.SetTrans();
     }
 
     protected override void Follow()

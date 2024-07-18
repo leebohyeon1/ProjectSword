@@ -37,22 +37,11 @@ public class SkillBtn : MonoBehaviour,
         startPosition = transform.position;
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
+        skillMask.transform.localScale = Vector3.zero;
 
-        float screenHeight = Screen.height;
-        Vector2 dragVector = eventData.position - startPosition;
 
-        if (eventData.position.y > screenHeight / 2 && skill_Index != 0)
-        {
-            // 1번 스킬 
-            skill_Index = 0;
-            ChangeSkillSize(skill_Index);
-        }
-        else if (eventData.position.y < screenHeight / 2 && skill_Index != 1)
-        {
-            // 2번 스킬
-            skill_Index = 1;
-            ChangeSkillSize(skill_Index);
-        }
+        skill_Index = 0;
+        ChangeSkillSize(skill_Index);
     }
 
     public void OnDrag(PointerEventData eventData)

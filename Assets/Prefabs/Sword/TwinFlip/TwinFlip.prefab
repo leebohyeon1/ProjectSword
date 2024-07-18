@@ -28,10 +28,11 @@ Transform:
   m_GameObject: {fileID: 1755657448561907817}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: -3.94, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3444159302311602812}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &947637672238178540
@@ -99,8 +100,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 2641036828859503304, guid: 16c0aca784f5e1f4098713365fb17ac6, type: 3}
-  ActPower: 0
-  ActSpeed: 0
+  bulletPoolTrans: {fileID: 3444159302311602812}
+  poolSize: 20
+  attckPower: 0
+  attackSpeed: 0
+  bulletSpeed: 0
   followPos: {fileID: 0}
   followDelay: 0.1
   maxPositions: 50
@@ -123,6 +127,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
+  skillDamageUp: 0
   duration:
   - 5
   - 10
@@ -130,3 +135,34 @@ MonoBehaviour:
   slowCheckTimer: 0
   bulletSpeedSlow: 5
   Panel: {fileID: 8251858154578419569, guid: aa95c3f9e743da2419e5c09fe13f3a88, type: 3}
+--- !u!1 &5488745084292017874
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3444159302311602812}
+  m_Layer: 0
+  m_Name: BulletPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3444159302311602812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5488745084292017874}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4297308276510447069}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

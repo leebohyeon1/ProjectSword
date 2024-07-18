@@ -149,7 +149,10 @@ public class PlayerStat : MonoBehaviour,IListener
 
         AutoRecovery();
 
-
+        if (keepSwap >= maxkeepSwap)
+        {
+            EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, 1f);
+        }
     }
 
     public void OnEvent(EVENT_TYPE Event_Type, Component Sender, object Param = null)
@@ -168,17 +171,12 @@ public class PlayerStat : MonoBehaviour,IListener
                 break;
             case EVENT_TYPE.SWAP_COUNT:
                 if (Sender != this)
-                {
-                    swapCount += (float)Param;
-
+                {             
                     if(keepSwap < maxkeepSwap)
                     {
+                        swapCount += (float)Param;
                         EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, swapCount / maxSwapCount);
-                    }
-                    else
-                    {
-                        EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, 1f);
-                    }
+                    }           
                 }
                 break;
         }
@@ -305,8 +303,10 @@ public class PlayerStat : MonoBehaviour,IListener
             GameObject swordInstance = Instantiate(weapon[i].swordPrefab, swordPos[i].position, Quaternion.identity);
             MagicSword magicSword = swordInstance.GetComponent<MagicSword>();
             magicSword.followPos = swordPos[i];
-            magicSword.ActPower = weapon[i].swordActPower;
-            magicSword.ActSpeed = weapon[i].swordActSpeed;
+            magicSword.attckPower = weapon[i].swordAttackPower;
+            magicSword.attackSpeed = weapon[i].swordAttackSpeed;
+            magicSword.bulletSpeed = weapon[i].swordBulletSpeed;
+            swordInstance.transform.SetParent(swordPos[i].transform, false);
             weaponList.Add(swordInstance);
         }
     }
