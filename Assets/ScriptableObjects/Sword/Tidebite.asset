@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 862fa96b88725d349aa7d0d959eec9ee, type: 3}
-  m_Name: Tidebit
+  m_Name: Tidebite
   m_EditorClassIdentifier: 
   attackdamage: 3
   attackSpeed: 0.7

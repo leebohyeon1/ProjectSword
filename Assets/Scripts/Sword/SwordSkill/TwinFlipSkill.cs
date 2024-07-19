@@ -133,7 +133,6 @@ public class TwinFlipSkill : SwordSkill
             {
                 TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
                 bullets.isBSkill = false;
-                bullets.bulletType = BulletController.Type.Ice;
             }
         }
         skillTimer[1] = 0f;

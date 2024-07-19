@@ -39,6 +39,7 @@ Transform:
   - {fileID: 7063179326464419884}
   - {fileID: 2720337345785299707}
   - {fileID: 5344731023250198114}
+  - {fileID: 8210973511058026740}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3838034058741756864
@@ -133,7 +134,7 @@ MonoBehaviour:
   maxHp: 100
   curHp: 0
   weapon:
-  - {fileID: 11400000, guid: 6ada174c90bfe404bb3290bb6416e510, type: 2}
+  - {fileID: 11400000, guid: b9dcf57cc06a3ce45b0d0a93b84585de, type: 2}
   - {fileID: 11400000, guid: e8b5b50667831844985ba65a768de597, type: 2}
   weaponIndex: 0
   swordPos:
@@ -141,6 +142,7 @@ MonoBehaviour:
   - {fileID: 2720337345785299707}
   attackDamage: 1
   attackSpeed: 0.3
+  firePos: {fileID: 4718030860254687385}
   skillCool: 0
   maxSkillCount: 100
   skillCount_: 0
@@ -192,8 +194,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46767eabdff4be84486f15c3afe518e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftFollower: {fileID: 3442762542596929003}
-  rightFollower: {fileID: 4911440691305720266}
+  leftFollower: {fileID: 4911440691305720266}
+  rightFollower: {fileID: 3442762542596929003}
   followDelay: 0.3
   maxPositions: 100
   wallLayer:
@@ -318,7 +320,38 @@ Transform:
   m_GameObject: {fileID: 3442762542596929003}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.5, y: -1.5, z: 0}
+  m_LocalPosition: {x: 1.5, y: -1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1940015974884664206}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4718030860254687385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8210973511058026740}
+  m_Layer: 3
+  m_Name: FirePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8210973511058026740
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4718030860254687385}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.216, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -349,7 +382,7 @@ Transform:
   m_GameObject: {fileID: 4911440691305720266}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: -1.5, z: 0}
+  m_LocalPosition: {x: -1.5, y: -1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

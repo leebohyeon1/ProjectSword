@@ -21,6 +21,7 @@ public class PlayerStat : MonoBehaviour,IListener
     [Header("공격")]
     public int attackDamage = 1;
     public float attackSpeed = 1f;
+    public GameObject firePos;
 
     [Header("스킬")]
     public float skillCool;
@@ -255,7 +256,7 @@ public class PlayerStat : MonoBehaviour,IListener
         attackSpeed = currentWeapon.attackSpeed;
         skillCool = currentWeapon.skillCool;
         skillCost = currentWeapon.skillCost;
-        bulletPrefab = currentWeapon.swordPrefab.GetComponent<MagicSword>().bullet;
+        bulletPrefab = currentWeapon.swordPrefab.GetComponent<MagicSword>().bulletPrefab;
         bulletSpeed = currentWeapon.bulletSpeed;
 
         for (int i = 0; i < skillSize.Length; i++)
@@ -306,7 +307,7 @@ public class PlayerStat : MonoBehaviour,IListener
             magicSword.attckPower = weapon[i].swordAttackPower;
             magicSword.attackSpeed = weapon[i].swordAttackSpeed;
             magicSword.bulletSpeed = weapon[i].swordBulletSpeed;
-            swordInstance.transform.SetParent(swordPos[i].transform, false);
+            //swordInstance.transform.SetParent(swordPos[i].transform, false);
             weaponList.Add(swordInstance);
         }
     }

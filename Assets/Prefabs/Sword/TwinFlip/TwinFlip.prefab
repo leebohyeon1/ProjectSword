@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c9972bd750cef24da82907322f29184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 2641036828859503304, guid: 16c0aca784f5e1f4098713365fb17ac6, type: 3}
+  bulletPrefab: {fileID: 2641036828859503304, guid: 16c0aca784f5e1f4098713365fb17ac6, type: 3}
   bulletPoolTrans: {fileID: 3444159302311602812}
   poolSize: 20
   attckPower: 0
@@ -108,6 +108,7 @@ MonoBehaviour:
   followPos: {fileID: 0}
   followDelay: 0.1
   maxPositions: 50
+  bulletPool: []
 --- !u!114 &3174759223075937693
 MonoBehaviour:
   m_ObjectHideFlags: 0

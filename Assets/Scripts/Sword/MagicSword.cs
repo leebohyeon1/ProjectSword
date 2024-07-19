@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Search;
 using UnityEngine;
 
 
 
 public class MagicSword : MonoBehaviour
 {
-
     [Header("Åº¸·")]
-    public GameObject bullet;
+    public GameObject bulletPrefab;
     public Transform bulletPoolTrans;
     public int poolSize = 20;
   
@@ -30,6 +30,12 @@ public class MagicSword : MonoBehaviour
     [SerializeField]
     protected List<GameObject> bulletPool = new List<GameObject>();
 
+    public GameObject firePos;
+
+    private void Start()
+    {
+      firePos.AddComponent<SwordFire>();
+    }
     void Update()
     {
        
@@ -39,6 +45,10 @@ public class MagicSword : MonoBehaviour
     {
         positions = new Queue<Vector3>();
         followerTransform = transform;
+
+        firePos = GameObject.Find("FirePos");
+        firePos.AddComponent <SwordFire>();
+        firePos.GetComponent<SwordFire>().magicSword = this;
     }
 
     protected virtual void Follow()
@@ -63,11 +73,13 @@ public class MagicSword : MonoBehaviour
         bulletPool.Clear();
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject bullet = Instantiate(this.bullet);
+            GameObject bullet = Instantiate(bulletPrefab);
             bullet.SetActive(false);
             bullet.transform.SetParent(bulletPoolTrans, true);
             bulletPool.Add(bullet);
         }
+
+        bulletPoolTrans.SetParent(null);
     }
 
     protected virtual GameObject GetBullet()
@@ -82,7 +94,7 @@ public class MagicSword : MonoBehaviour
             }
         }
 
-        GameObject newBullet = Instantiate(bullet);
+        GameObject newBullet = Instantiate(bulletPrefab);
         newBullet.SetActive(false);
         newBullet.GetComponent<BulletController>().damage = attckPower;
         newBullet.GetComponent<BulletController>().damageRate = 1f;
@@ -93,13 +105,14 @@ public class MagicSword : MonoBehaviour
     public virtual void Fire()
     {
         GameObject bullet = GetBullet();
-        bullet.transform.position = transform.position;
-        bullet.transform.rotation = Quaternion.identity;
+     
         bullet.GetComponent<BulletController>().isSubBullet = true;
         bullet.SetActive(true);
+        bullet.transform.position = transform.position;
+        bullet.transform.rotation = Quaternion.identity;
 
-        Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
-        bulletRb.velocity = Vector2.up * bulletSpeed;
+        bullet.GetComponent<Rigidbody2D>().velocity = Vector2.up * bulletSpeed;
+
 
     }
 
