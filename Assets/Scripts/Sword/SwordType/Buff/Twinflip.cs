@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuideSword : MagicSword
+public class Twinflip : MagicSword
 {
+    //private float timer = 0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,13 +17,14 @@ public class GuideSword : MagicSword
         Follow();
     }
 
-    protected override void SetTrans()
+    public override void SetTrans()
     {
         base.SetTrans();
     }
 
     protected override void Follow()
     {
-        base.Follow();  
+        base.Follow();
     }
+
 }

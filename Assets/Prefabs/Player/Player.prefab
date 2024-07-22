@@ -134,7 +134,7 @@ MonoBehaviour:
   maxHp: 100
   curHp: 0
   weapon:
-  - {fileID: 11400000, guid: b9dcf57cc06a3ce45b0d0a93b84585de, type: 2}
+  - {fileID: 11400000, guid: 6ada174c90bfe404bb3290bb6416e510, type: 2}
   - {fileID: 11400000, guid: e8b5b50667831844985ba65a768de597, type: 2}
   weaponIndex: 0
   swordPos:

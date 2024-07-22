@@ -134,8 +134,10 @@ public class PlayerStat : MonoBehaviour,IListener
         SetWeapon();
         InitializePool();
 
-
+        //weapon[weaponIndex].GetComponent<MagicSword>().SetBullet();
         GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
+
+      
     }
 
     void Update()
@@ -266,7 +268,7 @@ public class PlayerStat : MonoBehaviour,IListener
 
         GameUIManager.Instance.skillProfile.sprite = weapon[weaponIndex].skillImage;
         GameUIManager.Instance.swapProfile[0].sprite = weapon[0].skillImage;
-        GameUIManager.Instance.swapProfile[1].sprite = weapon[ 1].skillImage;
+        GameUIManager.Instance.swapProfile[1].sprite = weapon[1].skillImage;
     }
 
     public Vector2 SetWeaponSize(int i)
@@ -364,6 +366,7 @@ public class PlayerStat : MonoBehaviour,IListener
             upSkillDamage[0] += enchant.skillDamage;
             skillBuff[0] += enchant.skillBuff;
             swapBuff[0] += enchant.swapBuff;
+            weaponList[0].GetComponent<MagicSword>().buffLevel += enchant.petUpgrade;
         }
 
         if (enchant.isSub)
@@ -374,6 +377,7 @@ public class PlayerStat : MonoBehaviour,IListener
             upSkillDamage[1] += enchant.skillDamage;
             skillBuff[1] += enchant.skillBuff;
             swapBuff[1] += enchant.swapBuff;
+            weaponList[1].GetComponent<MagicSword>().buffLevel += enchant.petUpgrade;
         }
 
         canDrain = enchant.isDrain;

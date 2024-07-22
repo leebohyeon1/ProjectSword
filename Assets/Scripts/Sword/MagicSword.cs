@@ -12,7 +12,6 @@ public class MagicSword : MonoBehaviour
     public Transform bulletPoolTrans;
     public int poolSize = 20;
   
-
     [Header("Çàµ¿")]
     public int attckPower;
     public float attackSpeed;
@@ -32,23 +31,41 @@ public class MagicSword : MonoBehaviour
 
     public GameObject firePos;
 
+    public int buffLevel
+    {
+        get { return buffLevel_; }
+        set 
+        {     
+            buffLevel_ = value; 
+            if(buffLevel_ >= maxBuffLevel)
+            {
+                buffLevel_ = maxBuffLevel;
+            }
+        }
+    }
+    private int buffLevel_ = 0;
+    [SerializeField]
+    private int maxBuffLevel = 4;
+
     private void Start()
     {
-      firePos.AddComponent<SwordFire>();
+        SetTrans();
+
+
+        SetFire();
     }
     void Update()
     {
        
     }
 
-    protected virtual void SetTrans()
+    public virtual void SetTrans()
     {
         positions = new Queue<Vector3>();
         followerTransform = transform;
 
         firePos = GameObject.Find("FirePos");
-        firePos.AddComponent <SwordFire>();
-        firePos.GetComponent<SwordFire>().magicSword = this;
+             
     }
 
     protected virtual void Follow()
@@ -112,8 +129,18 @@ public class MagicSword : MonoBehaviour
         bullet.transform.rotation = Quaternion.identity;
 
         bullet.GetComponent<Rigidbody2D>().velocity = Vector2.up * bulletSpeed;
-
-
     }
+    
+    public virtual void SetBullet()
+    {
 
+        firePos.GetComponent<SwordFire>().enabled = !firePos.GetComponent<SwordFire>().enabled;
+    }
+    
+    public virtual void SetFire()
+    {
+        firePos.AddComponent<SwordFire>().magicSword = this;
+        //firePos.GetComponent<SwordFire>().enabled = false;
+        //firePos.GetComponent<SwordFire>().magicSword = this;
+    }
 }

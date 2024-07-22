@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4297308276510447069}
   - component: {fileID: 947637672238178540}
-  - component: {fileID: 1600750296036283501}
   - component: {fileID: 3174759223075937693}
+  - component: {fileID: -5001709836024687580}
   m_Layer: 0
   m_Name: TwinFlip
   m_TagString: Untagged
@@ -87,28 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1600750296036283501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1755657448561907817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c9972bd750cef24da82907322f29184, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 2641036828859503304, guid: 16c0aca784f5e1f4098713365fb17ac6, type: 3}
-  bulletPoolTrans: {fileID: 3444159302311602812}
-  poolSize: 20
-  attckPower: 0
-  attackSpeed: 0
-  bulletSpeed: 0
-  followPos: {fileID: 0}
-  followDelay: 0.1
-  maxPositions: 50
-  bulletPool: []
 --- !u!114 &3174759223075937693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,6 +114,30 @@ MonoBehaviour:
   slowCheckTimer: 0
   bulletSpeedSlow: 5
   Panel: {fileID: 8251858154578419569, guid: aa95c3f9e743da2419e5c09fe13f3a88, type: 3}
+--- !u!114 &-5001709836024687580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755657448561907817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78ff948b76636b549a21c67774d85a91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 1755657448561907817}
+  bulletPoolTrans: {fileID: 3444159302311602812}
+  poolSize: 20
+  attckPower: 0
+  attackSpeed: 0
+  bulletSpeed: 0
+  followPos: {fileID: 0}
+  followDelay: 0.1
+  maxPositions: 50
+  bulletPool: []
+  firePos: {fileID: 0}
+  maxBuffLevel: 4
 --- !u!1 &5488745084292017874
 GameObject:
   m_ObjectHideFlags: 0

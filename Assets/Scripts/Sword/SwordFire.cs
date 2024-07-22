@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SwordFire : MonoBehaviour
@@ -9,7 +10,7 @@ public class SwordFire : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      
+        Set();
     }
 
     // Update is called once per frame
@@ -29,7 +30,11 @@ public class SwordFire : MonoBehaviour
 
         bulletRb.velocity = Vector2.up * (playerStat.bulletSpeed + playerStat.upBulletSpeed[playerStat.weaponIndex]);
 
+        EventManager.Instance.PostNotification(EVENT_TYPE.FIRE, this);
     }
 
-
+    public virtual void Set()
+    {
+        playerStat = FindFirstObjectByType<PlayerStat>();
+    }
 }

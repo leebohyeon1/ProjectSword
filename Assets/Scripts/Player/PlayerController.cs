@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IListener
 {
     private PlayerStat playerStat;
     private Rigidbody2D rb;
@@ -17,6 +18,8 @@ public class PlayerController : MonoBehaviour
     {
         playerStat = GetComponent<PlayerStat>();
         rb = GetComponent<Rigidbody2D>();
+
+        EventManager.Instance.AddListener(EVENT_TYPE.FIRE, this);
     }
     void Update()
     {
@@ -26,6 +29,11 @@ public class PlayerController : MonoBehaviour
         }
 
         HadleAttack();
+    }
+
+    public void OnEvent(EVENT_TYPE Event_type, Component Sender, object Param = null)
+    {
+        attackTimer = 0;
     }
 
     public void Drag()
@@ -58,27 +66,8 @@ public class PlayerController : MonoBehaviour
         attackTimer += Time.deltaTime;
         if(attackTimer > (playerStat.attackSpeed - playerStat.upAttackSpeed[playerStat.weaponIndex])) 
         {
-            playerStat.firePos.GetComponent<SwordFire>().Fire();
-            attackTimer = 0f;
+            playerStat.firePos.GetComponents<SwordFire>()[playerStat.weaponIndex].Fire();
         }
-    }
-
-    public void Fire()
-    {
-        GameObject bullet = playerStat.GetBullet();
-        bullet.transform.position = transform.position;
-        bullet.transform.rotation = Quaternion.identity;
-        bullet.SetActive(true);
-
-        Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
-
-        if (playerStat.weapon[playerStat.weaponIndex].name == "Tenkai")
-        {
-            return;
-        }
-
-        bulletRb.velocity = Vector2.up * (playerStat.bulletSpeed + playerStat.upBulletSpeed[playerStat.weaponIndex]);
-
     }
  
 }
