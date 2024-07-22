@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1509313269363276334}
   - component: {fileID: 2596904378180188885}
   - component: {fileID: -8526222824581271024}
-  - component: {fileID: -2003152093566401588}
+  - component: {fileID: 7102652076916999087}
   m_Layer: 0
   m_Name: Dandelion
   m_TagString: Untagged
@@ -115,7 +115,7 @@ MonoBehaviour:
   - 5
   damageInterval: 1
   Panel: {fileID: 8251858154578419569, guid: c1e2936bfd1239a438d5e457fb759bd9, type: 3}
---- !u!114 &-2003152093566401588
+--- !u!114 &7102652076916999087
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c9972bd750cef24da82907322f29184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 2641036828859503304, guid: 4a97d522e9a5466468758b2fea965d66, type: 3}
+  bulletPrefab: {fileID: 2641036828859503304, guid: 4a97d522e9a5466468758b2fea965d66, type: 3}
   bulletPoolTrans: {fileID: 4659732989768760477}
   poolSize: 20
   attckPower: 0
@@ -136,6 +136,9 @@ MonoBehaviour:
   followPos: {fileID: 0}
   followDelay: 0.1
   maxPositions: 50
+  bulletPool: []
+  firePos: {fileID: 0}
+  maxBuffLevel: 4
 --- !u!1 &5682485270371804699
 GameObject:
   m_ObjectHideFlags: 0

@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4297308276510447069}
   - component: {fileID: 947637672238178540}
-  - component: {fileID: 1600750296036283501}
+  - component: {fileID: 7347579564919810101}
   - component: {fileID: -8257161528908764260}
   m_Layer: 0
   m_Name: Tenkai
@@ -118,7 +118,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1600750296036283501
+--- !u!114 &7347579564919810101
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,10 +127,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1755657448561907817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c9972bd750cef24da82907322f29184, type: 3}
+  m_Script: {fileID: 11500000, guid: a2d757c0635250645ac20fa2d894e487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 2641036828859503304, guid: 48eb373d600ee0840baf7e8afb1cdc00, type: 3}
+  bulletPrefab: {fileID: 2641036828859503304, guid: 48eb373d600ee0840baf7e8afb1cdc00, type: 3}
   bulletPoolTrans: {fileID: 7938155433540628794}
   poolSize: 20
   attckPower: 0
@@ -139,6 +139,9 @@ MonoBehaviour:
   followPos: {fileID: 0}
   followDelay: 0.1
   maxPositions: 50
+  bulletPool: []
+  firePos: {fileID: 0}
+  detectRadius: {x: 20, y: 5, z: 0}
 --- !u!114 &-8257161528908764260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,7 +161,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
-  skillDamageUp: 0
+  skillDamageUp: 4
   power:
   - 1
   - 0

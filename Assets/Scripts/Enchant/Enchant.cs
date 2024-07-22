@@ -22,6 +22,7 @@ public class Enchant : ScriptableObject
 
     public int skillBuff = 0;
     public int swapBuff = 0;
+    public int petUpgrade = 0;
     [Space(20f)]
 
     public int hpUp = 0;
@@ -34,6 +35,6 @@ public class Enchant : ScriptableObject
     [Space(20f)]
 
     public float swapDamage = 0f;
-
+ 
     public string enchantName;
 }

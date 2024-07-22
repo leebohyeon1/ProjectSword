@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9148645188510781627}
   - component: {fileID: 533999136453879723}
   m_Layer: 6
-  m_Name: TidebitBullet
+  m_Name: TidebiteBullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,3 +164,6 @@ MonoBehaviour:
   damage: 0
   damageRate: 0
   TotalDamage: 0
+  bulletType: 3
+  isSkillBullet: 0
+  isSubBullet: 0

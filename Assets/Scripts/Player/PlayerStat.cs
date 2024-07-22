@@ -21,6 +21,7 @@ public class PlayerStat : MonoBehaviour,IListener
     [Header("공격")]
     public int attackDamage = 1;
     public float attackSpeed = 1f;
+    public GameObject firePos;
 
     [Header("스킬")]
     public float skillCool;
@@ -133,8 +134,10 @@ public class PlayerStat : MonoBehaviour,IListener
         SetWeapon();
         InitializePool();
 
-
+        //weapon[weaponIndex].GetComponent<MagicSword>().SetBullet();
         GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
+
+      
     }
 
     void Update()
@@ -255,7 +258,7 @@ public class PlayerStat : MonoBehaviour,IListener
         attackSpeed = currentWeapon.attackSpeed;
         skillCool = currentWeapon.skillCool;
         skillCost = currentWeapon.skillCost;
-        bulletPrefab = currentWeapon.swordPrefab.GetComponent<MagicSword>().bullet;
+        bulletPrefab = currentWeapon.swordPrefab.GetComponent<MagicSword>().bulletPrefab;
         bulletSpeed = currentWeapon.bulletSpeed;
 
         for (int i = 0; i < skillSize.Length; i++)
@@ -265,7 +268,7 @@ public class PlayerStat : MonoBehaviour,IListener
 
         GameUIManager.Instance.skillProfile.sprite = weapon[weaponIndex].skillImage;
         GameUIManager.Instance.swapProfile[0].sprite = weapon[0].skillImage;
-        GameUIManager.Instance.swapProfile[1].sprite = weapon[ 1].skillImage;
+        GameUIManager.Instance.swapProfile[1].sprite = weapon[1].skillImage;
     }
 
     public Vector2 SetWeaponSize(int i)
@@ -306,7 +309,7 @@ public class PlayerStat : MonoBehaviour,IListener
             magicSword.attckPower = weapon[i].swordAttackPower;
             magicSword.attackSpeed = weapon[i].swordAttackSpeed;
             magicSword.bulletSpeed = weapon[i].swordBulletSpeed;
-            swordInstance.transform.SetParent(swordPos[i].transform, false);
+            //swordInstance.transform.SetParent(swordPos[i].transform, false);
             weaponList.Add(swordInstance);
         }
     }
@@ -363,6 +366,7 @@ public class PlayerStat : MonoBehaviour,IListener
             upSkillDamage[0] += enchant.skillDamage;
             skillBuff[0] += enchant.skillBuff;
             swapBuff[0] += enchant.swapBuff;
+            weaponList[0].GetComponent<MagicSword>().buffLevel += enchant.petUpgrade;
         }
 
         if (enchant.isSub)
@@ -373,6 +377,7 @@ public class PlayerStat : MonoBehaviour,IListener
             upSkillDamage[1] += enchant.skillDamage;
             skillBuff[1] += enchant.skillBuff;
             swapBuff[1] += enchant.swapBuff;
+            weaponList[1].GetComponent<MagicSword>().buffLevel += enchant.petUpgrade;
         }
 
         canDrain = enchant.isDrain;

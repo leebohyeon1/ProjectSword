@@ -8,9 +8,11 @@ public class BulletController : MonoBehaviour
     protected PlayerStat playerStat;
     public enum Type
     {
-        None,
+        Wind,
         Ice,
-        Fire
+        Fire,
+        Water,
+        Thunder
     }
 
     public int damage;
@@ -50,10 +52,10 @@ public class BulletController : MonoBehaviour
             bool canCount = true;
             if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
             {
-                playerStat.Drain((int)TotalDamage);
-                canCount = false;   
+                playerStat.Drain((int)TotalDamage);              
             }
 
+            if(isSubBullet) canCount = false;
             collision.GetComponent<EnemyStat>().TakeDamage((int)TotalDamage, canCount);
             gameObject.SetActive(false);
 

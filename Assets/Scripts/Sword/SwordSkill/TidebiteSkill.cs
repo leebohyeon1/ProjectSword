@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TidebitSkill : SwordSkill
+public class TidebiteSkill : SwordSkill
 {
     PlayerStat playerStat;
 
@@ -48,7 +48,7 @@ public class TidebitSkill : SwordSkill
 
     public override void SkillB()
     {
-        GameObject Bullet = GetComponent<MagicSword>().bullet;
+        GameObject Bullet = GetComponent<MagicSword>().bulletPrefab;
 
         GameObject BigBullet =  Instantiate(Bullet,new Vector2(skillPoint.position.x,playerStat.transform.position.y - 5f),Quaternion.identity);
         BigBullet.transform.localScale *= 2;

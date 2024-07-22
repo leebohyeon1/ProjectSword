@@ -164,7 +164,9 @@ MonoBehaviour:
   damage: 0
   damageRate: 0
   TotalDamage: 0
-  bulletType: 1
+  bulletType: 2
+  isSkillBullet: 0
+  isSubBullet: 0
   player: {fileID: 0}
   isBSkill: 0
   upDamage: 01000000020000000300000004000000
