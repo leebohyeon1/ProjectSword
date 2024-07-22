@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 4260712795892517455}
   - component: {fileID: 2284149096743789701}
   - component: {fileID: 6340777690407495934}
-  - component: {fileID: 6259532044742417244}
   - component: {fileID: 8889532065471979762}
+  - component: {fileID: 7020030567629678245}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -33,8 +33,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -4.096, z: 0}
-  m_LocalScale: {x: 0.888, y: 0.888, z: 0.888}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7063179326464419884}
   - {fileID: 2720337345785299707}
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
   m_Color: {r: 0.36334103, g: 0.6698113, b: 0.47208852, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -134,8 +134,8 @@ MonoBehaviour:
   maxHp: 100
   curHp: 0
   weapon:
-  - {fileID: 11400000, guid: 6ada174c90bfe404bb3290bb6416e510, type: 2}
-  - {fileID: 11400000, guid: e8b5b50667831844985ba65a768de597, type: 2}
+  - {fileID: 11400000, guid: a73a29ea3ae198145ab80d4df4d636c3, type: 2}
+  - {fileID: 11400000, guid: b9dcf57cc06a3ce45b0d0a93b84585de, type: 2}
   weaponIndex: 0
   swordPos:
   - {fileID: 7063179326464419884}
@@ -202,8 +202,35 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   wallDetectionRadius: 1.3
---- !u!58 &6259532044742417244
-CircleCollider2D:
+--- !u!50 &8889532065471979762
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337809136751114260}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 6
+--- !u!70 &7020030567629678245
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -235,35 +262,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.49999997
---- !u!50 &8889532065471979762
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1337809136751114260}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 6
+  m_Size: {x: 1, y: 2}
+  m_Direction: 0
 --- !u!1 &1500151249080409277
 GameObject:
   m_ObjectHideFlags: 0

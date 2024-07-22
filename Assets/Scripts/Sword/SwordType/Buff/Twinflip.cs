@@ -9,6 +9,9 @@ public class Twinflip : MagicSword
     void Start()
     {
         SetTrans();
+        SetFire();
+
+        InitializePool();
     }
 
     // Update is called once per frame
@@ -26,5 +29,18 @@ public class Twinflip : MagicSword
     {
         base.Follow();
     }
+    public override void Fire()
+    {
+        base.Fire();
+    }
 
+    public override void SetFire()
+    {
+        base.SetFire();
+    }
+
+    protected override void InitializePool()
+    {
+        base.InitializePool();
+    }
 }
