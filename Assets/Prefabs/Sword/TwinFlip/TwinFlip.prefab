@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78ff948b76636b549a21c67774d85a91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1755657448561907817}
+  bulletPrefab: {fileID: 2641036828859503304, guid: 16c0aca784f5e1f4098713365fb17ac6, type: 3}
   bulletPoolTrans: {fileID: 3444159302311602812}
   poolSize: 20
   attckPower: 0

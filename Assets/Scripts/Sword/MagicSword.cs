@@ -50,8 +50,6 @@ public class MagicSword : MonoBehaviour
     private void Start()
     {
         SetTrans();
-
-
         SetFire();
     }
     void Update()
