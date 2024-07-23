@@ -41,12 +41,20 @@ public class PlayerStat : MonoBehaviour,IListener
     {
         get => skillCount_;
         set 
-        {
+        {        
+
             skillCount_ = Mathf.Min(value, maxSkillCount);
+      
             if (skillCount_ == maxSkillCount)
             {
-                extraSkillCount = Mathf.Min(extraSkillCount + (value - maxSkillCount), maxExtraSkillCount);
-            }         
+                if (extraSkillCount > 0)
+                {
+                    // extraSkillCount가 0을 초과하면 더 이상 skillCount를 증가시키지 않음
+                    return;
+                }
+                float excess = value - maxSkillCount;
+                extraSkillCount = Mathf.Min(extraSkillCount + excess, maxExtraSkillCount);
+            }
         }
     }
     [SerializeField]
