@@ -59,6 +59,7 @@ public class DandelionSkill : SwordSkill
                 skillActive[0] = false;
                 Destroy(ppp[0]);
                 ppp.Clear();
+                damageTimer = 0f;
             }
         }
 

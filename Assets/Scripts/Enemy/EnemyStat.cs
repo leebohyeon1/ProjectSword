@@ -19,6 +19,10 @@ public class EnemyStat : MonoBehaviour
     public bool isBless;
     public float multiplyGage;
 
+    private List<float> speedModifiers = new List<float>();
+
+    public bool isIce;
+
     private void Awake()
     {
         isBless = Random.value * 100f < blessRate;
@@ -29,7 +33,7 @@ public class EnemyStat : MonoBehaviour
         enemyUI = GetComponent<EnemyUI>();
         enemyUI.UpdateHPText(hp);
 
-        GetComponent<Rigidbody2D>().velocity = Vector2.down * (speed + SpawnManager.Instance.plusAcceleration);
+        ApplySpeed();
 
         if (isBless )
         {
@@ -71,9 +75,30 @@ public class EnemyStat : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void SetSpeed(float Rate)
+     public void DecreaseSpeed(float rate)
     {
-        GetComponent<Rigidbody2D>().velocity = Vector2.down *(speed - (speed * Rate /100f));
-        //Debug.Log(GetComponent<Rigidbody2D>().velocity);
+        // 속도 감소율 추가
+        speedModifiers.Add(rate);
+        ApplySpeed();
+    }
+
+    public void IncreaseSpeed(float rate)
+    {
+        // 속도 증가율 추가 (음수 값을 속도 감소 리스트에 추가)
+        speedModifiers.Add(-rate);
+        ApplySpeed();
+    }
+
+    private void ApplySpeed()
+    {
+        // 모든 속도 감소율을 적용하여 최종 속도를 계산
+        float totalRate = 0f;
+        foreach (float modifier in speedModifiers)
+        {
+            totalRate += modifier;
+        }
+
+        float finalSpeed = speed * (1 - totalRate / 100f);
+        GetComponent<Rigidbody2D>().velocity = Vector2.down * (finalSpeed + SpawnManager.Instance.plusAcceleration);
     }
 }

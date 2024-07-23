@@ -17,8 +17,8 @@ public class Tidebite : MagicSword
     // Update is called once per frame
     void Update()
     {
-        //Follow();
-        //Attack();
+        Follow();
+        Attack();
 
     }
 

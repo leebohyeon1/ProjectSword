@@ -17,6 +17,7 @@ MonoBehaviour:
   skillCost: 40
   skillCool: 7
   bulletSpeed: 12
+  bulletType: 4
   swordPrefab: {fileID: 1755657448561907817, guid: 6b6595ac0c3e5e94bbb0c15f50c1d0b6, type: 3}
   swordAttackPower: 1
   swordAttackSpeed: 2

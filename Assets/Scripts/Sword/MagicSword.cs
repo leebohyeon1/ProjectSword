@@ -31,6 +31,7 @@ public class MagicSword : MonoBehaviour
 
     public GameObject firePos;
 
+    [SerializeField]
     public int buffLevel
     {
         get { return buffLevel_; }
@@ -44,7 +45,6 @@ public class MagicSword : MonoBehaviour
         }
     }
     private int buffLevel_ = 0;
-    [SerializeField]
     private int maxBuffLevel = 4;
 
     private void Start()

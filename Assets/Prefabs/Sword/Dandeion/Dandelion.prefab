@@ -106,7 +106,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
-  skillDamageUp: 4
+  skillDamageUp: 0
   power:
   - 1
   - 0.5

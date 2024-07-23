@@ -55,7 +55,7 @@ public class TwinFlipSkill : SwordSkill
                             enemyList.Add(Enemy);
                             if (enemyStat != null)
                             {
-                                enemyStat.SetSpeed(slowRate);
+                                enemyStat.DecreaseSpeed(slowRate);
                             }
                         }
 
@@ -106,7 +106,7 @@ public class TwinFlipSkill : SwordSkill
         foreach (GameObject bullet in playerStat.bulletPool_)
         {
             TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
-            bullets.bulletType = BulletController.Type.Ice;
+            bullets.bulletType = BulletType.Ice;
         }
 
     }
@@ -117,7 +117,7 @@ public class TwinFlipSkill : SwordSkill
         {
             TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
             bullets.isBSkill = true;
-            bullets.bulletType = BulletController.Type.Fire;
+            bullets.bulletType = BulletType.Fire;
         }
         skillTimer[1] = 0f;
         skillActive[1] = true;
@@ -168,7 +168,7 @@ public class TwinFlipSkill : SwordSkill
                 EnemyStat enemyStat = enemy.GetComponent<EnemyStat>();
                 if (enemyStat != null)
                 {
-                    enemyStat.SetSpeed(0f);
+                    enemyStat.IncreaseSpeed(slowRate);
                 }
             }
         }

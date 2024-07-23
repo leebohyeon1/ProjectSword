@@ -82,11 +82,11 @@ public class TenkaiBullet : BulletController
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
+        EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
         TotalDamage = damage * damageRate;
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<EnemyStat>().TakeDamage((int)TotalDamage);
+            enemyStat.TakeDamage((int)TotalDamage);
             if (diffusionCount_ > 0)
             {
                 FindNextTarget(collision);
@@ -97,13 +97,21 @@ public class TenkaiBullet : BulletController
                 diffusionCount_ = 0;
             }
 
-            if (playerStat.canDrain)
+
+            if (isIce && !enemyStat.isIce)
+            {
+                enemyStat.DecreaseSpeed(slowRate);
+            }
+
+            if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
             {
                 playerStat.Drain((int)TotalDamage);
             }
 
             diffusionCount_--;
         }
+
+
     }
 
     private void OnDrawGizmos()

@@ -137,7 +137,10 @@ MonoBehaviour:
   maxPositions: 50
   bulletPool: []
   firePos: {fileID: 0}
-  maxBuffLevel: 4
+  power:
+  - 30
+  - 10
+  duration: 6
 --- !u!1 &5488745084292017874
 GameObject:
   m_ObjectHideFlags: 0

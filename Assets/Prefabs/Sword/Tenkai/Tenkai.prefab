@@ -141,6 +141,7 @@ MonoBehaviour:
   maxPositions: 50
   bulletPool: []
   firePos: {fileID: 0}
+  maxBuffLevel: 4
   detectRadius: {x: 20, y: 5, z: 0}
 --- !u!114 &-8257161528908764260
 MonoBehaviour:
@@ -161,7 +162,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
-  skillDamageUp: 4
+  skillDamageUp: 0
   power:
   - 1
   - 0

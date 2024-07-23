@@ -53,7 +53,7 @@ public class TenkaiSkill : SwordSkill
                             enemyList.Add(Enemy);
                             if (enemyStat != null)
                             {
-                                enemyStat.SetSpeed(slowRate);
+                                enemyStat.DecreaseSpeed(slowRate);
                             }
                         }
                 
@@ -147,7 +147,7 @@ public class TenkaiSkill : SwordSkill
                 EnemyStat enemyStat = enemy.GetComponent<EnemyStat>();
                 if (enemyStat != null)
                 {
-                    enemyStat.SetSpeed(0);
+                    enemyStat.IncreaseSpeed(slowRate);
                 }
             }
         }

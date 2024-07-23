@@ -134,8 +134,8 @@ MonoBehaviour:
   maxHp: 100
   curHp: 0
   weapon:
+  - {fileID: 11400000, guid: e8b5b50667831844985ba65a768de597, type: 2}
   - {fileID: 11400000, guid: a73a29ea3ae198145ab80d4df4d636c3, type: 2}
-  - {fileID: 11400000, guid: b9dcf57cc06a3ce45b0d0a93b84585de, type: 2}
   weaponIndex: 0
   swordPos:
   - {fileID: 7063179326464419884}
@@ -143,6 +143,8 @@ MonoBehaviour:
   attackDamage: 1
   attackSpeed: 0.3
   firePos: {fileID: 4718030860254687385}
+  CriticalRate: 0
+  CriticalDamaged: 150
   skillCool: 0
   maxSkillCount: 100
   skillCount_: 0
@@ -159,6 +161,7 @@ MonoBehaviour:
   bulletParent: {fileID: 5344731023250198114}
   poolSize: 10
   bulletSpeed: 10
+  bulletType: 0
   upAttackDamage: 0000000000000000
   upAttackSpeed:
   - 0

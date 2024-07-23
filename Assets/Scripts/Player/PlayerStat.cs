@@ -6,6 +6,15 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.Rendering;
 using UnityEngine;
 
+public enum BulletType
+{
+    Wind,
+    Ice,
+    Fire,
+    Water,
+    Thunder
+}
+
 public class PlayerStat : MonoBehaviour,IListener
 {
     [Header("체력")]
@@ -22,6 +31,8 @@ public class PlayerStat : MonoBehaviour,IListener
     public int attackDamage = 1;
     public float attackSpeed = 1f;
     public GameObject firePos;
+    public float CriticalRate = 0f;
+    public float CriticalDamaged = 150f;
 
     [Header("스킬")]
     public float skillCool;
@@ -83,7 +94,7 @@ public class PlayerStat : MonoBehaviour,IListener
     public Transform bulletParent;
     public int poolSize = 20;
     public float bulletSpeed;
-
+    public BulletType bulletType;
     public List<GameObject> bulletPool_
     { 
         get { return bulletPool; }
@@ -192,16 +203,18 @@ public class PlayerStat : MonoBehaviour,IListener
         {
             if (!bullet.activeInHierarchy)
             {
-                bullet.GetComponent<BulletController>().damage = (attackDamage + upAttackDamage[weaponIndex]);
+                bullet.GetComponent<BulletController>().damage = CalculateDamage(attackDamage + upAttackDamage[weaponIndex]);
                 bullet.GetComponent<BulletController>().damageRate = 1f;
+                bullet.GetComponent<BulletController>().bulletType = bulletType;
                 return bullet;
             }
         }
 
         GameObject newBullet = Instantiate(bulletPrefab);
         newBullet.SetActive(false);
-        newBullet.GetComponent<BulletController>().damage = (attackDamage + upAttackDamage[weaponIndex]);
+        newBullet.GetComponent<BulletController>().damage = CalculateDamage(attackDamage + upAttackDamage[weaponIndex]);
         newBullet.GetComponent<BulletController>().damageRate = 1f;
+        newBullet.GetComponent<BulletController>().bulletType = bulletType;
         bulletPool.Add(newBullet);
         return newBullet;
     }
@@ -260,6 +273,7 @@ public class PlayerStat : MonoBehaviour,IListener
         skillCost = currentWeapon.skillCost;
         bulletPrefab = currentWeapon.swordPrefab.GetComponent<MagicSword>().bulletPrefab;
         bulletSpeed = currentWeapon.bulletSpeed;
+        bulletType = currentWeapon.bulletType;
 
         for (int i = 0; i < skillSize.Length; i++)
         {
@@ -417,7 +431,7 @@ public class PlayerStat : MonoBehaviour,IListener
 
         GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
     }
-
+        
     public void AutoRecovery()
     {
         hpReTimer += Time.deltaTime;
@@ -453,6 +467,32 @@ public class PlayerStat : MonoBehaviour,IListener
             EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, swapCount / maxSwapCount);
         }    
 
+    }
+
+    private int CalculateDamage(int baseDamage)
+    {
+        // 크리티컬 여부를 결정하기 위한 랜덤 값
+        float randomValue = Random.Range(0f, 100f);
+        if (randomValue < CriticalRate)
+        {
+            // 크리티컬이 발생한 경우 크리티컬 데미지를 추가
+            return (int)(baseDamage * (1 + CriticalDamaged / 100f));
+        }
+        else
+        {
+            // 크리티컬이 발생하지 않은 경우 기본 데미지
+            return baseDamage;
+        }
+    }
+
+    public void SetBulletIce(float rate)
+    {
+        foreach (GameObject bullet in bulletPool)
+        {
+            BulletController controller = bullet.GetComponent<BulletController>();
+            controller.isIce = !controller.isIce;
+            controller.slowRate = rate;
+        }
     }
 }
 

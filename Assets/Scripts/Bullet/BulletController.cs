@@ -6,23 +6,18 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     protected PlayerStat playerStat;
-    public enum Type
-    {
-        Wind,
-        Ice,
-        Fire,
-        Water,
-        Thunder
-    }
+
 
     public int damage;
     public float damageRate;
     public float TotalDamage;
 
-    public Type bulletType;
+    public BulletType bulletType;
 
     public bool isSkillBullet;
     public bool isSubBullet;
+    public bool isIce = false;
+    public float slowRate = 0f;
     private void Start()
     {
         playerStat = FindFirstObjectByType<PlayerStat>();
@@ -45,7 +40,7 @@ public class BulletController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
+        EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
         TotalDamage = damage * damageRate;
         if (collision.CompareTag("Enemy"))
         {
@@ -55,8 +50,13 @@ public class BulletController : MonoBehaviour
                 playerStat.Drain((int)TotalDamage);              
             }
 
+            if(isIce&& !enemyStat.isIce)
+            {
+                enemyStat.DecreaseSpeed(slowRate);
+            }
+
             if(isSubBullet) canCount = false;
-            collision.GetComponent<EnemyStat>().TakeDamage((int)TotalDamage, canCount);
+            enemyStat.TakeDamage((int)TotalDamage, canCount);
             gameObject.SetActive(false);
 
 
