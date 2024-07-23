@@ -21,6 +21,7 @@ public class EnemyStat : MonoBehaviour
 
     private List<float> speedModifiers = new List<float>();
 
+    [Header("ป๓ลย")]
     public bool isIce;
 
     private void Awake()

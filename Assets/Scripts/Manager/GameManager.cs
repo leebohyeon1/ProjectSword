@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     [Header("½ºÅ³")]
     [SerializeField]
-    private bool canSkill;
+    private bool isSkill;
     public float skillTimeScale;
     //==================================================================================
 
@@ -32,9 +32,9 @@ public class GameManager : MonoBehaviour
 
     public void SkillOnOff()
     {
-        canSkill = !canSkill;
+        isSkill = !isSkill;
 
-        if (canSkill)
+        if (isSkill)
         {
             Time.timeScale = skillTimeScale;
         }
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 
     public bool GetSkillBool()
     {
-        return canSkill;
+        return isSkill;
     }
 
     public void SetPause(bool pause)

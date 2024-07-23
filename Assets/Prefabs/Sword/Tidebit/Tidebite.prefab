@@ -106,7 +106,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
-  skillDamageUp: 0
+  skillDamageUp: 7
   power:
   - 8
   - 15
@@ -133,7 +133,6 @@ MonoBehaviour:
   maxPositions: 50
   bulletPool: []
   firePos: {fileID: 0}
-  maxBuffLevel: 4
 --- !u!1 &8649867307507198165
 GameObject:
   m_ObjectHideFlags: 0

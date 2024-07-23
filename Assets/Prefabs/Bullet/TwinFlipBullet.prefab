@@ -167,6 +167,8 @@ MonoBehaviour:
   bulletType: 2
   isSkillBullet: 0
   isSubBullet: 0
+  isIce: 0
+  slowRate: 0
   player: {fileID: 0}
   isBSkill: 0
   upDamage: 01000000020000000300000004000000

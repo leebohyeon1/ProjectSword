@@ -243,6 +243,7 @@ MonoBehaviour:
   blessRate: 5
   isBless: 0
   multiplyGage: 2
+  isIce: 0
 --- !u!114 &-7740092943958659329
 MonoBehaviour:
   m_ObjectHideFlags: 0

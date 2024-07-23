@@ -21,9 +21,11 @@ MonoBehaviour:
   skillCoolDown: 0
   skillBuff: 0
   swapBuff: 0
+  petUpgrade: 0
   hpUp: 0
   isDrain: 0
   hpRecovery: 0
   swapRecovery: 0
   skillRecovery: 0
+  swapDamage: 0
   enchantName: attackSpeed +1 [M]

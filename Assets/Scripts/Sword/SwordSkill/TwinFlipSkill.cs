@@ -13,7 +13,7 @@ public class TwinFlipSkill : SwordSkill
 
     [Header("A")]
     public float slowRate;
-    public float slowCheckTimer;
+    private float slowCheckTimer;
 
     [Header("B")]
     public float bulletSpeedSlow;
