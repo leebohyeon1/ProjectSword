@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public enum EVENT_TYPE
 {
-   CHANGE_WEAPON,
+   CHANGE_WEAPON, UPGRADE,
    SKILL_ON,
    SWAP_ON,
    SKILL_COUNT,

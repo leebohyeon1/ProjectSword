@@ -8,18 +8,23 @@ public class Dandelion : MagicSword, IListener
     private DandelionSkill skill;
 
     [Header("고유 능력 진화")]
+
     [Header("레벨 1")]
     public int damageUp = 0;
+
     [Header("레벨 2")]
     public float damageDownRate = 0.5f;
+
     [Header("레벨 3")]
     public Vector2 areaSize;
     public float duration;
     public int damage;
     public float Interval;
+
     [Header("레벨 4")]
     public float durationUp;
     public float IntervalDown;
+
     void Start()
     {
         SetTrans();
@@ -36,11 +41,6 @@ public class Dandelion : MagicSword, IListener
     {
         Follow();
         Attack();
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            buffLevel++;
-        }
     }
 
     public void OnEvent(EVENT_TYPE Event_type, Component Sender, object Param = null)
@@ -87,9 +87,6 @@ public class Dandelion : MagicSword, IListener
     {
         switch (buffLevel)
         {
-            case 0:
-                
-                break;
             case 1:
                 Buff1();
                 break;
@@ -97,10 +94,10 @@ public class Dandelion : MagicSword, IListener
                 Buff2();
                 break;
             case 3:
-   
+                Buff3();
                 break;
             case 4:
-            
+                Buff4();
                 break;
         }
     }
@@ -130,6 +127,11 @@ public class Dandelion : MagicSword, IListener
         }
     }
 
+    private void Buff4()
+    {
+        duration += durationUp;
+        Interval -= IntervalDown;
+    }
 
     public void SubDanSkill(Vector3 pos)
     {

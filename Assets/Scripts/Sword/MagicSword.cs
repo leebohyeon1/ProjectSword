@@ -38,7 +38,14 @@ public class MagicSword : MonoBehaviour
         get => buffLevel_;
         set
         {
+            if (buffLevel >= maxBuffLevel)
+            {
+                return;
+            }
+
             buffLevel_ = Mathf.Min(value, maxBuffLevel);
+
+          
             ApplyBuffEffects();
         }
     }

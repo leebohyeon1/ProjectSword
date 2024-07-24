@@ -141,6 +141,12 @@ MonoBehaviour:
   buffLevel_: 0
   damageUp: 10
   damageDownRate: 0.5
+  areaSize: {x: 2, y: 1}
+  duration: 2
+  damage: 1
+  Interval: 1
+  durationUp: 1
+  IntervalDown: 0.4
 --- !u!1 &5682485270371804699
 GameObject:
   m_ObjectHideFlags: 0
