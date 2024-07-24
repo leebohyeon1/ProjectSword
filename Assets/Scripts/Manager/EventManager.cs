@@ -5,13 +5,15 @@ using UnityEngine.SceneManagement;
 
 public enum EVENT_TYPE
 {
-   CHANGE_WEAPON,
+   CHANGE_WEAPON, UPGRADE,
    SKILL_ON,
    SWAP_ON,
    SKILL_COUNT,
    SWAP_COUNT,
    KEEP_SWAP,
-   FIRE
+   FIRE,
+
+   DAN3
 };
 public interface IListener
 {

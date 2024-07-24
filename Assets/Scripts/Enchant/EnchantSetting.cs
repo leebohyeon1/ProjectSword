@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnchantSetting : MonoBehaviour
 {
+    PlayerStat playerStat;
+
     public float[] firstPercentage;
     public Upgrade[] upgrades;
 
@@ -12,12 +14,42 @@ public class EnchantSetting : MonoBehaviour
 
     void Start()
     {
+        playerStat = FindFirstObjectByType<PlayerStat>();
+
         for (int i = 0; i < choices.Length; i++)
         {
             int randomNum = Random.Range(0, 100);
             choices[i].curEnchant = RandomEnchant(randomNum);
             choices[i].TextSet();
         } 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            PlayerStat playerStat = collision.GetComponent<PlayerStat>();
+            
+            int num = 0;
+            float minLength = Mathf.Infinity;
+            for (int i = 0; i < choices.Length; i++)
+            {
+                
+                float distance = Vector2.Distance(collision.transform.position, choices[i].transform.position);
+
+                
+                if(distance < minLength)
+                {
+                    minLength = distance;
+                    num = i;
+                }
+            }
+
+            playerStat.Upgrade(choices[num].curEnchant);
+            Debug.Log("업그레이드" + num);
+
+            Destroy(gameObject);
+        }
     }
     //==================================================================================
 

@@ -49,9 +49,11 @@ public class TwinFlipBullet : BulletController
             }
 
 
-            if (isIce && !enemyStat.isIce)
+            if (isIce && !enemyStat.isIce && !isSkillBullet)
             {
+                enemyStat.isIce = true;
                 enemyStat.DecreaseSpeed(slowRate);
+               
             }
 
             gameObject.SetActive(false);

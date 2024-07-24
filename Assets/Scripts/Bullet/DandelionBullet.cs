@@ -6,6 +6,8 @@ public class DandelionBullet : BulletController
 {
     public bool isDandelion = false;
 
+    public bool isLevel3 = false;
+
     void Start()
     {
         damageRate = 1f;
@@ -40,9 +42,11 @@ public class DandelionBullet : BulletController
             }
         }
 
-        if (isIce && !enemyStat.isIce)
+        if (isIce && !enemyStat.isIce && !isSkillBullet)
         {
+            enemyStat.isIce = true;
             enemyStat.DecreaseSpeed(slowRate);
+            
         }
     }
 

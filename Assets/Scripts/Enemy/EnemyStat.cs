@@ -24,6 +24,8 @@ public class EnemyStat : MonoBehaviour
     [Header("ป๓ลย")]
     public bool isIce;
 
+    private Collider2D collision2D;
+
     private void Awake()
     {
         isBless = Random.value * 100f < blessRate;
@@ -62,15 +64,6 @@ public class EnemyStat : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.CompareTag("Player"))
-        {
-            collision.GetComponent<PlayerStat>().TakeDamage(damage);
-            Destroy(gameObject);
-        }
-    }
-
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
@@ -101,5 +94,32 @@ public class EnemyStat : MonoBehaviour
 
         float finalSpeed = speed * (1 - totalRate / 100f);
         GetComponent<Rigidbody2D>().velocity = Vector2.down * (finalSpeed + SpawnManager.Instance.plusAcceleration);
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            collision.GetComponent<PlayerStat>().TakeDamage(damage);
+            Destroy(gameObject);
+        }
+
+        if(collision.CompareTag("Bullet"))
+        {
+            collision2D = collision;
+        }
+    }
+
+    void OnDestroy()
+    {
+        if(collision2D != null)
+        {
+            if (collision2D.GetComponent<DandelionBullet>().isLevel3)
+            {
+                EventManager.Instance.PostNotification(EVENT_TYPE.DAN3, this, transform.position);
+            }
+        }
+        
     }
 }

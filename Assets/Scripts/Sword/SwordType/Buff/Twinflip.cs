@@ -103,10 +103,9 @@ public class Twinflip : MagicSword
 
     private void FireBuff()
     {
-        playerStat.CriticalRate += power[0];
+        playerStat.criticalRate += power[0];
         fireBuffTimer = 0f;
         isBuff[0] = true;
-        Debug.Log("불버프 On");
     }
 
     private void IceBuff()
@@ -115,7 +114,6 @@ public class Twinflip : MagicSword
         playerStat.SetBulletIce(power[1]);
         iceBuffTimer = 0f;
         isBuff[1] = true;
-        Debug.Log("물버프 On");
     }
 
     private void FireBuffOff()
@@ -123,7 +121,7 @@ public class Twinflip : MagicSword
         isBuff[0] = false;
         fireBuffTimer = 0f;
        
-        playerStat.CriticalRate -= power[0];
+        playerStat.criticalRate -= power[0];
         
     }
 

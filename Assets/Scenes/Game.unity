@@ -1628,7 +1628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPause: 0
-  canSkill: 0
+  isSkill: 0
   skillTimeScale: 0.3
 --- !u!1 &636251835
 GameObject:
@@ -4115,7 +4115,7 @@ MonoBehaviour:
   optionSpeed: 2
   spawnPosition: {fileID: 1981205194}
   bossCount: 0
-  bossSpawnCount: 0a0000001e00000064000000
+  bossSpawnCount: 640000006400000064000000
   bossPrefab: []
 --- !u!1 &1818051702
 GameObject:
@@ -4768,6 +4768,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2284149096743789701, guid: 0b8212a35d4d25949947906a993013e6, type: 3}
+      propertyPath: weapon.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6ada174c90bfe404bb3290bb6416e510, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

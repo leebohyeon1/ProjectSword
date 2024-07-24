@@ -1,9 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.Intrinsics;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public enum BulletType
@@ -15,11 +10,11 @@ public enum BulletType
     Thunder
 }
 
-public class PlayerStat : MonoBehaviour,IListener
+public class PlayerStat : MonoBehaviour, IListener
 {
     [Header("체력")]
     public float maxHp = 100f;
-    public float curHp ;
+    public float curHp;
 
     [Header("무기")]
     public Swords[] weapon;
@@ -31,71 +26,61 @@ public class PlayerStat : MonoBehaviour,IListener
     public int attackDamage = 1;
     public float attackSpeed = 1f;
     public GameObject firePos;
-    public float CriticalRate = 0f;
-    public float CriticalDamaged = 150f;
+    public float criticalRate = 0f;
+    public float criticalDamage = 150f;
 
     [Header("스킬")]
     public float skillCool;
     public float maxSkillCount = 100f;
+    private float skillCount_;
+    private float skillCost;
+    public float maxExtraSkillCount = 150f;
+    private float extraSkillCount;
+    private float skillTimer;
+    [SerializeField] private Vector2[] skillSize = new Vector2[2];
+
     public float skillCount
     {
         get => skillCount_;
-        set 
-        {        
-
+        set
+        {
             skillCount_ = Mathf.Min(value, maxSkillCount);
-      
+         
             if (skillCount_ == maxSkillCount)
             {
-                if (extraSkillCount > 0)
-                {
-                    // extraSkillCount가 0을 초과하면 더 이상 skillCount를 증가시키지 않음
-                    return;
-                }
+                if (extraSkillCount > 0) return;
                 float excess = value - maxSkillCount;
                 extraSkillCount = Mathf.Min(extraSkillCount + excess, maxExtraSkillCount);
             }
         }
     }
-    [SerializeField]
-    private float skillCount_ = 0f;
-    private float skillCost;
-    public float maxExtraSkillCount = 150f;
-    [SerializeField]
-    private float extraSkillCount = 0f;
-    private float skillTimer;
-    [SerializeField]
-    private Vector2[] skillSize = new Vector2[2];
 
     [Header("스왑")]
-    [SerializeField]
     public float maxSwapCount = 100f;
-    private float swapCount_ = 0f;
+    private float swapCount_;
+    public int maxKeepSwap = 4;
+    private int keepSwap;
+    public float swapCool = 5f;
+    private float swapTimer;
+
     public float swapCount
     {
         get => swapCount_;
         set
         {
-            if (keepSwap != maxkeepSwap)
+            if (keepSwap != maxKeepSwap)
             {
                 swapCount_ = Mathf.Min(value, maxSwapCount);
-
-               
-
                 if (swapCount_ >= maxSwapCount)
                 {
-                    swapCount = 0f;
-                    keepSwap += keepSwap < maxkeepSwap ? 1 : 0;
+                    swapCount_ = 0f;
+                    keepSwap = Mathf.Min(keepSwap + 1, maxKeepSwap);
                     EventManager.Instance.PostNotification(EVENT_TYPE.KEEP_SWAP, this, keepSwap);
                 }
             }
         }
     }
-    public int maxkeepSwap = 4;
-    [SerializeField]
-    private int keepSwap = 0;
-    public float swapCool = 5f;
-    private float swapTimer = 0f;
+
 
     [Header("탄막")]
     public GameObject bulletPrefab;
@@ -103,13 +88,14 @@ public class PlayerStat : MonoBehaviour,IListener
     public int poolSize = 20;
     public float bulletSpeed;
     public BulletType bulletType;
+    private List<GameObject> bulletPool = new List<GameObject>();
+    private List<GameObject> TrashPool = new List<GameObject>();
+
     public List<GameObject> bulletPool_
-    { 
+    {
         get { return bulletPool; }
         set { bulletPool = value; }
     }
-    private List<GameObject> bulletPool = new List<GameObject>();
-    private List<GameObject> TrashPool = new List<GameObject>();
 
     [Header("업그레이드")]
     public int[] upAttackDamage = new int[2];
@@ -121,7 +107,6 @@ public class PlayerStat : MonoBehaviour,IListener
     public float skillCoolDown = 0f;
     public float swapDamage = 0f;
 
-
     [Header("흡혈")]
     public bool canDrain = false;
     public int[] damageQuarter;
@@ -130,12 +115,11 @@ public class PlayerStat : MonoBehaviour,IListener
     [Header("자동 회복")]
     public float hpReTimer = 0f;
     public float hpRecoveryAmount = 0f;
-
     public float skillReTimer = 0f;
-    public float skillRecoveryAmount = 0f; 
-
+    public float skillRecoveryAmount = 0f;
     public float swapReTimer = 0f;
     public float swapRecoveryAmount = 0f;
+
     //==================================================================================
 
     void Awake()
@@ -152,11 +136,7 @@ public class PlayerStat : MonoBehaviour,IListener
         SpawnSwords();
         SetWeapon();
         InitializePool();
-
-        //weapon[weaponIndex].GetComponent<MagicSword>().SetBullet();
         GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
-
-      
     }
 
     void Update()
@@ -171,10 +151,8 @@ public class PlayerStat : MonoBehaviour,IListener
 
         AutoRecovery();
 
-        if (keepSwap >= maxkeepSwap)
-        {
+        if (keepSwap >= maxKeepSwap)
             EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, 1f);
-        }
     }
 
     public void OnEvent(EVENT_TYPE Event_Type, Component Sender, object Param = null)
@@ -193,51 +171,18 @@ public class PlayerStat : MonoBehaviour,IListener
                 break;
             case EVENT_TYPE.SWAP_COUNT:
                 if (Sender != this)
-                {             
-                    if(keepSwap < maxkeepSwap)
+                {
+                    if (keepSwap < maxKeepSwap)
                     {
                         swapCount += (float)Param;
                         EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, swapCount / maxSwapCount);
-                    }           
+                    }
                 }
                 break;
         }
     }
+
     //==================================================================================
-
-    public GameObject GetBullet()
-    {
-        foreach (GameObject bullet in bulletPool)
-        {
-            if (!bullet.activeInHierarchy)
-            {
-                bullet.GetComponent<BulletController>().damage = CalculateDamage(attackDamage + upAttackDamage[weaponIndex]);
-                bullet.GetComponent<BulletController>().damageRate = 1f;
-                bullet.GetComponent<BulletController>().bulletType = bulletType;
-                return bullet;
-            }
-        }
-
-        GameObject newBullet = Instantiate(bulletPrefab);
-        newBullet.SetActive(false);
-        newBullet.GetComponent<BulletController>().damage = CalculateDamage(attackDamage + upAttackDamage[weaponIndex]);
-        newBullet.GetComponent<BulletController>().damageRate = 1f;
-        newBullet.GetComponent<BulletController>().bulletType = bulletType;
-        bulletPool.Add(newBullet);
-        return newBullet;
-    }
-
-    void InitializePool()
-    {
-        bulletPool.Clear();
-        for (int i = 0; i < poolSize; i++)
-        {
-            GameObject bullet = Instantiate(bulletPrefab);
-            bullet.SetActive(false);
-            bullet.transform.SetParent(bulletParent, true);
-            bulletPool.Add(bullet);
-        }
-    }
 
     public void ChangeWeapon()
     {
@@ -268,12 +213,137 @@ public class PlayerStat : MonoBehaviour,IListener
         InitializePool();
 
         EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT, this, skillCount / maxSkillCount);
-        EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, swapCount/ maxSwapCount);
+        EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, swapCount / maxSwapCount);
         EventManager.Instance.PostNotification(EVENT_TYPE.KEEP_SWAP, this, keepSwap);
     }
 
+    public void TakeDamage(float damage)
+    {
+        curHp -= damage;
+
+        GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
+        if (curHp <= 0f)
+        {
+            curHp = 0f;
+            Destroy(gameObject);
+        }
+    }
+
+    public void HealHp(float heal)
+    {
+        curHp = Mathf.Min(curHp + heal, maxHp);
+
+        GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
+    }
+
+    public void UseSkill(int skillIndex)
+    {
+        skillCount -= skillCost;
+        skillTimer = 0f;
+        if (extraSkillCount > 0f)
+        {
+            CalculationSkillCount();
+        }
+        weaponList[weaponIndex].GetComponent<SwordSkill>().Skill(skillIndex);
+        EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT, this, skillCount / maxSkillCount);
+    }
+
+    public void Drain(int damage)
+    {
+        int heal = damage <= damageQuarter[0] ? drainAmount[0] :
+                    damage <= damageQuarter[1] ? drainAmount[1] : drainAmount[2];
+
+        curHp = Mathf.Min(curHp + heal, maxHp);
+        GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
+
+    }
+
+    public void AutoRecovery()
+    {
+        if (hpReTimer > 0.1f)
+        {
+            hpReTimer = 0;
+
+            curHp += hpRecoveryAmount;
+            if (curHp >= maxHp)
+            {
+                curHp = maxHp;
+            }
+
+            GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
+        }
+
+        if (skillReTimer > 0.1f)
+        {
+            skillReTimer = 0;
+
+            skillCount += skillRecoveryAmount;
+            EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT, this, skillCount / maxSkillCount);
+        }
+
+        if (swapReTimer > 0.1f)
+        {
+            swapReTimer = 0;
+
+            swapCount += swapRecoveryAmount;
+            EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, swapCount / maxSwapCount);
+        }
+
+        hpReTimer += Time.deltaTime;
+        skillReTimer += Time.deltaTime;
+        swapReTimer += Time.deltaTime;
+    }
+
+    private int CalculateDamage(int baseDamage)
+    {
+        bool isCritical = Random.Range(0f, 100f) < criticalRate;
+        return isCritical ? Mathf.RoundToInt(baseDamage * (1 + criticalDamage / 100f)) : baseDamage;
+    }
+
+    private void CalculationSkillCount()
+    {
+        float countNeeded = maxSkillCount - skillCount;
+        if (extraSkillCount > countNeeded)
+        {
+            skillCount += countNeeded;
+            extraSkillCount -= countNeeded;
+        }
+        else
+        {
+            skillCount += extraSkillCount;
+            extraSkillCount = 0f;
+        }
+    }
+
+    #region GetFunc
+
+    public GameObject GetBullet()
+    {
+        foreach (var bullet in bulletPool)
+        {
+            if (!bullet.activeInHierarchy)
+            {
+                InitializeBullet(bullet);
+                return bullet;
+            }
+        }
+
+        var newBullet = Instantiate(bulletPrefab);
+        newBullet.SetActive(false);
+        InitializeBullet(newBullet);
+        bulletPool.Add(newBullet);
+        return newBullet;
+    }
+
+    public Swords GetSwords() => weapon[weaponIndex];
+
+    public List<GameObject> GetBulletPool() => bulletPool;
+    #endregion
+
+    #region SetFunc
+
     void SetWeapon()
-    {     
+    {
         var currentWeapon = weapon[weaponIndex];
         attackDamage = currentWeapon.attackdamage;
         attackSpeed = currentWeapon.attackSpeed;
@@ -293,215 +363,83 @@ public class PlayerStat : MonoBehaviour,IListener
         GameUIManager.Instance.swapProfile[1].sprite = weapon[1].skillImage;
     }
 
-    public Vector2 SetWeaponSize(int i)
-    {
-        return skillSize[i];
-    }
+    public Vector2 SetWeaponSize(int i) => skillSize[i];
 
-    public void TakeDamage(float damage)
-    {
-        curHp -= damage;
+    public void SetSKillTrans(Transform skillTransform) => weaponList[weaponIndex].GetComponent<SwordSkill>().SetTrans(skillTransform);
 
-        GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
-        if (curHp <= 0f)
+    public void SetBulletIce(float rate)
+    {
+        foreach (var bullet in bulletPool)
         {
-            curHp = 0f;
-            Destroy(gameObject);
+            var controller = bullet.GetComponent<BulletController>();
+            controller.isIce = !controller.isIce;
+            controller.slowRate = rate;
         }
     }
 
-    public void HealHp(float heal)
+    private void InitializeBullet(GameObject bullet)
     {
-        curHp += heal;
-        if (curHp >= maxHp)
-        {
-            maxHp = curHp;
-        }
+        var controller = bullet.GetComponent<BulletController>();
+        controller.damage = CalculateDamage(attackDamage + upAttackDamage[weaponIndex]);
+        controller.bulletType = bulletType;
+    }
 
-        GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
+    void InitializePool()
+    {
+        bulletPool.Clear();
+        for (int i = 0; i < poolSize; i++)
+        {
+            GameObject bullet = Instantiate(bulletPrefab);
+            bullet.SetActive(false);
+            bullet.transform.SetParent(bulletParent, true);
+            bulletPool.Add(bullet);
+        }
     }
 
     public void SpawnSwords()
     {
         for (int i = 0; i < weapon.Length; i++)
         {
-            GameObject swordInstance = Instantiate(weapon[i].swordPrefab, swordPos[i].position, Quaternion.identity);
-            MagicSword magicSword = swordInstance.GetComponent<MagicSword>();
+            var swordInstance = Instantiate(weapon[i].swordPrefab, swordPos[i].position, Quaternion.identity);
+            var magicSword = swordInstance.GetComponent<MagicSword>();
             magicSword.followPos = swordPos[i];
-            magicSword.attckPower = weapon[i].swordAttackPower;
+            magicSword.attackPower = weapon[i].swordAttackPower;
             magicSword.attackSpeed = weapon[i].swordAttackSpeed;
             magicSword.bulletSpeed = weapon[i].swordBulletSpeed;
-            //swordInstance.transform.SetParent(swordPos[i].transform, false);
             weaponList.Add(swordInstance);
         }
     }
 
-    public void UseSkill(int skillIndex)
-    {
-        skillCount -= skillCost;
-        skillTimer = 0f;
-        if (extraSkillCount > 0f)
-        {
-            CalculationCount();
-        }
-        weaponList[weaponIndex].GetComponent<SwordSkill>().Skill(skillIndex);
-        EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT, this, skillCount / maxSkillCount);
-    }
+    #endregion
 
-    void CalculationCount()
-    {
-        float countNeeded = maxSkillCount - skillCount;
-        if (extraSkillCount > countNeeded)
-        {
-            skillCount += countNeeded;
-            extraSkillCount -= countNeeded;
-        }
-        else
-        {
-            skillCount += extraSkillCount;
-            extraSkillCount = 0f;
-        }
-    }
-    
-    public void SetSKillTrans(Transform skillTransform)
-    {
-        weaponList[weaponIndex].GetComponent<SwordSkill>().SetTrans(skillTransform);
-    }
-
-    public Swords GetSwords()
-    {
-        return weapon[weaponIndex];
-    }
-
-    public List<GameObject> GetBulletPool()
-    {
-        return bulletPool;
-    }
+    #region Upgrade
 
     public void Upgrade(Enchant enchant)
     {
-        if (enchant.isMain)
-        {
-            upAttackDamage[0] += enchant.attackDamage;
-            upAttackSpeed[0] += enchant.attackSpeed;
-            upBulletSpeed[0] += enchant.bulletSpeed;
-            upSkillDamage[0] += enchant.skillDamage;
-            skillBuff[0] += enchant.skillBuff;
-            swapBuff[0] += enchant.swapBuff;
-            weaponList[0].GetComponent<MagicSword>().buffLevel += enchant.petUpgrade;
-        }
-
-        if (enchant.isSub)
-        {
-            upAttackDamage[1] += enchant.attackDamage;
-            upAttackSpeed[1] += enchant.attackSpeed;
-            upBulletSpeed[1] += enchant.bulletSpeed;
-            upSkillDamage[1] += enchant.skillDamage;
-            skillBuff[1] += enchant.skillBuff;
-            swapBuff[1] += enchant.swapBuff;
-            weaponList[1].GetComponent<MagicSword>().buffLevel += enchant.petUpgrade;
-        }
+        ApplyUpgrade(enchant, enchant.isMain ? 0 : 1);
 
         canDrain = enchant.isDrain;
         hpRecoveryAmount += enchant.hpRecovery;
         skillCoolDown += enchant.skillCoolDown;
         swapDamage += enchant.swapDamage;
 
-        for (int i = 0; i < weapon.Length; i++)
+        foreach (var weapon in weapon)
         {
-            weapon[weaponIndex].swordPrefab.GetComponent<SwordSkill>().skillDamageUp += upSkillDamage[i];
+            weapon.swordPrefab.GetComponent<SwordSkill>().skillDamageUp += upSkillDamage[weaponIndex];
         }
 
         HealHp(enchant.hpUp);
     }
 
-    public void Drain(int Damage)
+    private void ApplyUpgrade(Enchant enchant, int index)
     {
-        int heal = 0;
-        if(Damage <= damageQuarter[0])
-        {
-            heal = drainAmount[0];
-        }
-        else if(Damage <= damageQuarter[1]) 
-        {
-            heal = drainAmount[1];
-        }
-        else
-        {
-            heal = drainAmount[2];
-        }
-
-        curHp += heal;
-        if (curHp >= maxHp)
-        {
-            maxHp = curHp;
-        }
-
-        GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
+        upAttackDamage[index] += enchant.attackDamage;
+        upAttackSpeed[index] += enchant.attackSpeed;
+        upBulletSpeed[index] += enchant.bulletSpeed;
+        upSkillDamage[index] += enchant.skillDamage;
+        skillBuff[index] += enchant.skillBuff;
+        swapBuff[index] += enchant.swapBuff;
+        weaponList[index].GetComponent<MagicSword>().buffLevel += enchant.petUpgrade;
     }
-        
-    public void AutoRecovery()
-    {
-        hpReTimer += Time.deltaTime;
-        skillReTimer += Time.deltaTime;
-        swapReTimer += Time.deltaTime;
-
-        if (hpReTimer > 0.1f)
-        {
-            hpReTimer = 0;
-
-            curHp += hpRecoveryAmount;
-            if(curHp >= maxHp)
-            {
-                curHp =  maxHp; 
-            }
-
-            GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
-        }
-
-        if(skillReTimer > 0.1f)
-        {
-            skillReTimer = 0;
-
-            skillCount += skillRecoveryAmount;
-            EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT, this, skillCount / maxSkillCount);
-        }
-
-        if(swapReTimer > 0.1f)
-        {
-            swapReTimer = 0;
-
-            swapCount += swapRecoveryAmount;
-            EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, swapCount / maxSwapCount);
-        }    
-
-    }
-
-    private int CalculateDamage(int baseDamage)
-    {
-        // 크리티컬 여부를 결정하기 위한 랜덤 값
-        float randomValue = Random.Range(0f, 100f);
-        if (randomValue < CriticalRate)
-        {
-            // 크리티컬이 발생한 경우 크리티컬 데미지를 추가
-            return (int)(baseDamage * (1 + CriticalDamaged / 100f));
-        }
-        else
-        {
-            // 크리티컬이 발생하지 않은 경우 기본 데미지
-            return baseDamage;
-        }
-    }
-
-    public void SetBulletIce(float rate)
-    {
-        foreach (GameObject bullet in bulletPool)
-        {
-            BulletController controller = bullet.GetComponent<BulletController>();
-            controller.isIce = !controller.isIce;
-            controller.slowRate = rate;
-        }
-    }
+    #endregion
 }
-
-

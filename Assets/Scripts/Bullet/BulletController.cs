@@ -9,7 +9,7 @@ public class BulletController : MonoBehaviour
 
 
     public int damage;
-    public float damageRate;
+    public float damageRate = 1f;
     public float TotalDamage;
 
     public BulletType bulletType;
@@ -50,8 +50,9 @@ public class BulletController : MonoBehaviour
                 playerStat.Drain((int)TotalDamage);              
             }
 
-            if(isIce&& !enemyStat.isIce)
+            if(isIce&& !enemyStat.isIce && !isSkillBullet)
             {
+                enemyStat.isIce = true;
                 enemyStat.DecreaseSpeed(slowRate);
             }
 
