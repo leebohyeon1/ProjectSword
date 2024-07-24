@@ -11,7 +11,9 @@ public enum EVENT_TYPE
    SKILL_COUNT,
    SWAP_COUNT,
    KEEP_SWAP,
-   FIRE
+   FIRE,
+
+   DAN3
 };
 public interface IListener
 {

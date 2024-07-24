@@ -103,7 +103,7 @@ public class Twinflip : MagicSword
 
     private void FireBuff()
     {
-        playerStat.CriticalRate += power[0];
+        playerStat.criticalRate += power[0];
         fireBuffTimer = 0f;
         isBuff[0] = true;
         Debug.Log("บาน๖วม On");
@@ -123,7 +123,7 @@ public class Twinflip : MagicSword
         isBuff[0] = false;
         fireBuffTimer = 0f;
        
-        playerStat.CriticalRate -= power[0];
+        playerStat.criticalRate -= power[0];
         
     }
 

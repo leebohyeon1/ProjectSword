@@ -30,7 +30,7 @@ public class DandelionSkill : SwordSkill
 
     void Update()
     {
-        if (skillActive[0])
+        /*if (skillActive[0])
         {
             skillTimer[0] += Time.deltaTime;
             damageTimer += Time.deltaTime;
@@ -61,7 +61,7 @@ public class DandelionSkill : SwordSkill
                 ppp.Clear();
                 damageTimer = 0f;
             }
-        }
+        }*/
 
         if (skillActive[1])
         {
@@ -84,15 +84,15 @@ public class DandelionSkill : SwordSkill
             return;
         }
 
-        skillTimer[0] = 0f;
-        damageTimer = 0f;
-        skillActive[0] = true;
-
-        ppp.Clear();
-        GameObject panel =Instantiate(Panel, skillPoint.position, Quaternion.identity);
+        GameObject panel = Instantiate(Panel, skillPoint.position, Quaternion.identity);
         panel.transform.localScale = ChangeSkill(0);
-        ppp.Add(panel);
+
+        DandelionField dandelionField = panel.GetComponent<DandelionField>();
+        dandelionField.duration = duration[0];
+        dandelionField.damageAmount = (int)power[0];
+        dandelionField.damageInterval = damageInterval;
     }
+
     public override void SkillB()
     {
 
@@ -135,10 +135,12 @@ public class DandelionSkill : SwordSkill
     {
         return skillSize[index];
     }
+
     public override void SetTrans(Transform trans)
     {
         skillPoint = trans;
     }
+
 
 }
 

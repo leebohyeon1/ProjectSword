@@ -106,7 +106,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
-  skillDamageUp: 0
+  skillDamageUp: 1
   power:
   - 1
   - 0.5
@@ -130,7 +130,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2641036828859503304, guid: 4a97d522e9a5466468758b2fea965d66, type: 3}
   bulletPoolTrans: {fileID: 4659732989768760477}
   poolSize: 20
-  attckPower: 0
+  attackPower: 0
   attackSpeed: 0
   bulletSpeed: 0
   followPos: {fileID: 0}
@@ -138,7 +138,9 @@ MonoBehaviour:
   maxPositions: 50
   bulletPool: []
   firePos: {fileID: 0}
-  maxBuffLevel: 4
+  buffLevel_: 0
+  damageUp: 10
+  damageDownRate: 0.5
 --- !u!1 &5682485270371804699
 GameObject:
   m_ObjectHideFlags: 0
