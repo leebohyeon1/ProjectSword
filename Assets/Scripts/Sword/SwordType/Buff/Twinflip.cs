@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,15 +8,28 @@ public class Twinflip : MagicSword
     private PlayerStat playerStat;
 
     public float[] power = new float[2];
+
     public float duration = 6f;
 
     private bool isFireBuff = true;
     private float timer = 0f;
-    
-    private bool[] isBuff = new bool[2];
+
+    private bool[] isBuff = new bool[4];
     private float fireBuffTimer;
     private float iceBuffTimer;
 
+
+    [Header("고유 능력 진화")]
+
+    [Header("레벨 1")]
+    public int damageUp = 10;
+    private int index = 0;
+
+    [Header("레벨 2")]
+    public float[] buffPower = new float[2];
+
+    [Header("레벨 4")]
+    public int iceDamageUp = 2;
 
     private void Awake()
     {
@@ -60,6 +74,12 @@ public class Twinflip : MagicSword
         {
             timer = 0f; // 타이머 리셋
 
+            if (isBuff[2])
+            {
+                index = playerStat.weaponIndex;
+                playerStat.upAttackDamage[index] += damageUp;
+            }
+
             if (isFireBuff)
             {
                 FireBuff();
@@ -69,13 +89,15 @@ public class Twinflip : MagicSword
                 IceBuff();
             }
 
+           
+
             isFireBuff = !isFireBuff; // 다음에 호출할 Buff 변경
         }
 
         if (isBuff[0])
         {
             fireBuffTimer += Time.deltaTime;
-            if(fireBuffTimer >= duration)
+            if (fireBuffTimer >= duration)
             {
                 FireBuffOff();
             }
@@ -111,7 +133,15 @@ public class Twinflip : MagicSword
     private void IceBuff()
     {
         playerStat.bulletType = BulletType.Ice;
-        playerStat.SetBulletIce(power[1]);
+        if (isBuff[3])
+        {
+            playerStat.SetBulletIce(power[1], iceDamageUp);
+        }
+        else
+        {
+            playerStat.SetBulletIce(power[1]);
+        }
+            
         iceBuffTimer = 0f;
         isBuff[1] = true;
     }
@@ -120,18 +150,79 @@ public class Twinflip : MagicSword
     {
         isBuff[0] = false;
         fireBuffTimer = 0f;
-       
+
         playerStat.criticalRate -= power[0];
-        
+
+        if (isBuff[2])
+        {
+            playerStat.upAttackDamage[index] -= damageUp;
+            index = playerStat.weaponIndex;
+        }
+
     }
 
     private void IceBuffOff()
     {
         isBuff[1] = false;
         iceBuffTimer = 0f;
-      
+
         playerStat.bulletType = playerStat.weapon[playerStat.weaponIndex].bulletType;
-        playerStat.SetBulletIce(power[1]);
-  
+        playerStat.SetBulletIce(0,0);
+
+
+        if (isBuff[2])
+        {
+            playerStat.upAttackDamage[index] -= damageUp;
+            index = playerStat.weaponIndex;
+        }
+    }
+
+    protected override void ApplyBuffEffects()
+    {
+        switch (buffLevel)
+        {
+            case 1:
+                Buff1();
+                break;
+            case 2:
+                Buff2();
+                break;
+            case 3:
+                //      Buff3();
+                break;
+            case 4:
+                Buff4();
+                break;
+        }
+    }
+
+    private void Buff1()
+    {
+        GetComponent<TwinFlipSkill>().isBuff = true;
+        isBuff[2] = true;
+        index = playerStat.weaponIndex;
+        if (isBuff[1] || isBuff[2])
+        {
+            playerStat.upAttackDamage[index] += damageUp;
+        }
+
+        Debug.Log(11);
+    }
+
+    private void Buff2()
+    {
+       
+        power[0] += buffPower[0];
+    }
+
+    private void Buff3()
+    {
+
+    }
+
+    private void Buff4()
+    {
+        isBuff[3] = true;
+        power[1] += buffPower[1];
     }
 }

@@ -46,7 +46,6 @@ public class EnchantSetting : MonoBehaviour
             }
 
             playerStat.Upgrade(choices[num].curEnchant);
-            Debug.Log("업그레이드" + num);
 
             Destroy(gameObject);
         }

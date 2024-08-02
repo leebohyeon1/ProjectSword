@@ -367,13 +367,14 @@ public class PlayerStat : MonoBehaviour, IListener
 
     public void SetSKillTrans(Transform skillTransform) => weaponList[weaponIndex].GetComponent<SwordSkill>().SetTrans(skillTransform);
 
-    public void SetBulletIce(float rate)
+    public void SetBulletIce(float rate, float damage = 0)
     {
         foreach (var bullet in bulletPool)
         {
             var controller = bullet.GetComponent<BulletController>();
             controller.isIce = !controller.isIce;
             controller.slowRate = rate;
+            controller.damgeUp = damage;
         }
     }
 
@@ -416,8 +417,15 @@ public class PlayerStat : MonoBehaviour, IListener
 
     public void Upgrade(Enchant enchant)
     {
-        ApplyUpgrade(enchant, enchant.isMain ? 0 : 1);
-
+        if (enchant.isMain)
+        {
+            ApplyUpgrade(enchant, 0);
+        }
+        if (enchant.isSub)
+        {
+            ApplyUpgrade(enchant, 1);
+        }
+        
         canDrain = enchant.isDrain;
         hpRecoveryAmount += enchant.hpRecovery;
         skillCoolDown += enchant.skillCoolDown;
@@ -439,7 +447,10 @@ public class PlayerStat : MonoBehaviour, IListener
         upSkillDamage[index] += enchant.skillDamage;
         skillBuff[index] += enchant.skillBuff;
         swapBuff[index] += enchant.swapBuff;
-        weaponList[index].GetComponent<MagicSword>().buffLevel += enchant.petUpgrade;
+        if (enchant.petUpgrade != 0)
+        {
+            weaponList[index].GetComponent<MagicSword>().buffLevel += enchant.petUpgrade;
+        }
     }
     #endregion
 }

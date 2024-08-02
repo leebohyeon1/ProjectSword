@@ -106,12 +106,12 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
-  skillDamageUp: 0
+  skillDamageUp: 7
   duration:
   - 5
   - 10
+  isBuff: 0
   slowRate: 50
-  slowCheckTimer: 0
   bulletSpeedSlow: 5
   Panel: {fileID: 8251858154578419569, guid: aa95c3f9e743da2419e5c09fe13f3a88, type: 3}
 --- !u!114 &-5001709836024687580
@@ -129,7 +129,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2641036828859503304, guid: 16c0aca784f5e1f4098713365fb17ac6, type: 3}
   bulletPoolTrans: {fileID: 3444159302311602812}
   poolSize: 20
-  attckPower: 0
+  attackPower: 0
   attackSpeed: 0
   bulletSpeed: 0
   followPos: {fileID: 0}
@@ -137,10 +137,16 @@ MonoBehaviour:
   maxPositions: 50
   bulletPool: []
   firePos: {fileID: 0}
+  buffLevel_: 0
   power:
   - 30
   - 10
   duration: 6
+  damageUp: 10
+  buffPower:
+  - 10
+  - 15
+  iceDamageUp: 10
 --- !u!1 &5488745084292017874
 GameObject:
   m_ObjectHideFlags: 0
