@@ -9,6 +9,20 @@ public class Tenkai : MagicSword
     float timer = 0f;
     Vector3 Pos;
     PlayerStat playerStat;
+
+    [Header("고유 능력 진화")]
+
+    [Header("레벨 1")]
+    public int damageUp = 10;
+
+    [Header("레벨 2")]
+    public float buff2Slow = 20f;
+
+    [Header("레벨 3")]
+    public int buff3DiffusionCount = 3;
+
+    [Header("레벨 4")]
+    public int buff4Damage = 4;
     // Start is called before the first frame update
     void Start()
     {
@@ -127,4 +141,56 @@ public class Tenkai : MagicSword
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(Pos, detectRadius);
     }
+
+    protected override void ApplyBuffEffects()
+    {
+        switch (buffLevel)
+        {
+            case 1:
+                Buff1();
+                break;
+            case 2:
+                Buff2();
+                break;
+            case 3:
+                Buff3();
+                break;
+            case 4:
+                Buff4();
+                break;
+        }
+    }
+
+    private void Buff1()
+    {
+        plusAttackPower += damageUp;
+    }
+    
+    private void Buff2()
+    {
+        foreach (GameObject bullet in bulletPool)
+        {
+            TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
+            bullets.SetBuff2(true,buff2Slow);
+        }
+    } 
+    
+    private void Buff3()
+    {
+        foreach (GameObject bullet in bulletPool)
+        {
+            TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
+            bullets.SetBuff3(buff3DiffusionCount);
+        }
+    } 
+    
+    private void Buff4()
+    {
+        foreach (GameObject bullet in bulletPool)
+        {
+            TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
+            bullets.SetBuff4(buff4Damage);
+        }
+    }
+
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3841417112552887217}
   - component: {fileID: 7997106555405713481}
   - component: {fileID: 9148645188510781627}
-  - component: {fileID: 533999136453879723}
+  - component: {fileID: -2495567833427530405}
   m_Layer: 6
   m_Name: TidebiteBullet
   m_TagString: Bullet
@@ -149,7 +149,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &533999136453879723
+--- !u!114 &-2495567833427530405
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,12 +158,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2641036828859503304}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44e7aa30fb5d09447864021d1ac42066, type: 3}
+  m_Script: {fileID: 11500000, guid: 5398e473e4d4c9c4cbbf980cd976ebf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  damageRate: 0
+  damageRate: 1
   TotalDamage: 0
   bulletType: 3
   isSkillBullet: 0
   isSubBullet: 0
+  isIce: 0
+  slowRate: 0

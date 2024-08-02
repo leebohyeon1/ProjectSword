@@ -11,11 +11,17 @@ public class TenkaiBullet : BulletController
     public LayerMask enemyLayer;
 
     public GameObject target;
+
+    private bool buff2 = false;
+    private float buff2Slow = 0f;
+
+    private bool buff4 = false; 
+    private int buff4Damage;
     // Start is called before the first frame update
     void Start()
     {
         playerStat = FindFirstObjectByType<PlayerStat>();
-
+        damageRate = 1f;
     }
 
     private void OnEnable()
@@ -86,17 +92,32 @@ public class TenkaiBullet : BulletController
         TotalDamage = damage * damageRate;
         if (collision.CompareTag("Enemy"))
         {
-            enemyStat.TakeDamage((int)TotalDamage);
+            if (diffusionCount_ == 0 && buff4)
+            {
+                enemyStat.TakeDamage((int)((buff4Damage+ damage )* damageRate));
+            }
+            else
+            {
+                enemyStat.TakeDamage((int)TotalDamage);
+            }
+
             if (diffusionCount_ > 0)
             {
                 FindNextTarget(collision);
             }
-            else
+            else 
             {
+               
                 gameObject.SetActive(false);
                 diffusionCount_ = 0;
             }
 
+            if(buff2)
+            {
+                enemyStat.DecreaseSpeed(buff2Slow);
+
+               
+            }
 
             if (isIce && !enemyStat.isIce && !isSkillBullet)
             {
@@ -119,5 +140,21 @@ public class TenkaiBullet : BulletController
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    }
+
+    public void SetBuff2(bool boolean, float slow)
+    {
+        buff2 = boolean;
+        buff2Slow = slow;   
+    }
+
+    public void SetBuff3(int count)
+    {
+        diffusionCount = count;
+    }
+
+    public void SetBuff4(int Damage)
+    {
+        buff4Damage = Damage;
     }
 }

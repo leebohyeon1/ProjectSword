@@ -1,10 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Tidebite : MagicSword
 {
     private float timer = 0f;
+
+    [Header("고유 능력 진화")]
+
+    [Header("레벨 1")]
+    public int damageUp = 10;
+
+    [Header("레벨 2")]
+    public int molarDamage = 5;
+
+
+    [Header("레벨 4")]
+    public int molarDamageUp = 2;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +68,57 @@ public class Tidebite : MagicSword
     public override void SetFire()
     {
         base.SetFire();
+    }
+
+    protected override void ApplyBuffEffects()
+    {
+        switch (buffLevel)
+        {
+            case 1:
+                Buff1();
+                break;
+            case 2:
+                Buff2();
+                break;
+            case 3:
+                Buff3();
+                break;
+            case 4:
+                Buff4();
+                break;
+        }
+    }
+
+    private void Buff1()
+    {
+        plusAttackPower += damageUp;
+    }
+
+    private void Buff2()
+    {
+        foreach (GameObject bullet in bulletPool)
+        {
+           TidebiteBullet bullets = bullet.GetComponent<TidebiteBullet>();
+            //bullets.SetDamagebuff(damageDownRate);
+            bullets.SetMolar(true);
+            bullets.SetMolar(1);
+            bullets.SetMolarDamage(molarDamage);
+
+        }
+    }
+
+    private void Buff3()
+    {
+        foreach (GameObject bullet in bulletPool)
+        {
+            TidebiteBullet bullets = bullet.GetComponent<TidebiteBullet>();
+            bullets.SetMolar(2);
+        }
+    }
+
+    private void Buff4()
+    {
+        molarDamage += molarDamageUp;
     }
 
 }

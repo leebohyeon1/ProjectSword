@@ -10,6 +10,7 @@ public class TwinFlipSkill : SwordSkill
     public float[] duration;
     private float[] skillTimer = new float[2];
     private bool[] skillActive = new bool[2];
+    public bool isBuff = false;
 
     [Header("A")]
     public float slowRate;

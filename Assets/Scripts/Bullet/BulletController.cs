@@ -16,8 +16,11 @@ public class BulletController : MonoBehaviour
 
     public bool isSkillBullet;
     public bool isSubBullet;
+
     public bool isIce = false;
     public float slowRate = 0f;
+    public float damgeUp = 0f;
+
     private void Start()
     {
         playerStat = FindFirstObjectByType<PlayerStat>();
@@ -41,7 +44,16 @@ public class BulletController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
-        TotalDamage = damage * damageRate;
+        
+        if (enemyStat.isIce)
+        {
+            TotalDamage = damage * damageRate;
+        }
+        else
+        {
+            TotalDamage = (damage + damgeUp) * damageRate;
+        }
+
         if (collision.CompareTag("Enemy"))
         {
             bool canCount = true;
@@ -56,7 +68,10 @@ public class BulletController : MonoBehaviour
                 enemyStat.DecreaseSpeed(slowRate);
             }
 
+         
+
             if(isSubBullet) canCount = false;
+            
             enemyStat.TakeDamage((int)TotalDamage, canCount);
             gameObject.SetActive(false);
 

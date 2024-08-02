@@ -16,7 +16,7 @@ public class TwinFlipBullet : BulletController
     {
         playerStat = FindFirstObjectByType<PlayerStat>();
         player = playerStat.transform;
-        
+        damageRate = 1;
     }
 
     // Update is called once per frame

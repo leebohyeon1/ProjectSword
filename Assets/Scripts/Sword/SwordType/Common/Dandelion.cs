@@ -16,6 +16,7 @@ public class Dandelion : MagicSword, IListener
     public float damageDownRate = 0.5f;
 
     [Header("·¹º§ 3")]
+    private bool isLevel3 = false;
     public Vector2 areaSize;
     public float duration;
     public int damage;
@@ -45,7 +46,10 @@ public class Dandelion : MagicSword, IListener
 
     public void OnEvent(EVENT_TYPE Event_type, Component Sender, object Param = null)
     {
-        SubDanSkill((Vector3)Param);
+        if (isLevel3)
+        {
+            SubDanSkill((Vector3)Param);
+        }
     }
 
     public override void SetTrans()
@@ -120,6 +124,7 @@ public class Dandelion : MagicSword, IListener
 
     private void Buff3()
     {
+        isLevel3 = true;
         foreach (GameObject bullet in bulletPool)
         {
             DandelionBullet bullets = bullet.GetComponent<DandelionBullet>();

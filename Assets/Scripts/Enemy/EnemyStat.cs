@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyStat : MonoBehaviour
@@ -22,7 +23,8 @@ public class EnemyStat : MonoBehaviour
     private List<float> speedModifiers = new List<float>();
 
     [Header("ป๓ลย")]
-    public bool isIce;
+    public bool isIce = false;
+    public bool isMolar = false;
 
     private Collider2D collision2D;
 
@@ -105,21 +107,16 @@ public class EnemyStat : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if(collision.CompareTag("Bullet"))
+        if(collision.GetComponent<DandelionBullet>() && collision.GetComponent<DandelionBullet>().isSubBullet)
         {
-            collision2D = collision;
+            EventManager.Instance.PostNotification(EVENT_TYPE.DAN3, this, transform.position);
+
         }
     }
 
     void OnDestroy()
     {
-        if(collision2D != null)
-        {
-            if (collision2D.GetComponent<DandelionBullet>().isLevel3)
-            {
-                EventManager.Instance.PostNotification(EVENT_TYPE.DAN3, this, transform.position);
-            }
-        }
-        
+
+                 
     }
 }

@@ -24,31 +24,33 @@ public class DandelionBullet : BulletController
     {
         EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
         TotalDamage = damage * damageRate;
-        if (isDandelion)
+        if (collision.CompareTag("Enemy"))
         {
-            StartCoroutine(SkillB(collision));
-        }
-        else
-        {        
-            if (collision.CompareTag("Enemy"))
+            if (isDandelion)
+            {
+                StartCoroutine(SkillB(collision));
+            }
+            else
             {
                 enemyStat.TakeDamage((int)TotalDamage);
-                gameObject.SetActive(false);
+                gameObject.SetActive(false);         
             }
 
             if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
             {
                 playerStat.Drain((int)TotalDamage);
             }
-        }
 
-        if (isIce && !enemyStat.isIce && !isSkillBullet)
-        {
-            enemyStat.isIce = true;
-            enemyStat.DecreaseSpeed(slowRate);
-            
+            if (isIce && !enemyStat.isIce && !isSkillBullet)
+            {
+                enemyStat.isIce = true;
+                enemyStat.DecreaseSpeed(slowRate);
+
+            }
         }
     }
+       
+    
 
     public IEnumerator SkillB(Collider2D collision)
     {
