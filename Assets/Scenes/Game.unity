@@ -1609,7 +1609,7 @@ Transform:
   m_GameObject: {fileID: 622364761}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 160.82025, y: 301.4618, z: -3.0825567}
+  m_LocalPosition: {x: 160.8203, y: 301.4618, z: -3.082557}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4071,7 +4071,7 @@ Transform:
   m_GameObject: {fileID: 1775285921}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.059004672, y: 0.034168586, z: 0.06654326}
+  m_LocalPosition: {x: 0.05900467, y: 0.03416859, z: 0.06654326}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4107,7 +4107,7 @@ MonoBehaviour:
   - {fileID: 3000195901687093016, guid: 36e4d5ecd821ec9468fbbfcca28f61a5, type: 3}
   - {fileID: 3000195901687093016, guid: 3c56edadf85248546ace7cd72b8c8635, type: 3}
   - {fileID: 3000195901687093016, guid: f622b2a75e5ee0c4fb9f9e25e9abc7fe, type: 3}
-  spawnRate: 2
+  spawnInterval: 2
   plusAcceleration: 0
   enchantOption: {fileID: 76547456678739192, guid: b311e423518f8ea4aa8aa250b4fd1bfd, type: 3}
   spawnCount: 5
@@ -4115,8 +4115,17 @@ MonoBehaviour:
   optionSpeed: 2
   spawnPosition: {fileID: 1981205194}
   bossCount: 0
-  bossSpawnCount: 640000006400000064000000
-  bossPrefab: []
+  bossSpawnCount: 020000006400000064000000
+  bossPrefab:
+  - {fileID: 769503755803468904, guid: 9e5475edf5332f84c997e73aa50da6c7, type: 3}
+  BossEnemyPatterns:
+  - {fileID: 3000195901687093016, guid: d466d3881a4066e4dbd5927171727e9c, type: 3}
+  - {fileID: 3000195901687093016, guid: ddc1a5ddb65741b4eb1c3979881194ad, type: 3}
+  - {fileID: 3000195901687093016, guid: bbea600f4189b604197d4dd846ef29a8, type: 3}
+  - {fileID: 3000195901687093016, guid: 0be65e4cd22800e438536e6734025eb5, type: 3}
+  - {fileID: 3000195901687093016, guid: ca922aface6878e4dba9b8c9cb18f231, type: 3}
+  - {fileID: 3000195901687093016, guid: 76d168cf8ed98f943a36db062385b57f, type: 3}
+  - {fileID: 3000195901687093016, guid: c538ec6434c1525478045bfc2f17e340, type: 3}
 --- !u!1 &1818051702
 GameObject:
   m_ObjectHideFlags: 0
@@ -4771,7 +4780,7 @@ PrefabInstance:
     - target: {fileID: 2284149096743789701, guid: 0b8212a35d4d25949947906a993013e6, type: 3}
       propertyPath: weapon.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: a73a29ea3ae198145ab80d4df4d636c3, type: 2}
+      objectReference: {fileID: 11400000, guid: b9dcf57cc06a3ce45b0d0a93b84585de, type: 2}
     - target: {fileID: 2284149096743789701, guid: 0b8212a35d4d25949947906a993013e6, type: 3}
       propertyPath: weapon.Array.data[1]
       value: 
@@ -4795,15 +4804,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7797334778981395632, guid: 35fa2403aae1c3b4abfb9bafcefdd623, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.089289226
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7797334778981395632, guid: 35fa2403aae1c3b4abfb9bafcefdd623, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.05867243
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7797334778981395632, guid: 35fa2403aae1c3b4abfb9bafcefdd623, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.030366858
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7797334778981395632, guid: 35fa2403aae1c3b4abfb9bafcefdd623, type: 3}
       propertyPath: m_LocalRotation.w

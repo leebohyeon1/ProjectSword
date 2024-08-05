@@ -27,10 +27,11 @@ public class TidebiteBullet : BulletController
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        TotalDamage = damage * damageRate;
         if (collision.CompareTag("Enemy"))
         {
             EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
-            TotalDamage = damage * damageRate;
+            
 
             if (enemyStat.isMolar)
             {
@@ -62,7 +63,39 @@ public class TidebiteBullet : BulletController
             }
         }
 
+        if(collision.CompareTag("Boss"))
+        {
+            BossStat bossStat = collision.GetComponent<BossStat>();
 
+            if (bossStat.isMolar)
+            {
+                bossStat.TakeDamage((int)((damage + (molarDamage * molarLevel)) * damageRate));
+            }
+            else
+            {
+                bossStat.TakeDamage((int)TotalDamage);
+
+            }
+
+            gameObject.SetActive(false);
+
+            if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
+            {
+                playerStat.Drain((int)TotalDamage);
+            }
+
+            if (isIce && !bossStat.isIce && !isSkillBullet)
+            {
+                bossStat.isIce = true;
+                bossStat.DecreaseSpeed(slowRate);
+
+            }
+
+            if (isMolar)
+            {
+                bossStat.isMolar = true;
+            }
+        }
       
     }
 

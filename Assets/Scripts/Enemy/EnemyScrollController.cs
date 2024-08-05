@@ -8,9 +8,9 @@ public class EnemyScrollController : MonoBehaviour
     public float baseSpawnRate;
     public float curSpawnRate;
 
-    public int[] next50Pattern;
-    public int[] next35Pattern;
-    public int[] next15Pattern;
+    public int[] nextFirstPattern;
+    public int[] nextSecondPattern;
+    public int[] nextThirdPattern;
 
     void Update()
     {

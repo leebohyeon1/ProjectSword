@@ -22,10 +22,11 @@ public class DandelionBullet : BulletController
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
+       
         TotalDamage = damage * damageRate;
         if (collision.CompareTag("Enemy"))
         {
+            EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
             if (isDandelion)
             {
                 StartCoroutine(SkillB(collision));
@@ -45,6 +46,32 @@ public class DandelionBullet : BulletController
             {
                 enemyStat.isIce = true;
                 enemyStat.DecreaseSpeed(slowRate);
+
+            }
+        }
+
+        if(collision.CompareTag("Boss"))
+        {
+            BossStat bossStat = collision.GetComponent<BossStat>();
+            if (isDandelion)
+            {
+                StartCoroutine(SkillB(collision));
+            }
+            else
+            {
+                bossStat.TakeDamage((int)TotalDamage);
+                gameObject.SetActive(false);
+            }
+
+            if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
+            {
+                playerStat.Drain((int)TotalDamage);
+            }
+
+            if (isIce && !bossStat.isIce && !isSkillBullet)
+            {
+                bossStat.isIce = true;
+                bossStat.DecreaseSpeed(slowRate);
 
             }
         }

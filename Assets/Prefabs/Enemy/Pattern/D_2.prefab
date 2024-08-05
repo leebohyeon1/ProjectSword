@@ -46,12 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29f6b35b10d85234ab5a06b224c420f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
   baseSpawnRate: 0
   curSpawnRate: 0
-  next50Pattern: 0000000003000000
-  next35Pattern: 06000000
-  next15Pattern: 030000000400000005000000
+  nextFirstPattern: 000000000100000002000000
+  nextSecondPattern: 070000000800000009000000
+  nextThirdPattern: 0b000000
 --- !u!1001 &3612549048930175282
 PrefabInstance:
   m_ObjectHideFlags: 0

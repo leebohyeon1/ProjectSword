@@ -11,7 +11,7 @@ public class SpawnManager : MonoBehaviour
     [Header("적 스폰")]
     public GameObject[] Patterns; // 적 프리팹
     private GameObject curPattern;
-    public float spawnRate = 2.0f; // 적 생성 주기
+    public float spawnInterval = 2.0f; // 적 생성 주기
     private float spawnTimer = 0.0f;
     public float plusAcceleration = 0;
 
@@ -32,6 +32,7 @@ public class SpawnManager : MonoBehaviour
     public GameObject[] bossPrefab;
     private int curEvent = 0;
     private bool isboss;
+    public GameObject[] BossEnemyPatterns;
     //==================================================================================
 
     private void Awake()
@@ -56,43 +57,58 @@ public class SpawnManager : MonoBehaviour
     void Update()
     {
         spawnTimer += Time.deltaTime;
-        if (spawnTimer >= spawnRate)
+        if (!isboss)
         {
-            SpawnEnemy();
-            spawnTimer = 0f;            
+            if (spawnTimer >= spawnInterval)
+            {
+                SpawnEnemy();
+                spawnTimer = 0f;
+            }
+
+            if (curCount >= spawnCount)
+            {
+                SpawnEnchant();
+                curCount = 0;
+            }
+        }
+        else
+        {
+            if(spawnTimer >= spawnInterval)
+            {
+                SpawnBossEnemy();
+                spawnTimer = 0f;
+            }
         }
 
-        if(curCount >= spawnCount)
-        {
-            SpawnEnchant();
-            curCount = 0;
-        }
-
-        SpawnBoss();
+      
     }
     //==================================================================================
 
     private void SpawnEnemy()
     {
+        curCount++;
+        bossCount++;
+
+        if(bossCount >= bossSpawnCount[curEvent])
+        {
+            SpawnBoss();
+            return;
+        }
+
         int randomRate = Random.Range(0, 100);
         int nextPatternIndex = GetNextPatternIndex(ref randomRate);
 
         if (nextPatternIndex >= 0 && nextPatternIndex < Patterns.Length)
         {
             curPattern = Patterns[nextPatternIndex];
-            //Debug.Log($"확률: {randomRate}% , 현재 패턴: {curPattern.name}");
             Instantiate(curPattern, spawnPosition.position, Quaternion.identity);
         }
         else
         {
             Debug.LogError("유효하지 않은 패턴입니다.");
         }
-
-        if (!isboss)
-        {
-            curCount++;
-            bossCount++;
-        }
+   
+        
     }
 
     private int GetNextPatternIndex(ref int randomRate)
@@ -101,22 +117,22 @@ public class SpawnManager : MonoBehaviour
 
         if (randomRate < 50)
         {
-            int index = Random.Range(0, enemyScrollController.next50Pattern.Length);
+            int index = Random.Range(0, enemyScrollController.nextFirstPattern.Length);
             randomRate = 50;
-            return enemyScrollController.next50Pattern[index];
+            return enemyScrollController.nextFirstPattern[index];
        
         }
         else if (randomRate < 85)
         {
-            int index = Random.Range(0, enemyScrollController.next35Pattern.Length);
+            int index = Random.Range(0, enemyScrollController.nextSecondPattern.Length);
             randomRate = 35;
-            return enemyScrollController.next35Pattern[index];
+            return enemyScrollController.nextSecondPattern[index];
         }
         else
         {
-            int index = Random.Range(0, enemyScrollController.next15Pattern.Length);
+            int index = Random.Range(0, enemyScrollController.nextThirdPattern.Length);
             randomRate = 15;
-            return enemyScrollController.next15Pattern[index];
+            return enemyScrollController.nextThirdPattern[index];
         }
     }
 
@@ -138,8 +154,67 @@ public class SpawnManager : MonoBehaviour
         if(bossCount >= bossSpawnCount[curEvent])
         {
             isboss = true;
-            //Instantiate(bossPrefab[curEvent]);
+            Instantiate(bossPrefab[curEvent]);
+            spawnTimer = 0f;
+            StartBossPatternSpawn();
+            curEvent += 1;
         }
+    }
+
+    void StartBossPatternSpawn()
+    {
+        int randomIndex = Random.Range(0, 3);
+        curPattern = BossEnemyPatterns[randomIndex];
+        Instantiate(BossEnemyPatterns[randomIndex], spawnPosition.localPosition, Quaternion.identity);
+    }
+
+    private void SpawnBossEnemy()
+    {
+        int randomRate = Random.Range(0, 100);
+        int nextPatternIndex = GetNextBossPatternIndex(ref randomRate);
+
+        if (nextPatternIndex >= 0 && nextPatternIndex < Patterns.Length)
+        {
+            curPattern = Patterns[nextPatternIndex];
+            Instantiate(curPattern, spawnPosition.position, Quaternion.identity);
+        }
+        else
+        {
+            Debug.LogError("유효하지 않은 패턴입니다.");
+        }
+
+
+    }
+
+    private int GetNextBossPatternIndex(ref int randomRate)
+    {
+        var enemyScrollController = curPattern.GetComponent<EnemyScrollController>();
+
+        if (randomRate < 45)
+        {
+            int index = Random.Range(0, enemyScrollController.nextFirstPattern.Length);
+            randomRate = 45;
+            return enemyScrollController.nextFirstPattern[index];
+
+        }
+        else if (randomRate < 80)
+        {
+            int index = Random.Range(0, enemyScrollController.nextSecondPattern.Length);
+            randomRate = 35;
+            return enemyScrollController.nextSecondPattern[index];
+        }
+        else
+        {
+            int index = Random.Range(0, enemyScrollController.nextThirdPattern.Length);
+            randomRate = 20;
+            return enemyScrollController.nextThirdPattern[index];
+        }
+    }
+
+
+    public void KillBoss()
+    {
+        isboss = false;
     }
 }
 
