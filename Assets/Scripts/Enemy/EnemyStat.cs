@@ -26,8 +26,6 @@ public class EnemyStat : MonoBehaviour
     public bool isIce = false;
     public bool isMolar = false;
 
-    private Collider2D collision2D;
-
     private void Awake()
     {
         isBless = Random.value * 100f < blessRate;
@@ -112,11 +110,5 @@ public class EnemyStat : MonoBehaviour
             EventManager.Instance.PostNotification(EVENT_TYPE.DAN3, this, transform.position);
 
         }
-    }
-
-    void OnDestroy()
-    {
-
-                 
     }
 }

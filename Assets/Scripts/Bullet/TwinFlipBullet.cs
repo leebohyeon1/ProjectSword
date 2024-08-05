@@ -27,11 +27,12 @@ public class TwinFlipBullet : BulletController
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
         TotalDamage = damage * damageRate;
         if (collision.CompareTag("Enemy"))
         {
-           
+            EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
+         
+
             if (isBSkill)
             {
                 float dis = Vector2.Distance(player.position, collision.transform.position);
@@ -54,6 +55,36 @@ public class TwinFlipBullet : BulletController
                 enemyStat.isIce = true;
                 enemyStat.DecreaseSpeed(slowRate);
                
+            }
+
+            gameObject.SetActive(false);
+        }
+
+        if(collision.CompareTag("Boss"))
+        {
+            BossStat bossStat = collision.GetComponent<BossStat>();
+            if (isBSkill)
+            {
+                float dis = Vector2.Distance(player.position, collision.transform.position);
+                Debug.Log("°Å¸®: " + dis);
+                bossStat.TakeDamage(CalculateDamage(dis));
+            }
+            else
+            {
+                bossStat.TakeDamage((int)TotalDamage);
+            }
+
+            if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
+            {
+                playerStat.Drain((int)TotalDamage);
+            }
+
+
+            if (isIce && !bossStat.isIce && !isSkillBullet)
+            {
+                bossStat.isIce = true;
+                bossStat.DecreaseSpeed(slowRate);
+
             }
 
             gameObject.SetActive(false);

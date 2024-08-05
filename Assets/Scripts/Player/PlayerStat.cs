@@ -210,6 +210,7 @@ public class PlayerStat : MonoBehaviour, IListener
 
         keepSwap--;
         swapTimer = 0f;
+        skillCount = 0f;
         InitializePool();
 
         EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT, this, skillCount / maxSkillCount);
@@ -411,6 +412,10 @@ public class PlayerStat : MonoBehaviour, IListener
         }
     }
 
+    public void SetMaxSkillGage()
+    {
+        skillCount = maxSkillCount;
+    }
     #endregion
 
     #region Upgrade
