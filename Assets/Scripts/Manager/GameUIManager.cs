@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -41,6 +42,10 @@ public class GameUIManager : MonoBehaviour, IListener
 
     [Header("ÁøÃ´µµ")]
     public Slider gameProgress;
+
+    [Header("º¸½ºUI")]
+    public Slider bossHpBar;
+    public TMP_Text bossName;
     //==================================================================================
 
     void Awake()
@@ -190,6 +195,25 @@ public class GameUIManager : MonoBehaviour, IListener
   
     }
 
+    public void BossUIOn(string name)
+    {
+        gameProgress.gameObject.SetActive(false);
+        bossHpBar.gameObject.SetActive(true);
+        bossName.gameObject.SetActive(true);
+        bossName.text = name;
+    }
+
+    public void BossUIOff()
+    {
+        gameProgress.gameObject.SetActive(true);
+        bossHpBar.gameObject.SetActive(false);
+        bossName.gameObject.SetActive(false);
+    }
+
+    public void UpdateBossUI(int maxHp, int hp)
+    {
+        bossHpBar.value = (float)hp/maxHp;
+    }
     #endregion
 
 }

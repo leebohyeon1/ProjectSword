@@ -42,39 +42,39 @@ public class DandelionBullet : BulletController
                 playerStat.Drain((int)TotalDamage);
             }
 
-            if (isIce && !enemyStat.isIce && !isSkillBullet)
+            if (isIce && !enemyStat.GetIsIce() && !isSkillBullet)
             {
-                enemyStat.isIce = true;
+                enemyStat.SetIsIce(true);
                 enemyStat.DecreaseSpeed(slowRate);
 
             }
         }
 
-        if(collision.CompareTag("Boss"))
-        {
-            BossStat bossStat = collision.GetComponent<BossStat>();
-            if (isDandelion)
-            {
-                StartCoroutine(SkillB(collision));
-            }
-            else
-            {
-                bossStat.TakeDamage((int)TotalDamage);
-                gameObject.SetActive(false);
-            }
+        //if(collision.CompareTag("Boss"))
+        //{
+        //    BossStat bossStat = collision.GetComponent<BossStat>();
+        //    if (isDandelion)
+        //    {
+        //        StartCoroutine(SkillB(collision));
+        //    }
+        //    else
+        //    {
+        //        bossStat.TakeDamage((int)TotalDamage);
+        //        gameObject.SetActive(false);
+        //    }
 
-            if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
-            {
-                playerStat.Drain((int)TotalDamage);
-            }
+        //    if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
+        //    {
+        //        playerStat.Drain((int)TotalDamage);
+        //    }
 
-            if (isIce && !bossStat.isIce && !isSkillBullet)
-            {
-                bossStat.isIce = true;
-                bossStat.DecreaseSpeed(slowRate);
+        //    if (isIce && !bossStat.GetIsIce() && !isSkillBullet)
+        //    {
+        //        bossStat.SetIsIce(true);
+        //        bossStat.DecreaseSpeed(slowRate);
 
-            }
-        }
+        //    }
+        //}
     }
        
     

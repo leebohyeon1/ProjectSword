@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,23 +7,23 @@ public class EnemyStat : MonoBehaviour
     private EnemyUI enemyUI;
 
     public int hp = 1;
-    public float speed;
-    public int damage;
+    [SerializeField]protected float speed;
+    [SerializeField] protected int damage;
 
     [Header("게이지")]
-    public float skillGage;
-    public float swapGage;
+    [SerializeField] private float skillGage;
+    [SerializeField] protected float swapGage;
 
     [Header("축복")]
-    public float blessRate = 5f;
-    public bool isBless;
-    public float multiplyGage;
+    private float blessRate = 5f;
+    private  bool isBless;
+    private float multiplyGage = 2f;
 
-    private List<float> speedModifiers = new List<float>();
+    protected List<float> speedModifiers = new List<float>();
 
     [Header("상태")]
-    public bool isIce = false;
-    public bool isMolar = false;
+    protected bool isIce = false;
+    protected bool isMolar = false;
 
     private void Awake()
     {
@@ -45,7 +44,7 @@ public class EnemyStat : MonoBehaviour
     
     }
 
-    public void TakeDamage(int damage, bool Count = true)
+    public virtual void TakeDamage(int damage, bool Count = true)
     {
         hp -= damage;
         enemyUI.UpdateHPText(hp);
@@ -69,21 +68,35 @@ public class EnemyStat : MonoBehaviour
         Destroy(gameObject);
     }
 
-     public void DecreaseSpeed(float rate)
+    public virtual void SetIsIce(bool boolean)
+    {
+        isIce = boolean;
+    }
+
+    public virtual void SetIsMolar(bool boolean)
+    {
+        isMolar = boolean;
+    }
+
+    public virtual void DecreaseSpeed(float rate)
     {
         // 속도 감소율 추가
         speedModifiers.Add(rate);
         ApplySpeed();
     }
 
-    public void IncreaseSpeed(float rate)
+    public virtual void IncreaseSpeed(float rate)
     {
         // 속도 증가율 추가 (음수 값을 속도 감소 리스트에 추가)
         speedModifiers.Add(-rate);
         ApplySpeed();
     }
 
-    private void ApplySpeed()
+    public virtual bool GetIsIce() => isIce;
+
+    public virtual bool GetIsMolar() => isMolar;
+
+    protected virtual void ApplySpeed()
     {
         // 모든 속도 감소율을 적용하여 최종 속도를 계산
         float totalRate = 0f;

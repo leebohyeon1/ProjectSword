@@ -95,7 +95,7 @@ public class QueenSlimeController : BossController
             Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
             GameObject bullet = Instantiate(SkillPrefab, transform.position, rotation);
-            bullet.GetComponent<BossBulletController>().InitializeBullet(skillDamage, BulletType.Water);
+            bullet.GetComponent<BossSkillController>().InitializeSkill(skillDamage, BulletType.Water);
 
             Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
             bulletRb.velocity = rotation * Vector2.down * skillSpeed;

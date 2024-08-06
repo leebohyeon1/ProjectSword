@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 455944928915240223}
   m_Layer: 8
   m_Name: QueenSlime
-  m_TagString: Boss
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8509804, g: 0.8509804, b: 0.8509804, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -184,20 +184,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e0ab6e166a4f0a42a8d032a2698876a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
+  hp: 0
   speed: 0
-  swapGage: 200
   damage: 10
+  skillGage: 0
+  swapGage: 200
+  maxHp: 100
   criticalRate: 20
   criticalDamage: 150
   attackSpeed: 3
   bulletSpeed: 3
-  AttackCount: 0
   bossBulletPrefab: {fileID: 7905684294592537497, guid: 537dd470744898441ad387d839388911, type: 3}
   bulletParent: {fileID: 2021148145977963914}
   bulletType: 0
-  isIce: 0
-  isMolar: 0
 --- !u!1 &3160690675207064608
 GameObject:
   m_ObjectHideFlags: 0

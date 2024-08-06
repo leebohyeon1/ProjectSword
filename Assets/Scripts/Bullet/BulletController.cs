@@ -45,7 +45,7 @@ public class BulletController : MonoBehaviour
     {
         EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
         
-        if (enemyStat.isIce)
+        if (enemyStat.GetIsIce())
         {
             TotalDamage = damage * damageRate;
         }
@@ -62,9 +62,9 @@ public class BulletController : MonoBehaviour
                 playerStat.Drain((int)TotalDamage);              
             }
 
-            if(isIce&& !enemyStat.isIce && !isSkillBullet)
+            if(isIce&& !enemyStat.GetIsIce() && !isSkillBullet)
             {
-                enemyStat.isIce = true;
+                enemyStat.SetIsIce(true);
                 enemyStat.DecreaseSpeed(slowRate);
             }
 

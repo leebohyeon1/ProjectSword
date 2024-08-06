@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossBulletController : MonoBehaviour
+public class BossSkillController : MonoBehaviour
 {
     private float damage = 0;
-
     private BulletType bulletType;
     // Start is called before the first frame update
     void Start()
@@ -19,7 +18,7 @@ public class BossBulletController : MonoBehaviour
 
     }
 
-    public void InitializeBullet(float _damage, BulletType type)
+    public virtual void InitializeSkill(float _damage, BulletType type)
     {
         damage = _damage;
         bulletType = type;
@@ -36,6 +35,6 @@ public class BossBulletController : MonoBehaviour
 
     void OnBecameInvisible()
     {
-        gameObject.SetActive(false);       
+        Destroy(gameObject);
     }
 }
