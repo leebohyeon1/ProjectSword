@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyUI : MonoBehaviour
 {
-    public TMP_Text text;
+    [SerializeField]private TMP_Text text;
 
     private void Awake()
     {

@@ -28,11 +28,6 @@ public class TenkaiBullet : BulletController
     {
         diffusionCount_ = diffusionCount;
     }
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     void FindNextTarget(Collider2D collider)
     {
@@ -63,7 +58,7 @@ public class TenkaiBullet : BulletController
                 EnemyStat currentEnemyStat = enemyCollider.GetComponent<EnemyStat>();
                 if (currentEnemyStat != null && lowestHealthEnemy != null)
                 {
-                    if (currentEnemyStat.hp < lowestHealthEnemy.hp)
+                    if (currentEnemyStat.HP < lowestHealthEnemy.HP)
                     {
                         closestEnemy = enemyTransform;
                         lowestHealthEnemy = currentEnemyStat;
@@ -79,11 +74,7 @@ public class TenkaiBullet : BulletController
         else
         {
             transform.position = closestEnemy.position;
-        }
-        //target = closestEnemy.gameObject;
-        //target.GetComponent<EnemyStat>().TakeDamage((int)TotalDamage);
-
-     
+        }     
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -133,50 +124,6 @@ public class TenkaiBullet : BulletController
 
             diffusionCount_--;
         }
-
-        //if(collision.CompareTag("Boss"))
-        //{
-        //    BossStat bossStat = collision.GetComponent<BossStat>();
-        //    if (diffusionCount_ == 0 && buff4)
-        //    {
-        //        bossStat.TakeDamage((int)((buff4Damage + damage) * damageRate));
-        //    }
-        //    else
-        //    {
-        //        bossStat.TakeDamage((int)TotalDamage);
-        //    }
-
-        //    if (diffusionCount_ > 0)
-        //    {
-        //        FindNextTarget(collision);
-        //    }
-        //    else
-        //    {
-
-        //        gameObject.SetActive(false);
-        //        diffusionCount_ = 0;
-        //    }
-
-        //    if (buff2)
-        //    {
-        //        bossStat.DecreaseSpeed(buff2Slow);
-
-
-        //    }
-
-        //    if (isIce && !bossStat.isIce && !isSkillBullet)
-        //    {
-        //        bossStat.isIce = true;
-        //        bossStat.DecreaseSpeed(slowRate);
-        //    }
-
-        //    if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
-        //    {
-        //        playerStat.Drain((int)TotalDamage);
-        //    }
-
-        //    diffusionCount_--;
-        //}
     }
 
     private void OnDrawGizmos()
@@ -199,5 +146,40 @@ public class TenkaiBullet : BulletController
     public void SetBuff4(int Damage)
     {
         buff4Damage = Damage;
+    }
+
+    //=============================================================================
+    public override void SetBulletType(BulletType bulletType)
+    {
+        base.SetBulletType(bulletType);
+    }
+    public override void SetDamagebuff(float rate)
+    {
+        base.SetDamagebuff(rate);
+    }
+    public override void SetDamage(int Damage)
+    {
+        base.SetDamage(Damage);
+    }
+    public override void SetSlowRate(float slowRate)
+    {
+        base.SetSlowRate(slowRate);
+    }
+    public override void SetIce(bool ice)
+    {
+        base.SetIce(ice);
+    }
+    public override void IncreaseDamage(float damage)
+    {
+        base.IncreaseDamage(damage);
+    }
+
+    public override bool GetSubBullet()
+    {
+        return base.GetSubBullet();
+    }
+    public override bool GetIce()
+    {
+        return base.GetIce();
     }
 }

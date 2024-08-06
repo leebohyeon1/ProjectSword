@@ -98,7 +98,7 @@ public class BossStat : EnemyStat
         }
 
         float finalSpeed = speed * (1 - totalRate / 100f);
-        GetComponent<Rigidbody2D>().velocity = Vector2.down * (finalSpeed + SpawnManager.Instance.plusAcceleration);
+        GetComponent<Rigidbody2D>().velocity = Vector2.down * (finalSpeed + SpawnManager.Instance.PlusAcceleration());
     }
 
     public GameObject GetBullet()
@@ -141,4 +141,5 @@ public class BossStat : EnemyStat
         base.SetIsMolar(boolean);   
     }
 
+    public override int HP => base.HP;
 }

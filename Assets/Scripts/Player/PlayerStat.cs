@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum BulletType
 {
@@ -13,28 +14,28 @@ public enum BulletType
 public class PlayerStat : MonoBehaviour, IListener
 {
     [Header("체력")]
-    public float maxHp = 100f;
-    public float curHp;
+    [SerializeField] private float maxHp = 100f;
+    [SerializeField] private float curHp;
 
     [Header("무기")]
-    public Swords[] weapon;
+    [SerializeField] private Swords[] weapon;
     private List<GameObject> weaponList = new List<GameObject>();
-    public int weaponIndex;
-    public Transform[] swordPos;
+    [SerializeField] private int weaponIndex;
+    [SerializeField] private Transform[] swordPos;
 
     [Header("공격")]
-    public int attackDamage = 1;
-    public float attackSpeed = 1f;
-    public GameObject firePos;
-    public float criticalRate = 0f;
-    public float criticalDamage = 150f;
+    [SerializeField] private int attackDamage = 1;
+    [SerializeField] private float attackSpeed = 1f;
+    [SerializeField] private GameObject firePos;
+    [SerializeField] private float criticalRate = 0f;
+    [SerializeField] private float criticalDamage = 150f;
 
     [Header("스킬")]
-    public float skillCool;
-    public float maxSkillCount = 100f;
+    [SerializeField] private float skillCool;
+    [SerializeField] private float maxSkillCount = 100f;
     private float skillCount_;
     private float skillCost;
-    public float maxExtraSkillCount = 150f;
+    [SerializeField] private float maxExtraSkillCount = 150f;
     private float extraSkillCount;
     private float skillTimer;
     [SerializeField] private Vector2[] skillSize = new Vector2[2];
@@ -335,10 +336,16 @@ public class PlayerStat : MonoBehaviour, IListener
         bulletPool.Add(newBullet);
         return newBullet;
     }
-
     public Swords GetSwords() => weapon[weaponIndex];
-
     public List<GameObject> GetBulletPool() => bulletPool;
+    public GameObject GetFirePos() => firePos;
+
+    public int GetWeaponIndex() => weaponIndex;
+    public float GetCurHP() => curHp;
+    public float GetMaxHP() => maxHp;
+    public float GetAttackSpeed() => attackSpeed;   
+
+
     #endregion
 
     #region SetFunc
@@ -350,18 +357,17 @@ public class PlayerStat : MonoBehaviour, IListener
         attackSpeed = currentWeapon.attackSpeed;
         skillCool = currentWeapon.skillCool;
         skillCost = currentWeapon.skillCost;
-        bulletPrefab = currentWeapon.swordPrefab.GetComponent<MagicSword>().bulletPrefab;
+        bulletPrefab = currentWeapon.swordPrefab.GetComponent<MagicSword>().GetBulletPrefab();
         bulletSpeed = currentWeapon.bulletSpeed;
         bulletType = currentWeapon.bulletType;
 
         for (int i = 0; i < skillSize.Length; i++)
         {
-            skillSize[i] = weapon[weaponIndex].swordPrefab.GetComponent<SwordSkill>().skillSize[i];
+            skillSize[i] = weapon[weaponIndex].swordPrefab.GetComponent<SwordSkill>().GetSkillSize()[i];
         }
 
-        GameUIManager.Instance.skillProfile.sprite = weapon[weaponIndex].skillImage;
-        GameUIManager.Instance.swapProfile[0].sprite = weapon[0].skillImage;
-        GameUIManager.Instance.swapProfile[1].sprite = weapon[1].skillImage;
+        GameUIManager.Instance.SetSkillImage(weapon[weaponIndex].skillImage);
+        GameUIManager.Instance.SetSwapUIImage(weapon[0].skillImage, weapon[1].skillImage);
     }
 
     public Vector2 SetWeaponSize(int i) => skillSize[i];
@@ -373,17 +379,17 @@ public class PlayerStat : MonoBehaviour, IListener
         foreach (var bullet in bulletPool)
         {
             var controller = bullet.GetComponent<BulletController>();
-            controller.isIce = !controller.isIce;
-            controller.slowRate = rate;
-            controller.damgeUp = damage;
+            controller.SetIce(!controller.GetIce());
+            controller.SetSlowRate(rate);
+            controller.IncreaseDamage(damage);
         }
     }
 
     private void InitializeBullet(GameObject bullet)
     {
         var controller = bullet.GetComponent<BulletController>();
-        controller.damage = CalculateDamage(attackDamage + upAttackDamage[weaponIndex]);
-        controller.bulletType = bulletType;
+        controller.SetDamage( CalculateDamage(attackDamage + upAttackDamage[weaponIndex]));
+        controller.SetBulletType(bulletType);
     }
 
     void InitializePool()
@@ -404,10 +410,8 @@ public class PlayerStat : MonoBehaviour, IListener
         {
             var swordInstance = Instantiate(weapon[i].swordPrefab, swordPos[i].position, Quaternion.identity);
             var magicSword = swordInstance.GetComponent<MagicSword>();
-            magicSword.followPos = swordPos[i];
-            magicSword.attackPower = weapon[i].swordAttackPower;
-            magicSword.attackSpeed = weapon[i].swordAttackSpeed;
-            magicSword.bulletSpeed = weapon[i].swordBulletSpeed;
+            magicSword.SetSword(swordPos[i], weapon[i].swordAttackPower, weapon[i].swordAttackSpeed, weapon[i].swordBulletSpeed);
+ 
             weaponList.Add(swordInstance);
         }
     }
@@ -415,6 +419,15 @@ public class PlayerStat : MonoBehaviour, IListener
     public void SetMaxSkillGage()
     {
         skillCount = maxSkillCount;
+    }
+
+    public void SetCriticalRate(float Rate)
+    {
+        criticalRate += Rate;
+        if(criticalRate <= 0)
+        {
+            criticalRate = 0;
+        }
     }
     #endregion
 
@@ -438,7 +451,7 @@ public class PlayerStat : MonoBehaviour, IListener
 
         foreach (var weapon in weapon)
         {
-            weapon.swordPrefab.GetComponent<SwordSkill>().skillDamageUp += upSkillDamage[weaponIndex];
+            weapon.swordPrefab.GetComponent<SwordSkill>().SetSkillDamage(upSkillDamage[weaponIndex]);
         }
 
         HealHp(enchant.hpUp);

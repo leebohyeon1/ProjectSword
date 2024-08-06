@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TenkaiFire : SwordFire
 {
-    public TenkaiBullet bullet;
-    public Tenkai tenkai;
+    [SerializeField] private TenkaiBullet bullet;
+    [SerializeField] private Tenkai tenkai;
 
     Vector3 Pos;
     void Start()
@@ -52,7 +52,7 @@ public class TenkaiFire : SwordFire
                 EnemyStat currentEnemyStat = enemyCollider.GetComponent<EnemyStat>();
                 if (currentEnemyStat != null && lowestHealthEnemy != null)
                 {
-                    if (currentEnemyStat.hp < lowestHealthEnemy.hp)
+                    if (currentEnemyStat.HP < lowestHealthEnemy.HP)
                     {
                         closestEnemy = enemyTransform;
                         lowestHealthEnemy = currentEnemyStat;
@@ -73,7 +73,16 @@ public class TenkaiFire : SwordFire
         }
         EventManager.Instance.PostNotification(EVENT_TYPE.FIRE, this);
     }
+    public override void SetMagicSword(MagicSword sword)
+    {
+        base.SetMagicSword(sword);
+    }
 
+    public void SetTenkai(TenkaiBullet tenkaiBullet, Tenkai tenkai)
+    {
+        bullet = tenkaiBullet;
+        this.tenkai = tenkai;
+    }
 
     private void OnDrawGizmosSelected()
     {

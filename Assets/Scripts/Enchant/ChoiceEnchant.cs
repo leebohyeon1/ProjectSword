@@ -6,10 +6,15 @@ using UnityEngine;
 
 public class ChoiceEnchant : MonoBehaviour
 {
-    public Enchant curEnchant;
+    [SerializeField] private Enchant curEnchant;
+    public Enchant Enchant
+    {
+        get { return curEnchant; }
+        set { curEnchant = value; }
+    }
     // Start is called before the first frame update
-    
-    public TMP_Text text;
+
+    [SerializeField] private TMP_Text text;
     //==================================================================================
 
     void OnBecameInvisible()
@@ -22,4 +27,6 @@ public class ChoiceEnchant : MonoBehaviour
     {
         text.text = curEnchant.name;
     }
+
+ 
 }

@@ -9,30 +9,31 @@ public class SpawnManager : MonoBehaviour
     //==================================================================================
 
     [Header("利 胶迄")]
-    public GameObject[] Patterns; // 利 橇府普
+    [SerializeField] private GameObject[] Patterns; // 利 橇府普
     private GameObject curPattern;
-    public float spawnInterval = 2.0f; // 利 积己 林扁
+    [SerializeField] private float spawnInterval = 2.0f; // 利 积己 林扁
     private float spawnTimer = 0.0f;
-    public float plusAcceleration = 0;
+    [SerializeField] private float plusAcceleration = 0;
+    
 
     [Header("急琶瘤")]
-    public GameObject enchantOption;
-    public int spawnCount = 5;
+    [SerializeField] private GameObject enchantOption;
+    [SerializeField] private int spawnCount = 5;
     [SerializeField]
     private int curCount = 0;
-    public float optionSpeed = 5f;
+    [SerializeField] private float optionSpeed = 5f;
 
     [Space(20f)]
     [SerializeField]
     private Transform spawnPosition;
 
     [Header("焊胶")]
-    public int bossCount = 0;
-    public int[] bossSpawnCount;
-    public GameObject[] bossPrefab;
+    [SerializeField] private int bossCount = 0;
+    [SerializeField] private int[] bossSpawnCount;
+    [SerializeField] private GameObject[] bossPrefab;
     private int curEvent = 0;
     private bool isboss;
-    public GameObject[] BossEnemyPatterns;
+    [SerializeField] private GameObject[] BossEnemyPatterns;
     //==================================================================================
 
     private void Awake()
@@ -83,7 +84,11 @@ public class SpawnManager : MonoBehaviour
       
     }
     //==================================================================================
-
+    public float PlusAcceleration() => plusAcceleration;
+    public int BossCount() => bossCount; 
+    public int[] BossSpawnCount() => bossSpawnCount;
+    public int BossLength() => bossSpawnCount.Length;
+    //==================================================================================
     private void SpawnEnemy()
     {
         curCount++;
@@ -117,22 +122,22 @@ public class SpawnManager : MonoBehaviour
 
         if (randomRate < 50)
         {
-            int index = Random.Range(0, enemyScrollController.nextFirstPattern.Length);
+            int index = Random.Range(0, enemyScrollController.NextPattern(0).Length);
             randomRate = 50;
-            return enemyScrollController.nextFirstPattern[index];
+            return enemyScrollController.NextPattern(0)[index];
        
         }
         else if (randomRate < 85)
         {
-            int index = Random.Range(0, enemyScrollController.nextSecondPattern.Length);
+            int index = Random.Range(0, enemyScrollController.NextPattern(1).Length);
             randomRate = 35;
-            return enemyScrollController.nextSecondPattern[index];
+            return enemyScrollController.NextPattern(1)[index];
         }
         else
         {
-            int index = Random.Range(0, enemyScrollController.nextThirdPattern.Length);
+            int index = Random.Range(0, enemyScrollController.NextPattern(2).Length);
             randomRate = 15;
-            return enemyScrollController.nextThirdPattern[index];
+            return enemyScrollController.NextPattern(2)[index];
         }
     }
 
@@ -192,22 +197,22 @@ public class SpawnManager : MonoBehaviour
 
         if (randomRate < 45)
         {
-            int index = Random.Range(0, enemyScrollController.nextFirstPattern.Length);
+            int index = Random.Range(0, enemyScrollController.NextPattern(0).Length);
             randomRate = 45;
-            return enemyScrollController.nextFirstPattern[index];
+            return enemyScrollController.NextPattern(0)[index];
 
         }
         else if (randomRate < 80)
         {
-            int index = Random.Range(0, enemyScrollController.nextSecondPattern.Length);
+            int index = Random.Range(0, enemyScrollController.NextPattern(1).Length);
             randomRate = 35;
-            return enemyScrollController.nextSecondPattern[index];
+            return enemyScrollController.NextPattern(1)[index];
         }
         else
         {
-            int index = Random.Range(0, enemyScrollController.nextThirdPattern.Length);
+            int index = Random.Range(0, enemyScrollController.NextPattern(2).Length);
             randomRate = 20;
-            return enemyScrollController.nextThirdPattern[index];
+            return enemyScrollController.NextPattern(2)[index];
         }
     }
 
@@ -217,6 +222,8 @@ public class SpawnManager : MonoBehaviour
         isboss = false;
         GameUIManager.Instance.BossUIOff();
     }
+
+
 }
 
 

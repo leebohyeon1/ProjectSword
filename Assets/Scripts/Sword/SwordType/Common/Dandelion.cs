@@ -51,7 +51,7 @@ public class Dandelion : MagicSword, IListener
             SubDanSkill((Vector3)Param);
         }
     }
-
+    //================================================================================================
     public override void SetTrans()
     {
         base.SetTrans();
@@ -86,7 +86,13 @@ public class Dandelion : MagicSword, IListener
     {
         base.SetFire();
     }
+    public override GameObject GetBulletPrefab() => base.GetBulletPrefab();
 
+    public override void SetSword(Transform Trans, int AttackPower, float AttackSpeed, float BulletSpeed)
+    {
+        base.SetSword(Trans, AttackPower, AttackSpeed, BulletSpeed);
+    }
+    //================================================================================================
     protected override void ApplyBuffEffects()
     {
         switch (buffLevel)
@@ -148,4 +154,6 @@ public class Dandelion : MagicSword, IListener
         dandelionField.damageAmount = damage;
         dandelionField.damageInterval = Interval;
     }
+
+ 
 }

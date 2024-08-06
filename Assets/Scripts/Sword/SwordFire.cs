@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class SwordFire : MonoBehaviour
 {
-    public PlayerStat playerStat;
-    public MagicSword magicSword;
+    [SerializeField] protected PlayerStat playerStat;
+    [SerializeField] protected MagicSword magicSword;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +28,7 @@ public class SwordFire : MonoBehaviour
 
         Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
 
-        bulletRb.velocity = Vector2.up * (playerStat.bulletSpeed + playerStat.upBulletSpeed[playerStat.weaponIndex]);
+        bulletRb.velocity = Vector2.up * (playerStat.bulletSpeed + playerStat.upBulletSpeed[playerStat.GetWeaponIndex()]);
 
         EventManager.Instance.PostNotification(EVENT_TYPE.FIRE, this);
     }
@@ -36,5 +36,10 @@ public class SwordFire : MonoBehaviour
     public virtual void Set()
     {
         playerStat = FindFirstObjectByType<PlayerStat>();
+    }
+
+    public virtual void SetMagicSword(MagicSword sword)
+    {
+        magicSword = sword;
     }
 }

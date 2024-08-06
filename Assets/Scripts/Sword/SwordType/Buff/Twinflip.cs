@@ -52,6 +52,7 @@ public class Twinflip : MagicSword
         Follow();
         Fire();
     }
+    //================================================================================================
 
     public override void SetTrans()
     {
@@ -76,7 +77,7 @@ public class Twinflip : MagicSword
 
             if (isBuff[2])
             {
-                index = playerStat.weaponIndex;
+                index = playerStat.GetWeaponIndex();
                 playerStat.upAttackDamage[index] += damageUp;
             }
 
@@ -122,10 +123,17 @@ public class Twinflip : MagicSword
     {
         base.InitializePool();
     }
+    
+    public override GameObject GetBulletPrefab() => base.GetBulletPrefab();
 
+    public override void SetSword(Transform Trans, int AttackPower, float AttackSpeed, float BulletSpeed)
+    {
+        base.SetSword(Trans, AttackPower, AttackSpeed, BulletSpeed);
+    }
+    //================================================================================================
     private void FireBuff()
     {
-        playerStat.criticalRate += power[0];
+        playerStat.SetCriticalRate(power[0]);
         fireBuffTimer = 0f;
         isBuff[0] = true;
     }
@@ -151,12 +159,12 @@ public class Twinflip : MagicSword
         isBuff[0] = false;
         fireBuffTimer = 0f;
 
-        playerStat.criticalRate -= power[0];
+        playerStat.SetCriticalRate(-power[0]);
 
         if (isBuff[2])
         {
             playerStat.upAttackDamage[index] -= damageUp;
-            index = playerStat.weaponIndex;
+            index = playerStat.GetWeaponIndex();
         }
 
     }
@@ -166,14 +174,14 @@ public class Twinflip : MagicSword
         isBuff[1] = false;
         iceBuffTimer = 0f;
 
-        playerStat.bulletType = playerStat.weapon[playerStat.weaponIndex].bulletType;
-        playerStat.SetBulletIce(0,0);
+        playerStat.bulletType = playerStat.GetSwords().bulletType;
+        playerStat.SetBulletIce(-power[1], -iceDamageUp);
 
 
         if (isBuff[2])
         {
             playerStat.upAttackDamage[index] -= damageUp;
-            index = playerStat.weaponIndex;
+            index = playerStat.GetWeaponIndex();
         }
     }
 
@@ -200,7 +208,7 @@ public class Twinflip : MagicSword
     {
         GetComponent<TwinFlipSkill>().isBuff = true;
         isBuff[2] = true;
-        index = playerStat.weaponIndex;
+        index = playerStat.GetWeaponIndex();
         if (isBuff[1] || isBuff[2])
         {
             playerStat.upAttackDamage[index] += damageUp;
@@ -225,4 +233,6 @@ public class Twinflip : MagicSword
         isBuff[3] = true;
         power[1] += buffPower[1];
     }
+
+
 }

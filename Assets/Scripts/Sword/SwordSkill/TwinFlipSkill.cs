@@ -107,7 +107,7 @@ public class TwinFlipSkill : SwordSkill
         foreach (GameObject bullet in playerStat.bulletPool_)
         {
             TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
-            bullets.bulletType = BulletType.Ice;
+            bullets.SetBulletType( BulletType.Ice);
         }
 
     }
@@ -118,7 +118,7 @@ public class TwinFlipSkill : SwordSkill
         {
             TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
             bullets.isBSkill = true;
-            bullets.bulletType = BulletType.Fire;
+            bullets.SetBulletType(BulletType.Fire);
         }
         skillTimer[1] = 0f;
         skillActive[1] = true;
@@ -160,6 +160,17 @@ public class TwinFlipSkill : SwordSkill
     {
         skillPoint = trans;
     }
+
+    public override Vector2[] GetSkillSize()
+    {
+        return base.GetSkillSize();
+    }
+
+    public override void SetSkillDamage(float Damage)
+    {
+        base.SetSkillDamage(Damage);
+    }
+
     private void RestoreAllEnemySpeeds()
     {
         foreach (GameObject enemy in enemyList)

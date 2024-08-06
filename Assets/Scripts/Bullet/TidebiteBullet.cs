@@ -20,11 +20,6 @@ public class TidebiteBullet : BulletController
 
     }
 
-    public override void SetDamagebuff(float rate)
-    {
-        base.SetDamagebuff(rate);
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         TotalDamage = damage * damageRate;
@@ -61,42 +56,7 @@ public class TidebiteBullet : BulletController
             {
                 enemyStat.SetIsMolar(true);
             }
-        }
-
-        //if(collision.CompareTag("Boss"))
-        //{
-        //    BossStat bossStat = collision.GetComponent<BossStat>();
-
-        //    if (bossStat.isMolar)
-        //    {
-        //        bossStat.TakeDamage((int)((damage + (molarDamage * molarLevel)) * damageRate));
-        //    }
-        //    else
-        //    {
-        //        bossStat.TakeDamage((int)TotalDamage);
-
-        //    }
-
-        //    gameObject.SetActive(false);
-
-        //    if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
-        //    {
-        //        playerStat.Drain((int)TotalDamage);
-        //    }
-
-        //    if (isIce && !bossStat.isIce && !isSkillBullet)
-        //    {
-        //        bossStat.isIce = true;
-        //        bossStat.DecreaseSpeed(slowRate);
-
-        //    }
-
-        //    if (isMolar)
-        //    {
-        //        bossStat.isMolar = true;
-        //    }
-        //}
-      
+        }     
     }
 
     public void SetMolar(bool molar_bool)
@@ -114,5 +74,40 @@ public class TidebiteBullet : BulletController
         this.molarDamage = molarDamage;
     }
 
-    public bool GetMolar => isMolar;
+    public bool GetMolar() => isMolar;
+
+    //=============================================================================
+    public override void SetBulletType(BulletType bulletType)
+    {
+        base.SetBulletType(bulletType);
+    }
+    public override void SetDamagebuff(float rate)
+    {
+        base.SetDamagebuff(rate);
+    }
+    public override void SetDamage(int Damage)
+    {
+        base.SetDamage(Damage);
+    }
+    public override void SetSlowRate(float slowRate)
+    {
+        base.SetSlowRate(slowRate);
+    }
+    public override void SetIce(bool ice)
+    {
+        base.SetIce(ice);
+    }
+    public override void IncreaseDamage(float damage)
+    {
+        base.IncreaseDamage(damage);
+    }
+
+    public override bool GetSubBullet()
+    {
+        return base.GetSubBullet();
+    }
+    public override bool GetIce()
+    {
+        return base.GetIce();
+    }
 }

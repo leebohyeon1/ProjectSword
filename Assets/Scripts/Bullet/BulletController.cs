@@ -8,27 +8,22 @@ public class BulletController : MonoBehaviour
     protected PlayerStat playerStat;
 
 
-    public int damage;
-    public float damageRate = 1f;
-    public float TotalDamage;
+    [SerializeField] protected int damage;
+    [SerializeField] protected float damageRate = 1f;
+    [SerializeField] protected float TotalDamage;
 
-    public BulletType bulletType;
+    [SerializeField] protected BulletType bulletType;
 
-    public bool isSkillBullet;
-    public bool isSubBullet;
+    [SerializeField] protected bool isSkillBullet;
+    [SerializeField] protected bool isSubBullet;
 
-    public bool isIce = false;
-    public float slowRate = 0f;
-    public float damgeUp = 0f;
+    [SerializeField] protected bool isIce = false;
+    [SerializeField] protected float slowRate = 0f;
+    [SerializeField] protected float damageUp = 0f;
 
     private void Start()
     {
         playerStat = FindFirstObjectByType<PlayerStat>();
-    }
-
-    private void Update()
-    {
-
     }
 
     void OnBecameInvisible()
@@ -41,6 +36,38 @@ public class BulletController : MonoBehaviour
         damageRate = rate;
     }
 
+    public virtual void SetBulletType(BulletType bulletType)
+    {
+        this.bulletType = bulletType;
+    }
+
+    public virtual void SetDamage(int Damage)
+    {
+        damage = Damage;
+    }
+
+    public virtual void SetSlowRate(float slowRate)
+    {
+        this.slowRate += slowRate;
+    }
+    public virtual void SetIce(bool ice)
+    {
+        isIce = ice;
+    }
+    public virtual void IncreaseDamage(float damage)
+    {
+        damageUp += damage; 
+        if(damageUp < 0f)
+        {
+            damageUp = 0f;
+        }
+    }
+
+    public virtual bool GetSubBullet() => isSubBullet;
+    public virtual bool GetIce() => isIce;
+
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
@@ -51,7 +78,7 @@ public class BulletController : MonoBehaviour
         }
         else
         {
-            TotalDamage = (damage + damgeUp) * damageRate;
+            TotalDamage = (damage + damageUp) * damageRate;
         }
 
         if (collision.CompareTag("Enemy"))

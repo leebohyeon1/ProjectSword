@@ -41,7 +41,7 @@ public class Tenkai : MagicSword
         Follow();
         Attack();
     }
-
+    //================================================================================================
     public override void SetTrans()
     {
         base.SetTrans();
@@ -50,13 +50,11 @@ public class Tenkai : MagicSword
 
     public override void SetFire()
     {
-
         firePos.AddComponent<TenkaiFire>();
-        //firePos.GetComponent<TenkaiFire>().enabled = false;
-        firePos.GetComponent<TenkaiFire>().magicSword = this;
 
-        firePos.GetComponent<TenkaiFire>().bullet = bulletPrefab.GetComponent<TenkaiBullet>();
-        firePos.GetComponent<TenkaiFire>().tenkai = this;
+        firePos.GetComponent<TenkaiFire>().SetMagicSword(this);
+
+        firePos.GetComponent<TenkaiFire>().SetTenkai( bulletPrefab.GetComponent<TenkaiBullet>(),this);
     }
     protected override void Follow()
     {
@@ -114,7 +112,7 @@ public class Tenkai : MagicSword
                 EnemyStat currentEnemyStat = enemyCollider.GetComponent<EnemyStat>();
                 if (currentEnemyStat != null && lowestHealthEnemy != null)
                 {
-                    if (currentEnemyStat.hp < lowestHealthEnemy.hp)
+                    if (currentEnemyStat.HP < lowestHealthEnemy.HP)
                     {
                         closestEnemy = enemyTransform;
                         lowestHealthEnemy = currentEnemyStat;
@@ -128,7 +126,7 @@ public class Tenkai : MagicSword
             GameObject bullet = GetBullet();
             bullet.transform.position = transform.position;
             bullet.transform.rotation = Quaternion.identity;
-            bullet.GetComponent<BulletController>().isSubBullet = true;
+            bullet.GetComponent<BulletController>().GetSubBullet();
             bullet.SetActive(true);
 
             //Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
@@ -136,6 +134,13 @@ public class Tenkai : MagicSword
         }
     }
 
+    public override GameObject GetBulletPrefab() => base.GetBulletPrefab();
+
+    public override void SetSword(Transform Trans, int AttackPower, float AttackSpeed, float BulletSpeed)
+    {
+        base.SetSword(Trans, AttackPower, AttackSpeed, BulletSpeed);
+    }
+    //================================================================================================
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
@@ -192,5 +197,6 @@ public class Tenkai : MagicSword
             bullets.SetBuff4(buff4Damage);
         }
     }
+
 
 }

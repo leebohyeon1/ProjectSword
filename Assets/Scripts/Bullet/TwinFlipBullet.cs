@@ -59,36 +59,6 @@ public class TwinFlipBullet : BulletController
 
             gameObject.SetActive(false);
         }
-
-        //if(collision.CompareTag("Boss"))
-        //{
-        //    BossStat bossStat = collision.GetComponent<BossStat>();
-        //    if (isBSkill)
-        //    {
-        //        float dis = Vector2.Distance(player.position, collision.transform.position);
-        //        Debug.Log("거리: " + dis);
-        //        bossStat.TakeDamage(CalculateDamage(dis));
-        //    }
-        //    else
-        //    {
-        //        bossStat.TakeDamage((int)TotalDamage);
-        //    }
-
-        //    if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
-        //    {
-        //        playerStat.Drain((int)TotalDamage);
-        //    }
-
-
-        //    if (isIce && !bossStat.isIce && !isSkillBullet)
-        //    {
-        //        bossStat.isIce = true;
-        //        bossStat.DecreaseSpeed(slowRate);
-
-        //    }
-
-        //    gameObject.SetActive(false);
-        //}
     }
 
     int CalculateDamage(float dis)
@@ -119,5 +89,40 @@ public class TwinFlipBullet : BulletController
         }
         Debug.Log("데미지: " + TotalDamage);
         return (int)TotalDamage;
+    }
+
+    //=============================================================================
+    public override void SetBulletType(BulletType bulletType)
+    {
+        base.SetBulletType(bulletType);
+    }
+    public override void SetDamagebuff(float rate)
+    {
+        base.SetDamagebuff(rate);
+    }
+    public override void SetDamage(int Damage)
+    {
+        base.SetDamage(Damage);
+    }
+    public override void SetSlowRate(float slowRate)
+    {
+        base.SetSlowRate(slowRate);
+    }
+    public override void SetIce(bool ice)
+    {
+        base.SetIce(ice);
+    }
+    public override void IncreaseDamage(float damage)
+    {
+        base.IncreaseDamage(damage);
+    }
+
+    public override bool GetSubBullet()
+    {
+        return base.GetSubBullet();
+    }
+    public override bool GetIce()
+    {
+        return base.GetIce();
     }
 }

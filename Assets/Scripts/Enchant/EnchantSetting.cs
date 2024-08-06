@@ -6,10 +6,10 @@ public class EnchantSetting : MonoBehaviour
 {
     PlayerStat playerStat;
 
-    public float[] firstPercentage;
-    public Upgrade[] upgrades;
+    [SerializeField] private float[] firstPercentage;
+    [SerializeField] private Upgrade[] upgrades;
 
-    public ChoiceEnchant[] choices;
+    [SerializeField] private ChoiceEnchant[] choices;
     //==================================================================================
 
     void Start()
@@ -19,7 +19,7 @@ public class EnchantSetting : MonoBehaviour
         for (int i = 0; i < choices.Length; i++)
         {
             int randomNum = Random.Range(0, 100);
-            choices[i].curEnchant = RandomEnchant(randomNum);
+            choices[i].Enchant = RandomEnchant(randomNum);
             choices[i].TextSet();
         } 
     }
@@ -45,7 +45,7 @@ public class EnchantSetting : MonoBehaviour
                 }
             }
 
-            playerStat.Upgrade(choices[num].curEnchant);
+            playerStat.Upgrade(choices[num].Enchant);
 
             Destroy(gameObject);
         }

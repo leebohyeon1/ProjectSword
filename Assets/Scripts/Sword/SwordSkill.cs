@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class SwordSkill : MonoBehaviour
 {
-    public Vector2[] skillSize;
-    public Transform skillPoint; // Inspector에서 설정
+    [SerializeField] protected Vector2[] skillSize;
+    [SerializeField] protected Transform skillPoint; // Inspector에서 설정
 
-    public LayerMask enemyLayer;
+    [SerializeField] protected LayerMask enemyLayer;
 
-    public float skillDamageUp;
+    [SerializeField] protected float skillDamageUp;
 
     public virtual void Skill(int Index) { }
 
@@ -20,4 +20,12 @@ public class SwordSkill : MonoBehaviour
 
     public virtual void SkillA() { }
     public virtual void SkillB() { }
+
+    public virtual Vector2[] GetSkillSize() { return skillSize; }
+    public virtual void SetSkillDamage(float Damage)
+    {
+        skillDamageUp += Damage;
+        if(skillDamageUp <= 0) skillDamageUp = 0;
+    }
+
 }

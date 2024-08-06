@@ -15,8 +15,8 @@ public class PlayerUI : MonoBehaviour
     {
         healthBar = FindObjectOfType<HealthBar>();
 
-        Hp = GetComponent<PlayerStat>().curHp;
-        MaxHp = GetComponent<PlayerStat>().maxHp;
+        Hp = GetComponent<PlayerStat>().GetCurHP();
+        MaxHp = GetComponent<PlayerStat>().GetMaxHP();
     }
 
     private void Update()

@@ -35,6 +35,7 @@ public class Tidebite : MagicSword
 
     }
 
+    //================================================================================================
     public override void SetTrans()
     {
         base.SetTrans();
@@ -69,6 +70,14 @@ public class Tidebite : MagicSword
     {
         base.SetFire();
     }
+    
+    public override GameObject GetBulletPrefab() => base.GetBulletPrefab();
+    
+    public override void SetSword(Transform Trans, int AttackPower, float AttackSpeed, float BulletSpeed)
+    {
+        base.SetSword(Trans, AttackPower, AttackSpeed, BulletSpeed);
+    }
+    //================================================================================================
 
     protected override void ApplyBuffEffects()
     {
@@ -120,5 +129,6 @@ public class Tidebite : MagicSword
     {
         molarDamage += molarDamageUp;
     }
+
 
 }

@@ -64,9 +64,9 @@ public class PlayerController : MonoBehaviour, IListener
     public void HadleAttack()
     {
         attackTimer += Time.deltaTime;
-        if(attackTimer > (playerStat.attackSpeed - playerStat.upAttackSpeed[playerStat.weaponIndex])) 
+        if(attackTimer > (playerStat.GetAttackSpeed() - playerStat.upAttackSpeed[playerStat.GetWeaponIndex()])) 
         {
-            playerStat.firePos.GetComponents<SwordFire>()[playerStat.weaponIndex].Fire();
+            playerStat.GetFirePos().GetComponents<SwordFire>()[playerStat.GetWeaponIndex()].Fire();
         }
     }
  

@@ -4,14 +4,11 @@ using UnityEngine;
 
 public class EnemyScrollController : MonoBehaviour
 {
-    //public float moveSpeed = 2.0f;
-    public float baseSpawnRate;
-    public float curSpawnRate;
+    [SerializeField] private int[] nextFirstPattern;
+    [SerializeField] private int[] nextSecondPattern;
+    [SerializeField] private int[] nextThirdPattern;
 
-    public int[] nextFirstPattern;
-    public int[] nextSecondPattern;
-    public int[] nextThirdPattern;
-
+    
     void Update()
     {
         //transform.Translate(Vector3.down * moveSpeed * Time.deltaTime);
@@ -24,10 +21,20 @@ public class EnemyScrollController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
-        //if (screenPosition.y < -2f)
-        //{
-        //    Destroy(gameObject);
-        //}
+    }
+
+    public int[] NextPattern(int num)
+    {
+        switch (num)
+        {
+            case 0:
+                return nextFirstPattern;
+            case 1:
+                return nextSecondPattern;
+            case 2:
+                return nextThirdPattern;
+            default:
+                return nextFirstPattern;
+        }
     }
 }

@@ -138,6 +138,16 @@ public class TenkaiSkill : SwordSkill
     {
         skillPoint = trans;
     }
+    public override Vector2[] GetSkillSize()
+    {
+        return base.GetSkillSize();
+    }
+
+    public override void SetSkillDamage(float Damage)
+    {
+        base.SetSkillDamage(Damage);
+    }
+
     private void RestoreAllEnemySpeeds()
     {
         foreach (GameObject enemy in enemyList)

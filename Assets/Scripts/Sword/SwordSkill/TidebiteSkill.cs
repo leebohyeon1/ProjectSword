@@ -48,13 +48,13 @@ public class TidebiteSkill : SwordSkill
 
     public override void SkillB()
     {
-        GameObject Bullet = GetComponent<MagicSword>().bulletPrefab;
+        GameObject Bullet = GetComponent<MagicSword>().GetBulletPrefab();
 
         GameObject BigBullet =  Instantiate(Bullet,new Vector2(skillPoint.position.x,playerStat.transform.position.y - 5f),Quaternion.identity);
         BigBullet.transform.localScale *= 2;
-        BigBullet.GetComponent<BulletController>().damage = (int)(power[1] + skillDamageUp);
+        BigBullet.GetComponent<BulletController>().SetDamage((int)(power[1] + skillDamageUp));
         //BigBullet.GetComponent<BulletController>().damageRate = 1f;
-        BigBullet.GetComponent<BulletController>().isSubBullet = true;
+        BigBullet.GetComponent<BulletController>().GetSubBullet();
        BigBullet.GetComponent<Rigidbody2D>().velocity = Vector2.up * playerStat.bulletSpeed* 1.2f;
        
     }
@@ -67,5 +67,14 @@ public class TidebiteSkill : SwordSkill
     public override void SetTrans(Transform trans)
     {
         skillPoint = trans;
+    }
+    public override Vector2[] GetSkillSize()
+    {
+        return base.GetSkillSize();
+    }
+
+    public override void SetSkillDamage(float Damage)
+    {
+        base.SetSkillDamage(Damage);
     }
 }
