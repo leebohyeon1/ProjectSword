@@ -2,23 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossStat : MonoBehaviour
+public class BossStat : EnemyStat
 {
-    PlayerStat playerStat;
+    private PlayerStat playerStat;
 
-    [SerializeField] private int hp;
-    [SerializeField] private float speed;
-    [SerializeField] private float swapGage;
+
+    [Header("================")]
+    [SerializeField] private int maxHp = 100;
 
     [Header("공격")]
-    [SerializeField] private int damage;
     [SerializeField] private float criticalRate;
     [SerializeField] private float criticalDamage;
     [SerializeField] private float attackSpeed;
     [SerializeField] private float bulletSpeed;
-
-    [Header("스킬")]
-    [SerializeField] private int AttackCount;
 
     [Header("탄막")]
     [SerializeField] private GameObject bossBulletPrefab;
@@ -26,17 +22,17 @@ public class BossStat : MonoBehaviour
     [SerializeField] private BulletType bulletType;
     private List<GameObject> bulletPool = new List<GameObject>();
 
-    [Header("상태")]
-    private List<float> speedModifiers = new List<float>();
-    public bool isIce = false;
-    public bool isMolar = false;
-
     // Start is called before the first frame update
     void Start()
     {
+       
         playerStat = FindFirstObjectByType<PlayerStat>();
+     
+        hp = maxHp;
+        GameUIManager.Instance.UpdateBossUI(maxHp, hp);
 
         InitializePool();
+  
     }
 
     // Update is called once per frame
@@ -45,9 +41,10 @@ public class BossStat : MonoBehaviour
         
     }
 
-    public void TakeDamage(int damage)
+    public override void TakeDamage(int damage, bool count)
     {
         hp -= damage;
+        GameUIManager.Instance.UpdateBossUI(maxHp, hp);
 
         if (hp <= 0)
         {
@@ -82,20 +79,16 @@ public class BossStat : MonoBehaviour
         return isCritical ? Mathf.RoundToInt(baseDamage * (1 + criticalDamage / 100f)) : baseDamage;
     }
 
-    public void DecreaseSpeed(float rate)
+    public override void DecreaseSpeed(float rate)
     {
-        // 속도 감소율 추가
-        speedModifiers.Add(rate);
-        ApplySpeed();
+       base.DecreaseSpeed(rate);
     }
-    public void IncreaseSpeed(float rate)
+    public override void IncreaseSpeed(float rate)
     {
-        // 속도 증가율 추가 (음수 값을 속도 감소 리스트에 추가)
-        speedModifiers.Add(-rate);
-        ApplySpeed();
+       base.IncreaseSpeed(rate);
     }
 
-    private void ApplySpeed()
+    protected override void ApplySpeed()
     {
         // 모든 속도 감소율을 적용하여 최종 속도를 계산
         float totalRate = 0f;
@@ -133,5 +126,19 @@ public class BossStat : MonoBehaviour
 
     public float GetBulletSpeed() => bulletSpeed;
     public float GetAttackSpeed() => attackSpeed;
+
+    public override bool GetIsIce() => base.GetIsIce();
+
+    public override bool GetIsMolar() => base.GetIsMolar();
+
+    public override void SetIsIce(bool boolean)
+    {
+        base.SetIsIce(boolean); 
+    }
+
+    public override void SetIsMolar(bool boolean)
+    {
+        base.SetIsMolar(boolean);   
+    }
 
 }

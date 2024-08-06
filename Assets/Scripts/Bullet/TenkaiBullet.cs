@@ -120,9 +120,9 @@ public class TenkaiBullet : BulletController
                
             }
 
-            if (isIce && !enemyStat.isIce && !isSkillBullet)
+            if (isIce && !enemyStat.GetIsMolar() && !isSkillBullet)
             {
-                enemyStat.isIce = true;
+                enemyStat.SetIsIce(true);
                 enemyStat.DecreaseSpeed(slowRate);
             }
 
@@ -134,49 +134,49 @@ public class TenkaiBullet : BulletController
             diffusionCount_--;
         }
 
-        if(collision.CompareTag("Boss"))
-        {
-            BossStat bossStat = collision.GetComponent<BossStat>();
-            if (diffusionCount_ == 0 && buff4)
-            {
-                bossStat.TakeDamage((int)((buff4Damage + damage) * damageRate));
-            }
-            else
-            {
-                bossStat.TakeDamage((int)TotalDamage);
-            }
+        //if(collision.CompareTag("Boss"))
+        //{
+        //    BossStat bossStat = collision.GetComponent<BossStat>();
+        //    if (diffusionCount_ == 0 && buff4)
+        //    {
+        //        bossStat.TakeDamage((int)((buff4Damage + damage) * damageRate));
+        //    }
+        //    else
+        //    {
+        //        bossStat.TakeDamage((int)TotalDamage);
+        //    }
 
-            if (diffusionCount_ > 0)
-            {
-                FindNextTarget(collision);
-            }
-            else
-            {
+        //    if (diffusionCount_ > 0)
+        //    {
+        //        FindNextTarget(collision);
+        //    }
+        //    else
+        //    {
 
-                gameObject.SetActive(false);
-                diffusionCount_ = 0;
-            }
+        //        gameObject.SetActive(false);
+        //        diffusionCount_ = 0;
+        //    }
 
-            if (buff2)
-            {
-                bossStat.DecreaseSpeed(buff2Slow);
+        //    if (buff2)
+        //    {
+        //        bossStat.DecreaseSpeed(buff2Slow);
 
 
-            }
+        //    }
 
-            if (isIce && !bossStat.isIce && !isSkillBullet)
-            {
-                bossStat.isIce = true;
-                bossStat.DecreaseSpeed(slowRate);
-            }
+        //    if (isIce && !bossStat.isIce && !isSkillBullet)
+        //    {
+        //        bossStat.isIce = true;
+        //        bossStat.DecreaseSpeed(slowRate);
+        //    }
 
-            if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
-            {
-                playerStat.Drain((int)TotalDamage);
-            }
+        //    if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
+        //    {
+        //        playerStat.Drain((int)TotalDamage);
+        //    }
 
-            diffusionCount_--;
-        }
+        //    diffusionCount_--;
+        //}
     }
 
     private void OnDrawGizmos()

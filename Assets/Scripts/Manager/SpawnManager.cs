@@ -151,14 +151,14 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnBoss()
     {
-        if(bossCount >= bossSpawnCount[curEvent])
-        {
-            isboss = true;
-            Instantiate(bossPrefab[curEvent]);
-            spawnTimer = 0f;
-            StartBossPatternSpawn();
-            curEvent += 1;
-        }
+        isboss = true;
+        spawnTimer = 0f;
+
+        GameUIManager.Instance.BossUIOn(bossPrefab[curEvent].name);
+        Instantiate(bossPrefab[curEvent]);
+        StartBossPatternSpawn();
+
+        curEvent += 1;
     }
 
     void StartBossPatternSpawn()
@@ -215,6 +215,7 @@ public class SpawnManager : MonoBehaviour
     public void KillBoss()
     {
         isboss = false;
+        GameUIManager.Instance.BossUIOff();
     }
 }
 

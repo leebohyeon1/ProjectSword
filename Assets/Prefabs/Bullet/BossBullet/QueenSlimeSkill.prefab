@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 400137745223345771}
   - component: {fileID: -4267534982316433991}
   - component: {fileID: 5557417410674247706}
-  - component: {fileID: 7375691856559209840}
+  - component: {fileID: -1126782687410694655}
   m_Layer: 0
   m_Name: QueenSlimeSkill
   m_TagString: Untagged
@@ -149,7 +149,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &7375691856559209840
+--- !u!114 &-1126782687410694655
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,6 +158,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7905684294592537497}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 082bcf2712edfb945ab93bfc570bba1d, type: 3}
+  m_Script: {fileID: 11500000, guid: a35c782e29302ad4088c25715a86e965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
