@@ -1746,6 +1746,7 @@ MonoBehaviour:
   isPause: 0
   isSkill: 0
   skillTimeScale: 0.3
+  isTwinflipLevel3: 0
 --- !u!1 &636251835
 GameObject:
   m_ObjectHideFlags: 0
@@ -5301,7 +5302,7 @@ PrefabInstance:
     - target: {fileID: 2284149096743789701, guid: 0b8212a35d4d25949947906a993013e6, type: 3}
       propertyPath: weapon.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: b9dcf57cc06a3ce45b0d0a93b84585de, type: 2}
+      objectReference: {fileID: 11400000, guid: a73a29ea3ae198145ab80d4df4d636c3, type: 2}
     - target: {fileID: 2284149096743789701, guid: 0b8212a35d4d25949947906a993013e6, type: 3}
       propertyPath: weapon.Array.data[1]
       value: 

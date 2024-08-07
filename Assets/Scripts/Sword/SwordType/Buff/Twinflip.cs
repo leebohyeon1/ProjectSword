@@ -27,6 +27,10 @@ public class Twinflip : MagicSword
     [Header("레벨 2")]
     [SerializeField] private float[] buffPower = new float[2];
 
+    [Header("레벨 3")]
+    [SerializeField] private int[] damage;
+    [SerializeField] private float[] distance;
+
     [Header("레벨 4")]
     [SerializeField] private int iceDamageUp = 2;
 
@@ -44,7 +48,6 @@ public class Twinflip : MagicSword
     {
         SetTrans();
         SetFire();
-
         InitializePool();
     }
 
@@ -130,7 +133,7 @@ public class Twinflip : MagicSword
 
     private void Buff3()
     {
-
+        GameManager.Instance.SetTwinflip3(true, ref damage, ref distance);
     }
 
     private void Buff4()
@@ -176,8 +179,6 @@ public class Twinflip : MagicSword
             {
                 IceBuff();
             }
-
-
 
             isFireBuff = !isFireBuff; // 다음에 호출할 Buff 변경
         }
@@ -229,11 +230,23 @@ public class Twinflip : MagicSword
                 Buff2();
                 break;
             case 3:
-                //Buff3();
+                Buff3();
                 break;
             case 4:
                 Buff4();
                 break;
+        }
+    }
+
+    //================================================================================================
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = new Color(1, 0, 0);
+
+        for (int i = 0; i < GameManager.Instance.TwinDis.Length; i++)
+        {
+            Gizmos.DrawLine(new Vector3(100, playerStat.transform.position.y + GameManager.Instance.TwinDis[i], 0), new Vector3(-100, transform.position.y + GameManager.Instance.TwinDis[i], 0));
         }
     }
 

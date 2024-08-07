@@ -148,12 +148,7 @@ public class GameUIManager : MonoBehaviour, IListener
     {
         if(canSwap)
         {
-            MoveSwapBar(0f);
-
-            EventManager.Instance.PostNotification(EVENT_TYPE.CHANGE_WEAPON, this);
-
-            MoveSwapBar(1f);
-
+            StartCoroutine(MoveSwapBar());
         }
 
     }
@@ -178,11 +173,22 @@ public class GameUIManager : MonoBehaviour, IListener
         skillImageBar.transform.DOMoveX(skillEndPoint.position.x, 0.7f)
             .SetEase(Ease.OutCirc).OnComplete(() => skillImageBar.transform.position = skillImageBar.transform.parent.transform.position);
     }
-    public void MoveSwapBar(float delay)
+
+    public IEnumerator MoveSwapBar()
     {
+        Time.timeScale = 0.3f;
+
         int index = playerStat.GetWeaponIndex();
-        swapImageBar[index].transform.DOMoveX(swapEndPoint.position.x, 0.7f).SetDelay(delay)
-              .SetEase(Ease.OutCirc).OnComplete(() => swapImageBar[index].transform.position = swapImageBar[index].transform.parent.transform.position);
+        swapImageBar[index].transform.DOMoveX(swapEndPoint.position.x, 0.2f).SetEase(Ease.OutCirc)
+            .OnComplete(() => swapImageBar[index].transform.position = swapImageBar[index].transform.parent.transform.position);
+
+        yield return new WaitForSeconds(0.6f);
+
+        EventManager.Instance.PostNotification(EVENT_TYPE.CHANGE_WEAPON, this);
+
+        Time.timeScale = 1f;
+        swapImageBar[index].transform.DOMoveX(swapEndPoint.position.x, 0.6f).SetEase(Ease.OutCirc)
+          .OnComplete(() => swapImageBar[index].transform.position = swapImageBar[index].transform.parent.transform.position);
     }
 
     public void SetSwapUIImage(Sprite mainWeapon, Sprite subWeapon)

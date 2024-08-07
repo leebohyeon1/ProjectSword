@@ -62,6 +62,11 @@ public class TidebiteBullet : BulletController
         base.IncreaseDamage(damage);
     }
 
+    public override void SetTwinflip3(bool twinflip3)
+    {
+        base.SetTwinflip3(twinflip3);
+    }
+
     public override bool GetSubBullet()
     {
         return base.GetSubBullet();
@@ -69,6 +74,10 @@ public class TidebiteBullet : BulletController
     public override bool GetIce()
     {
         return base.GetIce();
+    }
+    protected override int CalculateTwinDamage(float distance)
+    {
+        return base.CalculateTwinDamage(distance);
     }
 
     //=============================================================================
@@ -80,15 +89,49 @@ public class TidebiteBullet : BulletController
         {
             EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
 
+         
 
             if (enemyStat.GetIsMolar())
             {
-                enemyStat.TakeDamage((int)((damage + (molarDamage * molarLevel)) * damageRate));
+                TotalDamage = ((damage + (molarDamage * molarLevel)) * damageRate);
+
+                if (isTwinflip3)
+                {
+                    Vector3 screenPosition = Camera.main.WorldToScreenPoint(collision.transform.position);
+
+                    // 화면의 절반 이하에 있는지 확인
+                    if (screenPosition.y < Screen.height / 2)
+                    {
+                        float dis = Vector2.Distance(playerStat.transform.position, collision.transform.position);
+                        Debug.Log("거리: " + dis);
+                        enemyStat.TakeDamage(CalculateTwinDamage(dis));
+                    }
+                }
+                else
+                {
+                    enemyStat.TakeDamage((int)TotalDamage);
+                }
+
+             
             }
             else
             {
-                enemyStat.TakeDamage((int)TotalDamage);
+                if (isTwinflip3)
+                {
+                    Vector3 screenPosition = Camera.main.WorldToScreenPoint(collision.transform.position);
 
+                    // 화면의 절반 이하에 있는지 확인
+                    if (screenPosition.y < Screen.height / 2)
+                    {
+                        float dis = Vector2.Distance(playerStat.transform.position, collision.transform.position);
+                        Debug.Log("거리: " + dis);
+                        enemyStat.TakeDamage(CalculateTwinDamage(dis));
+                    }
+                }
+                else
+                {
+                    enemyStat.TakeDamage((int)TotalDamage);
+                }
             }
 
             gameObject.SetActive(false);

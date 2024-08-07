@@ -82,13 +82,24 @@ public class TwinFlipBullet : BulletController
         base.IncreaseDamage(damage);
     }
 
+    public override void SetTwinflip3(bool twinflip3)
+    {
+        base.SetTwinflip3(twinflip3);
+    }
+
     public override bool GetSubBullet()
     {
         return base.GetSubBullet();
     }
+
     public override bool GetIce()
     {
         return base.GetIce();
+    }
+
+    protected override int CalculateTwinDamage(float distance)
+    {
+        return base.CalculateTwinDamage(distance);
     }
 
     //=============================================================================
@@ -105,11 +116,44 @@ public class TwinFlipBullet : BulletController
             {
                 float dis = Vector2.Distance(player.position, collision.transform.position);
                 Debug.Log("거리: " + dis);
-                enemyStat.TakeDamage(CalculateDamage(dis));
+                CalculateDamage(dis);
+                
+                if (isTwinflip3)
+                {
+                    Vector3 screenPosition = Camera.main.WorldToScreenPoint(collision.transform.position);
+
+                    // 화면의 절반 이하에 있는지 확인
+                    if (screenPosition.y < Screen.height / 2)
+                    {
+                        float dis1 = Vector2.Distance(playerStat.transform.position, collision.transform.position);
+                        Debug.Log("거리: " + dis1);
+                        enemyStat.TakeDamage(CalculateTwinDamage(dis1));
+                    }
+                }
+                else
+                {
+                    enemyStat.TakeDamage((int)TotalDamage);
+                }
+
             }
             else
             {
-                enemyStat.TakeDamage((int)TotalDamage);
+                if (isTwinflip3)
+                {
+                    Vector3 screenPosition = Camera.main.WorldToScreenPoint(collision.transform.position);
+
+                    // 화면의 절반 이하에 있는지 확인
+                    if (screenPosition.y < Screen.height / 2)
+                    {
+                        float dis1 = Vector2.Distance(playerStat.transform.position, collision.transform.position);
+                        Debug.Log("거리: " + dis1);
+                        enemyStat.TakeDamage(CalculateTwinDamage(dis1));
+                    }
+                }
+                else
+                {
+                    enemyStat.TakeDamage((int)TotalDamage);
+                }
             }
 
             if (playerStat.canDrain && !isSkillBullet && !isSubBullet)

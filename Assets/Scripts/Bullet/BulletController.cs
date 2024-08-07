@@ -17,6 +17,7 @@ public class BulletController : MonoBehaviour
     [SerializeField] protected bool isSubBullet;
 
     [SerializeField] protected bool isIce = false;
+    [SerializeField] protected bool isTwinflip3 = false;
     [SerializeField] protected float slowRate = 0f;
     [SerializeField] protected float damageUp = 0f;
 
@@ -63,10 +64,36 @@ public class BulletController : MonoBehaviour
         }
     }
 
+    public virtual void SetTwinflip3(bool twinflip3)
+    {
+        isTwinflip3 = twinflip3;
+    }
+
     public virtual bool GetSubBullet() => isSubBullet;
 
     public virtual bool GetIce() => isIce;
 
+    protected virtual int CalculateTwinDamage(float dis)
+    {
+        if (dis >= GameManager.Instance.TwinDis[0])
+        {
+            TotalDamage += GameManager.Instance.TwinDam[0];
+            Debug.Log("거리" + 0);
+        }
+        else if (dis >= GameManager.Instance.TwinDis[1])
+        {
+            TotalDamage += GameManager.Instance.TwinDam[1];
+            Debug.Log("거리" + 1);
+        }
+        else
+        {
+            TotalDamage += GameManager.Instance.TwinDam[2];
+            Debug.Log("거리" + 2);
+        }
+
+        Debug.Log("데미지: " + TotalDamage);
+        return (int)TotalDamage;
+    }
     //=============================================================================
 
     private void OnTriggerEnter2D(Collider2D collision)

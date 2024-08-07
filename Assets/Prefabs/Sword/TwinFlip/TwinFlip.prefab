@@ -146,6 +146,11 @@ MonoBehaviour:
   buffPower:
   - 10
   - 15
+  damage: 010000000200000003000000
+  distance:
+  - 3
+  - 2
+  - 1
   iceDamageUp: 10
 --- !u!1 &5488745084292017874
 GameObject:
