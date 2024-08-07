@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour, IListener
     private bool isDragging = false;
     private float attackTimer;
 
+    //==================================================================================
+
     private void Start()
     {
         playerStat = GetComponent<PlayerStat>();
@@ -35,6 +37,8 @@ public class PlayerController : MonoBehaviour, IListener
     {
         attackTimer = 0;
     }
+
+    //==================================================================================
 
     public void Drag()
     {

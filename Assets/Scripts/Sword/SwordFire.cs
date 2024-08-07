@@ -7,17 +7,20 @@ public class SwordFire : MonoBehaviour
 {
     [SerializeField] protected PlayerStat playerStat;
     [SerializeField] protected MagicSword magicSword;
-    // Start is called before the first frame update
+
+    //================================================================================================
+
     void Start()
     {
         Set();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
+
+    //================================================================================================
 
     public virtual void Fire()
     {

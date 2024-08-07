@@ -7,30 +7,30 @@ public class TwinFlipSkill : SwordSkill
     PlayerStat playerStat;
 
     [Header("½ºÅ³")]
-    public float[] duration;
+    [SerializeField] private float[] duration;
     private float[] skillTimer = new float[2];
     private bool[] skillActive = new bool[2];
-    public bool isBuff = false;
+    [SerializeField] private bool isBuff = false;
 
     [Header("A")]
-    public float slowRate;
+    [SerializeField] private float slowRate;
     private float slowCheckTimer;
 
     [Header("B")]
-    public float bulletSpeedSlow;
+    [SerializeField] private float bulletSpeedSlow;
 
     [Space(10f)]
-    public GameObject Panel;
+    [SerializeField] private GameObject Panel;
     private List<GameObject> enemyList = new List<GameObject>();
     private List<GameObject> ppp = new List<GameObject>();
-    // Start is called before the first frame update
+
+    //==================================================================================
 
     void Start()
     {
         playerStat = FindObjectOfType<PlayerStat>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (skillActive[0])
@@ -88,6 +88,44 @@ public class TwinFlipSkill : SwordSkill
         }
     }
 
+    //==================================================================================
+
+    public void SetBuff(bool boolean) { isBuff = boolean; }
+
+    public void SkillBOff()
+    {
+
+        playerStat.bulletSpeed += bulletSpeedSlow;
+        foreach (GameObject bullet in playerStat.bulletPool_)
+        {
+            if (bullet.GetComponent<TwinFlipBullet>() != null)
+            {
+                TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
+                bullets.SetBSkill(false);
+            }
+        }
+        skillTimer[1] = 0f;
+        skillActive[1] = false;
+    }
+
+    private void RestoreAllEnemySpeeds()
+    {
+        foreach (GameObject enemy in enemyList)
+        {
+            if (enemy != null)
+            {
+                EnemyStat enemyStat = enemy.GetComponent<EnemyStat>();
+                if (enemyStat != null)
+                {
+                    enemyStat.IncreaseSpeed(slowRate);
+                }
+            }
+        }
+        enemyList.Clear();
+    }
+
+    //==================================================================================
+
     public override void SkillA()
     {
         if (skillPoint == null)
@@ -117,27 +155,11 @@ public class TwinFlipSkill : SwordSkill
         foreach (GameObject bullet in playerStat.bulletPool_)
         {
             TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
-            bullets.isBSkill = true;
+            bullets.SetBSkill(true);
             bullets.SetBulletType(BulletType.Fire);
         }
         skillTimer[1] = 0f;
         skillActive[1] = true;
-    }
-
-    public void SkillBOff()
-    {
-        
-        playerStat.bulletSpeed += bulletSpeedSlow;
-        foreach (GameObject bullet in playerStat.bulletPool_)
-        {
-            if (bullet.GetComponent<TwinFlipBullet>() != null)
-            {
-                TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
-                bullets.isBSkill = false;
-            }
-        }
-        skillTimer[1] = 0f;
-        skillActive[1] = false;
     }
 
     public override void Skill(int index)
@@ -171,29 +193,15 @@ public class TwinFlipSkill : SwordSkill
         base.SetSkillDamage(Damage);
     }
 
-    private void RestoreAllEnemySpeeds()
-    {
-        foreach (GameObject enemy in enemyList)
-        {
-            if (enemy != null)
-            {
-                EnemyStat enemyStat = enemy.GetComponent<EnemyStat>();
-                if (enemyStat != null)
-                {
-                    enemyStat.IncreaseSpeed(slowRate);
-                }
-            }
-        }
-        enemyList.Clear();
-    }
+    //==================================================================================
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = new Color(1, 0, 0.5f);
         TwinFlipBullet bullet = playerStat.bulletPool_[0].GetComponent<TwinFlipBullet>();
-        for (int i = 0; i < bullet.distance.Length; i++)
+        for (int i = 0; i < bullet.GetDistance().Length; i++)
         {
-            Gizmos.DrawLine(new Vector3(100, playerStat.transform.position.y + bullet.distance[i], 0), new Vector3(-100, transform.position.y + bullet.distance[i], 0));
+            Gizmos.DrawLine(new Vector3(100, playerStat.transform.position.y + bullet.GetDistance()[i], 0), new Vector3(-100, transform.position.y + bullet.GetDistance()[i], 0));
         }
     }
 }

@@ -7,18 +7,20 @@ public class TenkaiSkill : SwordSkill
     PlayerStat playerStat;
 
     [Header("½ºÅ³")]
-    public float[] power;
-    public float[] duration;
+    [SerializeField] private float[] power;
+    [SerializeField] private float[] duration;
     private float[] skillTimer = new float[2];
     private bool[] skillActive = new bool[2];
 
     [Header("A")]
-    public float slowRate;
-    public float damageInterval = 1f;
+    [SerializeField] private float slowRate;
+    [SerializeField] private float damageInterval = 1f;
     private float damageTimer;
-    public GameObject Panel;
+    [SerializeField] private GameObject Panel;
     private List<GameObject> enemyList= new List<GameObject>();
     private List<GameObject> ppp = new List<GameObject>();
+
+    //==================================================================================
 
     void Start()
     {
@@ -84,6 +86,38 @@ public class TenkaiSkill : SwordSkill
 
     }
 
+    //==================================================================================
+
+    public void SkillBOff()
+    {
+        foreach (GameObject bullet in playerStat.bulletPool_)
+        {
+            TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
+            bullets.SetDiffusionCount(1);
+        }
+        skillTimer[1] = 0f;
+        skillActive[1] = false;
+    }
+
+
+    private void RestoreAllEnemySpeeds()
+    {
+        foreach (GameObject enemy in enemyList)
+        {
+            if (enemy != null)
+            {
+                EnemyStat enemyStat = enemy.GetComponent<EnemyStat>();
+                if (enemyStat != null)
+                {
+                    enemyStat.IncreaseSpeed(slowRate);
+                }
+            }
+        }
+        enemyList.Clear();
+    }
+
+    //==================================================================================
+
     public override void SkillA()
     {
 
@@ -101,21 +135,10 @@ public class TenkaiSkill : SwordSkill
         foreach (GameObject bullet in playerStat.bulletPool_)
         {
             TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
-            bullets.diffusionCount += 1;
+            bullets.IncreaseDiffusionCount(1);
         }
         skillTimer[1] = 0f;
         skillActive[1] = true;
-    }
-
-    public void SkillBOff()
-    {
-        foreach (GameObject bullet in playerStat.bulletPool_)
-        {
-            TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
-            bullets.diffusionCount = 1;
-        }
-        skillTimer[1] = 0f;
-        skillActive[1] = false;
     }
 
     public override void Skill(int index)
@@ -146,22 +169,6 @@ public class TenkaiSkill : SwordSkill
     public override void SetSkillDamage(float Damage)
     {
         base.SetSkillDamage(Damage);
-    }
-
-    private void RestoreAllEnemySpeeds()
-    {
-        foreach (GameObject enemy in enemyList)
-        {
-            if (enemy != null)
-            {
-                EnemyStat enemyStat = enemy.GetComponent<EnemyStat>();
-                if (enemyStat != null)
-                {
-                    enemyStat.IncreaseSpeed(slowRate);
-                }
-            }
-        }
-        enemyList.Clear();
     }
 
 

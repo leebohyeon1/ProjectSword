@@ -6,6 +6,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public static SpawnManager Instance {  get; private set; }
+
     //==================================================================================
 
     [Header("적 스폰")]
@@ -14,7 +15,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float spawnInterval = 2.0f; // 적 생성 주기
     private float spawnTimer = 0.0f;
     [SerializeField] private float plusAcceleration = 0;
-    
 
     [Header("선택지")]
     [SerializeField] private GameObject enchantOption;
@@ -34,6 +34,7 @@ public class SpawnManager : MonoBehaviour
     private int curEvent = 0;
     private bool isboss;
     [SerializeField] private GameObject[] BossEnemyPatterns;
+
     //==================================================================================
 
     private void Awake()
@@ -83,12 +84,15 @@ public class SpawnManager : MonoBehaviour
 
       
     }
+
     //==================================================================================
     public float PlusAcceleration() => plusAcceleration;
     public int BossCount() => bossCount; 
     public int[] BossSpawnCount() => bossSpawnCount;
     public int BossLength() => bossSpawnCount.Length;
+
     //==================================================================================
+   
     private void SpawnEnemy()
     {
         curCount++;

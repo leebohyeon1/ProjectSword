@@ -8,12 +8,15 @@ public class EnemyScrollController : MonoBehaviour
     [SerializeField] private int[] nextSecondPattern;
     [SerializeField] private int[] nextThirdPattern;
 
-    
+    //==================================================================================
+
     void Update()
     {
         //transform.Translate(Vector3.down * moveSpeed * Time.deltaTime);
         CheckIfOutOfScreen();
     }
+
+    //==================================================================================
 
     void CheckIfOutOfScreen()
     {

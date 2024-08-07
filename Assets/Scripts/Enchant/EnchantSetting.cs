@@ -10,6 +10,7 @@ public class EnchantSetting : MonoBehaviour
     [SerializeField] private Upgrade[] upgrades;
 
     [SerializeField] private ChoiceEnchant[] choices;
+
     //==================================================================================
 
     void Start()
@@ -24,32 +25,6 @@ public class EnchantSetting : MonoBehaviour
         } 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            PlayerStat playerStat = collision.GetComponent<PlayerStat>();
-            
-            int num = 0;
-            float minLength = Mathf.Infinity;
-            for (int i = 0; i < choices.Length; i++)
-            {
-                
-                float distance = Vector2.Distance(collision.transform.position, choices[i].transform.position);
-
-                
-                if(distance < minLength)
-                {
-                    minLength = distance;
-                    num = i;
-                }
-            }
-
-            playerStat.Upgrade(choices[num].Enchant);
-
-            Destroy(gameObject);
-        }
-    }
     //==================================================================================
 
     public Enchant RandomEnchant(int randomRate)
@@ -69,6 +44,35 @@ public class EnchantSetting : MonoBehaviour
         {
             int num = Random.Range(0, 100);
             return upgrades[2].RandomUpgrade(num);
+        }
+    }
+
+    //==================================================================================
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            PlayerStat playerStat = collision.GetComponent<PlayerStat>();
+
+            int num = 0;
+            float minLength = Mathf.Infinity;
+            for (int i = 0; i < choices.Length; i++)
+            {
+
+                float distance = Vector2.Distance(collision.transform.position, choices[i].transform.position);
+
+
+                if (distance < minLength)
+                {
+                    minLength = distance;
+                    num = i;
+                }
+            }
+
+            playerStat.Upgrade(choices[num].Enchant);
+
+            Destroy(gameObject);
         }
     }
 }

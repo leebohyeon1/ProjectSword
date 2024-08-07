@@ -7,13 +7,15 @@ public class TidebiteSkill : SwordSkill
     PlayerStat playerStat;
 
     [Header("½ºÅ³")]
-    public float[] power;
+    [SerializeField] private float[] power;
+
     //==================================================================================
 
     void Start()
     {
         playerStat = FindObjectOfType<PlayerStat>();
     }
+
     //==================================================================================
 
     public override void Skill(int index)

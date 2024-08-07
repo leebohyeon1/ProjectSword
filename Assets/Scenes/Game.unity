@@ -1040,7 +1040,7 @@ Transform:
   m_GameObject: {fileID: 371516519}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.992458, y: -3.0440001, z: -0.029487973}
+  m_LocalPosition: {x: 0, y: 0, z: -0.029487973}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2545,7 +2545,7 @@ Transform:
   m_GameObject: {fileID: 1006476396}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.992458, y: -3.0440001, z: -0.029487973}
+  m_LocalPosition: {x: 0, y: 0, z: -0.029487973}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3442,7 +3442,7 @@ Transform:
   m_GameObject: {fileID: 1371896133}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.992458, y: -3.0440001, z: -0.029487973}
+  m_LocalPosition: {x: 0, y: 0, z: -0.029487973}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4403,7 +4403,7 @@ MonoBehaviour:
   optionSpeed: 2
   spawnPosition: {fileID: 1981205194}
   bossCount: 0
-  bossSpawnCount: 010000006400000064000000
+  bossSpawnCount: 0a0000006400000064000000
   bossPrefab:
   - {fileID: 769503755803468904, guid: 9e5475edf5332f84c997e73aa50da6c7, type: 3}
   BossEnemyPatterns:

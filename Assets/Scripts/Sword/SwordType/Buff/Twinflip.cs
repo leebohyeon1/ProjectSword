@@ -7,9 +7,9 @@ public class Twinflip : MagicSword
 {
     private PlayerStat playerStat;
 
-    public float[] power = new float[2];
+    [SerializeField] private float[] power = new float[2];
 
-    public float duration = 6f;
+    [SerializeField] private float duration = 6f;
 
     private bool isFireBuff = true;
     private float timer = 0f;
@@ -18,18 +18,19 @@ public class Twinflip : MagicSword
     private float fireBuffTimer;
     private float iceBuffTimer;
 
-
     [Header("고유 능력 진화")]
 
     [Header("레벨 1")]
-    public int damageUp = 10;
+    [SerializeField] private int damageUp = 10;
     private int index = 0;
 
     [Header("레벨 2")]
-    public float[] buffPower = new float[2];
+    [SerializeField] private float[] buffPower = new float[2];
 
     [Header("레벨 4")]
-    public int iceDamageUp = 2;
+    [SerializeField] private int iceDamageUp = 2;
+
+    //==================================================================================
 
     private void Awake()
     {
@@ -52,84 +53,7 @@ public class Twinflip : MagicSword
         Follow();
         Fire();
     }
-    //================================================================================================
 
-    public override void SetTrans()
-    {
-        base.SetTrans();
-
-        playerStat = FindFirstObjectByType<PlayerStat>();
-    }
-
-    protected override void Follow()
-    {
-        base.Follow();
-    }
-
-    public override void Fire()
-    {
-        // 타이머를 증가시키고, Duration이 지나면 Buff를 변경
-
-        timer += Time.deltaTime;
-        if (timer >= attackSpeed)
-        {
-            timer = 0f; // 타이머 리셋
-
-            if (isBuff[2])
-            {
-                index = playerStat.GetWeaponIndex();
-                playerStat.upAttackDamage[index] += damageUp;
-            }
-
-            if (isFireBuff)
-            {
-                FireBuff();
-            }
-            else
-            {
-                IceBuff();
-            }
-
-           
-
-            isFireBuff = !isFireBuff; // 다음에 호출할 Buff 변경
-        }
-
-        if (isBuff[0])
-        {
-            fireBuffTimer += Time.deltaTime;
-            if (fireBuffTimer >= duration)
-            {
-                FireBuffOff();
-            }
-        }
-
-        if (isBuff[1])
-        {
-            iceBuffTimer += Time.deltaTime;
-            if (iceBuffTimer >= duration)
-            {
-                IceBuffOff();
-            }
-        }
-    }
-
-    public override void SetFire()
-    {
-        base.SetFire();
-    }
-
-    protected override void InitializePool()
-    {
-        base.InitializePool();
-    }
-    
-    public override GameObject GetBulletPrefab() => base.GetBulletPrefab();
-
-    public override void SetSword(Transform Trans, int AttackPower, float AttackSpeed, float BulletSpeed)
-    {
-        base.SetSword(Trans, AttackPower, AttackSpeed, BulletSpeed);
-    }
     //================================================================================================
     private void FireBuff()
     {
@@ -185,28 +109,9 @@ public class Twinflip : MagicSword
         }
     }
 
-    protected override void ApplyBuffEffects()
-    {
-        switch (buffLevel)
-        {
-            case 1:
-                Buff1();
-                break;
-            case 2:
-                Buff2();
-                break;
-            case 3:
-                //      Buff3();
-                break;
-            case 4:
-                Buff4();
-                break;
-        }
-    }
-
     private void Buff1()
     {
-        GetComponent<TwinFlipSkill>().isBuff = true;
+        GetComponent<TwinFlipSkill>().SetBuff(true);
         isBuff[2] = true;
         index = playerStat.GetWeaponIndex();
         if (isBuff[1] || isBuff[2])
@@ -234,5 +139,102 @@ public class Twinflip : MagicSword
         power[1] += buffPower[1];
     }
 
+    //================================================================================================
+
+    public override void SetTrans()
+    {
+        base.SetTrans();
+
+        playerStat = FindFirstObjectByType<PlayerStat>();
+    }
+
+    protected override void Follow()
+    {
+        base.Follow();
+    }
+
+    public override void Fire()
+    {
+        // 타이머를 증가시키고, Duration이 지나면 Buff를 변경
+
+        timer += Time.deltaTime;
+        if (timer >= attackSpeed)
+        {
+            timer = 0f; // 타이머 리셋
+
+            if (isBuff[2])
+            {
+                index = playerStat.GetWeaponIndex();
+                playerStat.upAttackDamage[index] += damageUp;
+            }
+
+            if (isFireBuff)
+            {
+                FireBuff();
+            }
+            else
+            {
+                IceBuff();
+            }
+
+
+
+            isFireBuff = !isFireBuff; // 다음에 호출할 Buff 변경
+        }
+
+        if (isBuff[0])
+        {
+            fireBuffTimer += Time.deltaTime;
+            if (fireBuffTimer >= duration)
+            {
+                FireBuffOff();
+            }
+        }
+
+        if (isBuff[1])
+        {
+            iceBuffTimer += Time.deltaTime;
+            if (iceBuffTimer >= duration)
+            {
+                IceBuffOff();
+            }
+        }
+    }
+
+    public override void SetFire()
+    {
+        base.SetFire();
+    }
+
+    protected override void InitializePool()
+    {
+        base.InitializePool();
+    }
+
+    public override GameObject GetBulletPrefab() => base.GetBulletPrefab();
+
+    public override void SetSword(Transform Trans, int AttackPower, float AttackSpeed, float BulletSpeed)
+    {
+        base.SetSword(Trans, AttackPower, AttackSpeed, BulletSpeed);
+    }
+
+    protected override void ApplyBuffEffects()
+    {
+        switch (buffLevel)
+        {
+            case 1:
+                Buff1();
+                break;
+            case 2:
+                Buff2();
+                break;
+            case 3:
+                //Buff3();
+                break;
+            case 4:
+                Buff4();
+                break;
+        }
+    }
 
 }

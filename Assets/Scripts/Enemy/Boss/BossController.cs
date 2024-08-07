@@ -8,6 +8,8 @@ public class BossController : MonoBehaviour
 
     protected float attackTimer = 0f;
 
+    //==================================================================================
+
     private void Start()
     {
         bossStat = GetComponent<BossStat>();
@@ -23,6 +25,8 @@ public class BossController : MonoBehaviour
         }
 
     }
+
+    //==================================================================================
 
     public virtual void Attack() { }
 

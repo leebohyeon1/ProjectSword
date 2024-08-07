@@ -7,7 +7,6 @@ public class BulletController : MonoBehaviour
 {
     protected PlayerStat playerStat;
 
-
     [SerializeField] protected int damage;
     [SerializeField] protected float damageRate = 1f;
     [SerializeField] protected float TotalDamage;
@@ -21,15 +20,14 @@ public class BulletController : MonoBehaviour
     [SerializeField] protected float slowRate = 0f;
     [SerializeField] protected float damageUp = 0f;
 
+    //=============================================================================
+
     private void Start()
     {
         playerStat = FindFirstObjectByType<PlayerStat>();
     }
 
-    void OnBecameInvisible()
-    {
-        gameObject.SetActive(false);
-    }
+    //=============================================================================
 
     public virtual void SetDamagebuff(float rate)
     {
@@ -50,10 +48,12 @@ public class BulletController : MonoBehaviour
     {
         this.slowRate += slowRate;
     }
+
     public virtual void SetIce(bool ice)
     {
         isIce = ice;
     }
+
     public virtual void IncreaseDamage(float damage)
     {
         damageUp += damage; 
@@ -64,9 +64,10 @@ public class BulletController : MonoBehaviour
     }
 
     public virtual bool GetSubBullet() => isSubBullet;
+
     public virtual bool GetIce() => isIce;
 
-
+    //=============================================================================
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -104,5 +105,10 @@ public class BulletController : MonoBehaviour
 
 
         }
+    }
+
+    void OnBecameInvisible()
+    {
+        gameObject.SetActive(false);
     }
 }

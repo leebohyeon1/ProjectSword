@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tenkai : MagicSword
 {
-    public Vector3 detectRadius;
+    [SerializeField] private Vector3 detectRadius;
 
     float timer = 0f;
     Vector3 Pos;
@@ -13,17 +13,19 @@ public class Tenkai : MagicSword
     [Header("고유 능력 진화")]
 
     [Header("레벨 1")]
-    public int damageUp = 10;
+    [SerializeField] private int damageUp = 10;
 
     [Header("레벨 2")]
-    public float buff2Slow = 20f;
+    [SerializeField] private float buff2Slow = 20f;
 
     [Header("레벨 3")]
-    public int buff3DiffusionCount = 3;
+    [SerializeField] private int buff3DiffusionCount = 3;
 
     [Header("레벨 4")]
-    public int buff4Damage = 4;
-    // Start is called before the first frame update
+    [SerializeField] private int buff4Damage = 4;
+
+    //================================================================================================
+
     void Start()
     {
         SetTrans();
@@ -35,13 +37,61 @@ public class Tenkai : MagicSword
         Pos = new Vector3(transform.position.x, transform.position.y + (detectRadius.y / 2), 0);
     }
 
-    // Update is called once per frame
     void Update()
     {
         Follow();
         Attack();
     }
+
     //================================================================================================
+
+    private void Buff1()
+    {
+        plusAttackPower += damageUp;
+    }
+    
+    private void Buff2()
+    {
+        foreach (GameObject bullet in bulletPool)
+        {
+            TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
+            bullets.SetBuff2(true,buff2Slow);
+        }
+    } 
+    
+    private void Buff3()
+    {
+        foreach (GameObject bullet in bulletPool)
+        {
+            TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
+            bullets.SetBuff3(buff3DiffusionCount);
+        }
+    } 
+    
+    private void Buff4()
+    {
+        foreach (GameObject bullet in bulletPool)
+        {
+            TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
+            bullets.SetBuff4(buff4Damage);
+        }
+    }
+
+    public Vector3 GetDetectRadius() { return detectRadius; }
+
+
+    public void Attack()
+    {
+        timer += Time.deltaTime;
+        if (timer > attackSpeed)
+        {
+            Fire();
+            timer = 0f;
+        }
+    }
+
+    //================================================================================================
+
     public override void SetTrans()
     {
         base.SetTrans();
@@ -54,7 +104,7 @@ public class Tenkai : MagicSword
 
         firePos.GetComponent<TenkaiFire>().SetMagicSword(this);
 
-        firePos.GetComponent<TenkaiFire>().SetTenkai( bulletPrefab.GetComponent<TenkaiBullet>(),this);
+        firePos.GetComponent<TenkaiFire>().SetTenkai(bulletPrefab.GetComponent<TenkaiBullet>(), this);
     }
     protected override void Follow()
     {
@@ -76,16 +126,6 @@ public class Tenkai : MagicSword
         return base.GetBullet();
     }
 
-    public void Attack()
-    {
-        timer += Time.deltaTime;
-        if (timer > attackSpeed)
-        {
-            Fire();
-            timer = 0f;
-        }
-    }
-
     public override void Fire()
     {
         Transform closestEnemy = null;
@@ -93,7 +133,7 @@ public class Tenkai : MagicSword
         float closestDistance = Mathf.Infinity;
         EnemyStat lowestHealthEnemy = null;
 
-        Collider2D[] enemies = Physics2D.OverlapBoxAll(Pos, detectRadius, 0, bulletPrefab.GetComponent<TenkaiBullet>().enemyLayer);
+        Collider2D[] enemies = Physics2D.OverlapBoxAll(Pos, detectRadius, 0, bulletPrefab.GetComponent<TenkaiBullet>().GetEnemyLayer());
 
         foreach (Collider2D enemyCollider in enemies)
         {
@@ -140,12 +180,6 @@ public class Tenkai : MagicSword
     {
         base.SetSword(Trans, AttackPower, AttackSpeed, BulletSpeed);
     }
-    //================================================================================================
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(Pos, detectRadius);
-    }
 
     protected override void ApplyBuffEffects()
     {
@@ -166,37 +200,12 @@ public class Tenkai : MagicSword
         }
     }
 
-    private void Buff1()
-    {
-        plusAttackPower += damageUp;
-    }
-    
-    private void Buff2()
-    {
-        foreach (GameObject bullet in bulletPool)
-        {
-            TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
-            bullets.SetBuff2(true,buff2Slow);
-        }
-    } 
-    
-    private void Buff3()
-    {
-        foreach (GameObject bullet in bulletPool)
-        {
-            TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
-            bullets.SetBuff3(buff3DiffusionCount);
-        }
-    } 
-    
-    private void Buff4()
-    {
-        foreach (GameObject bullet in bulletPool)
-        {
-            TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
-            bullets.SetBuff4(buff4Damage);
-        }
-    }
+    //================================================================================================
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(Pos, detectRadius);
+    }
 
 }

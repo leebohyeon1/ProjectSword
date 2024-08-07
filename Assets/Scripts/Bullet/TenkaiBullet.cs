@@ -6,28 +6,34 @@ using static UnityEngine.GraphicsBuffer;
 public class TenkaiBullet : BulletController
 {
     private int diffusionCount_;
-    public int diffusionCount = 1;
-    public float detectionRadius;
-    public LayerMask enemyLayer;
+    [SerializeField] private int diffusionCount = 1;
+    [SerializeField] private float detectionRadius;
+    [SerializeField] private LayerMask enemyLayer;
 
-    public GameObject target;
+    [SerializeField] private GameObject target;
 
     private bool buff2 = false;
     private float buff2Slow = 0f;
 
     private bool buff4 = false; 
     private int buff4Damage;
-    // Start is called before the first frame update
+
+    //=============================================================================
+
     void Start()
     {
         playerStat = FindFirstObjectByType<PlayerStat>();
         damageRate = 1f;
+
+        Invoke("NoCollision",1f);
     }
 
     private void OnEnable()
     {
         diffusionCount_ = diffusionCount;
     }
+
+    //=============================================================================
 
     void FindNextTarget(Collider2D collider)
     {
@@ -77,61 +83,6 @@ public class TenkaiBullet : BulletController
         }     
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        TotalDamage = damage * damageRate;
-        
-        if (collision.CompareTag("Enemy"))
-        {
-            EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
-            if (diffusionCount_ == 0 && buff4)
-            {
-                enemyStat.TakeDamage((int)((buff4Damage+ damage )* damageRate));
-            }
-            else
-            {
-                enemyStat.TakeDamage((int)TotalDamage);
-            }
-
-            if (diffusionCount_ > 0)
-            {
-                FindNextTarget(collision);
-            }
-            else 
-            {
-               
-                gameObject.SetActive(false);
-                diffusionCount_ = 0;
-            }
-
-            if(buff2)
-            {
-                enemyStat.DecreaseSpeed(buff2Slow);
-
-               
-            }
-
-            if (isIce && !enemyStat.GetIsMolar() && !isSkillBullet)
-            {
-                enemyStat.SetIsIce(true);
-                enemyStat.DecreaseSpeed(slowRate);
-            }
-
-            if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
-            {
-                playerStat.Drain((int)TotalDamage);
-            }
-
-            diffusionCount_--;
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
-    }
-
     public void SetBuff2(bool boolean, float slow)
     {
         buff2 = boolean;
@@ -148,7 +99,23 @@ public class TenkaiBullet : BulletController
         buff4Damage = Damage;
     }
 
+    public void SetDiffusionCount(int count) { diffusionCount = count; }
+
+    public void IncreaseDiffusionCount(int count)
+    {
+        diffusionCount += count;
+    }
+
+    public LayerMask GetEnemyLayer() => enemyLayer;
+
+    private void NoCollision()
+    {
+        gameObject.SetActive(false);
+    }
+
+
     //=============================================================================
+
     public override void SetBulletType(BulletType bulletType)
     {
         base.SetBulletType(bulletType);
@@ -182,4 +149,63 @@ public class TenkaiBullet : BulletController
     {
         return base.GetIce();
     }
+
+
+    //=============================================================================
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        TotalDamage = damage * damageRate;
+
+        if (collision.CompareTag("Enemy"))
+        {
+            EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
+            if (diffusionCount_ == 0 && buff4)
+            {
+                enemyStat.TakeDamage((int)((buff4Damage + damage) * damageRate));
+            }
+            else
+            {
+                enemyStat.TakeDamage((int)TotalDamage);
+            }
+
+            if (diffusionCount_ > 0)
+            {
+                FindNextTarget(collision);
+            }
+            else
+            {
+
+                gameObject.SetActive(false);
+                diffusionCount_ = 0;
+            }
+
+            if (buff2)
+            {
+                enemyStat.DecreaseSpeed(buff2Slow);
+
+
+            }
+
+            if (isIce && !enemyStat.GetIsMolar() && !isSkillBullet)
+            {
+                enemyStat.SetIsIce(true);
+                enemyStat.DecreaseSpeed(slowRate);
+            }
+
+            if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
+            {
+                playerStat.Drain((int)TotalDamage);
+            }
+
+            diffusionCount_--;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    }
+
 }

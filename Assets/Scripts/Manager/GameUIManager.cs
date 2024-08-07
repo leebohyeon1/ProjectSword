@@ -12,6 +12,7 @@ public class GameUIManager : MonoBehaviour, IListener
     public static GameUIManager Instance {  get; private set; }
 
     private PlayerStat playerStat;
+
     //====================================================================
     
     [Header("스킬 버튼")]
@@ -46,6 +47,7 @@ public class GameUIManager : MonoBehaviour, IListener
     [Header("보스UI")]
     [SerializeField] private Slider bossHpBar;
     [SerializeField] private TMP_Text bossName;
+
     //==================================================================================
 
     void Awake()
@@ -138,6 +140,7 @@ public class GameUIManager : MonoBehaviour, IListener
                 break;
         }
     }
+
     //==================================================================================
 
     #region Btn

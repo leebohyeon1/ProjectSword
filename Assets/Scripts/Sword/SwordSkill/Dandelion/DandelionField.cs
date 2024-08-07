@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class DandelionField : MonoBehaviour
 {
-    public float duration = 5f; // 장판의 지속 시간
-    public float damageInterval = 1f; // 피해를 주는 간격
-    public int damageAmount = 1; // 피해량
+    [SerializeField] private float duration = 5f; // 장판의 지속 시간
+    [SerializeField] private float damageInterval = 1f; // 피해를 주는 간격
+    [SerializeField] private int damageAmount = 1; // 피해량
     private float damageTimer = 0f;
 
-    public LayerMask enemyLayer;
+    [SerializeField] private LayerMask enemyLayer;
+
+    //==================================================================================
 
     private void Start()
     {
@@ -27,6 +29,8 @@ public class DandelionField : MonoBehaviour
         }
     }
 
+    //==================================================================================
+
     private void ApplyDamage()
     {
         Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, transform.localScale,0, enemyLayer);
@@ -41,5 +45,12 @@ public class DandelionField : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SetField(float Duration, float Interval, int Damage)
+    {
+        duration = Duration;
+        damageInterval = Interval;
+        damageAmount = Damage;
     }
 }

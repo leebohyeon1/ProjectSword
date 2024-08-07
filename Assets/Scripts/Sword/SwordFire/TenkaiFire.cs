@@ -7,24 +7,33 @@ public class TenkaiFire : SwordFire
     [SerializeField] private TenkaiBullet bullet;
     [SerializeField] private Tenkai tenkai;
 
-    Vector3 Pos;
+    private Vector3 Pos;
+
+    //==================================================================================
+    
     void Start()
     {
         Set();
 
-        Pos = new Vector3(transform.position.x, transform.position.y + (tenkai.detectRadius.y/2), 0);
+        Pos = new Vector3(transform.position.x, transform.position.y + (tenkai.GetDetectRadius().y/2), 0);
     }
 
-    // Update is called once per frame
-    void Update()
+    //==================================================================================
+
+    public void SetTenkai(TenkaiBullet tenkaiBullet, Tenkai tenkai)
     {
-
+        bullet = tenkaiBullet;
+        this.tenkai = tenkai;
     }
+
+    //==================================================================================
+
     public override void Set()
     {
         base.Set();
 
     }
+
     public override void Fire()
     {
       
@@ -33,7 +42,7 @@ public class TenkaiFire : SwordFire
         float closestDistance = Mathf.Infinity;
         EnemyStat lowestHealthEnemy = null;
 
-        Collider2D[] enemies  = Physics2D.OverlapBoxAll(Pos, tenkai.detectRadius,0,bullet.enemyLayer);
+        Collider2D[] enemies  = Physics2D.OverlapBoxAll(Pos, tenkai.GetDetectRadius(),0,bullet.GetEnemyLayer());
 
         foreach (Collider2D enemyCollider in enemies)
         {
@@ -73,20 +82,17 @@ public class TenkaiFire : SwordFire
         }
         EventManager.Instance.PostNotification(EVENT_TYPE.FIRE, this);
     }
+
     public override void SetMagicSword(MagicSword sword)
     {
         base.SetMagicSword(sword);
     }
 
-    public void SetTenkai(TenkaiBullet tenkaiBullet, Tenkai tenkai)
-    {
-        bullet = tenkaiBullet;
-        this.tenkai = tenkai;
-    }
+    //==================================================================================
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(Pos, tenkai.detectRadius);
+        Gizmos.DrawWireCube(Pos, tenkai.GetDetectRadius());
     }
 }

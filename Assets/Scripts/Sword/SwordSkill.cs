@@ -12,6 +12,8 @@ public class SwordSkill : MonoBehaviour
 
     [SerializeField] protected float skillDamageUp;
 
+    //================================================================================================
+
     public virtual void Skill(int Index) { }
 
     public virtual Vector2 ChangeSkill(int Index) { return Vector2.zero; }
@@ -22,6 +24,7 @@ public class SwordSkill : MonoBehaviour
     public virtual void SkillB() { }
 
     public virtual Vector2[] GetSkillSize() { return skillSize; }
+
     public virtual void SetSkillDamage(float Damage)
     {
         skillDamageUp += Damage;

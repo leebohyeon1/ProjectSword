@@ -11,6 +11,8 @@ public class PlayerUI : MonoBehaviour
     private float Hp;
     private float MaxHp;
 
+    //=============================================================================
+
     private void Start()
     {
         healthBar = FindObjectOfType<HealthBar>();
@@ -23,6 +25,8 @@ public class PlayerUI : MonoBehaviour
     {
         healthBar.UpdateHp(Hp, MaxHp, 0);
     }
+
+    //=============================================================================
 
     public void UpdateHp(float hp, float maxHp)
     {

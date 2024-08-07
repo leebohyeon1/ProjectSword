@@ -23,12 +23,15 @@ public class SkillBtn : MonoBehaviour,
     public Transform skillSpawnPoint;
     public int skill_Index = 0;
 
-    
+    //================================================================================================
+
     void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
         playerStat = FindObjectOfType<PlayerStat>();
     }
+
+    //================================================================================================
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -98,6 +101,8 @@ public class SkillBtn : MonoBehaviour,
         }
 
     }
+
+    //================================================================================================
 
     private void CancelSkill()
     {

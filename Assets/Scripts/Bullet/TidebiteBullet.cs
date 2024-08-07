@@ -7,57 +7,16 @@ public class TidebiteBullet : BulletController
     [SerializeField] private bool isMolar;
     [SerializeField] private int molarDamage = 0;
     [SerializeField] private int molarLevel = 0;
-    // Start is called before the first frame update
+
+    //=============================================================================
+
     void Start()
     {
         damageRate = 1f;
         playerStat = FindFirstObjectByType<PlayerStat>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        TotalDamage = damage * damageRate;
-        if (collision.CompareTag("Enemy"))
-        {
-            EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
-            
-
-            if (enemyStat.GetIsMolar())
-            {
-                enemyStat.TakeDamage((int)((damage + (molarDamage * molarLevel)) * damageRate));
-            }
-            else
-            {
-                enemyStat.TakeDamage((int)TotalDamage);
-                
-            }
-
-            gameObject.SetActive(false);
-
-            if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
-            {
-                playerStat.Drain((int)TotalDamage);
-            }
-
-            if (isIce && !enemyStat.GetIsIce() && !isSkillBullet)
-            {
-                enemyStat.SetIsIce(true);
-                enemyStat.DecreaseSpeed(slowRate);
-
-            }
-
-            if (isMolar)
-            {
-                enemyStat.SetIsMolar(true);
-            }
-        }     
-    }
+    //=============================================================================
 
     public void SetMolar(bool molar_bool)
     {
@@ -77,6 +36,7 @@ public class TidebiteBullet : BulletController
     public bool GetMolar() => isMolar;
 
     //=============================================================================
+
     public override void SetBulletType(BulletType bulletType)
     {
         base.SetBulletType(bulletType);
@@ -109,5 +69,46 @@ public class TidebiteBullet : BulletController
     public override bool GetIce()
     {
         return base.GetIce();
+    }
+
+    //=============================================================================
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        TotalDamage = damage * damageRate;
+        if (collision.CompareTag("Enemy"))
+        {
+            EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
+
+
+            if (enemyStat.GetIsMolar())
+            {
+                enemyStat.TakeDamage((int)((damage + (molarDamage * molarLevel)) * damageRate));
+            }
+            else
+            {
+                enemyStat.TakeDamage((int)TotalDamage);
+
+            }
+
+            gameObject.SetActive(false);
+
+            if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
+            {
+                playerStat.Drain((int)TotalDamage);
+            }
+
+            if (isIce && !enemyStat.GetIsIce() && !isSkillBullet)
+            {
+                enemyStat.SetIsIce(true);
+                enemyStat.DecreaseSpeed(slowRate);
+
+            }
+
+            if (isMolar)
+            {
+                enemyStat.SetIsMolar(true);
+            }
+        }
     }
 }

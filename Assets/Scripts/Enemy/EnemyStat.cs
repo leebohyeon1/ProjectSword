@@ -25,6 +25,8 @@ public class EnemyStat : MonoBehaviour
     protected bool isIce = false;
     protected bool isMolar = false;
 
+    //==================================================================================
+
     private void Awake()
     {
         isBless = Random.value * 100f < blessRate;
@@ -44,6 +46,13 @@ public class EnemyStat : MonoBehaviour
     
     }
 
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
+    }
+
+    //==================================================================================
+
     public virtual void TakeDamage(int damage, bool Count = true)
     {
         hp -= damage;
@@ -61,11 +70,6 @@ public class EnemyStat : MonoBehaviour
                 EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, finalSwapGage);
             }
         }
-    }
-
-    private void OnBecameInvisible()
-    {
-        Destroy(gameObject);
     }
 
     public virtual void SetIsIce(bool boolean)
@@ -111,6 +115,7 @@ public class EnemyStat : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = Vector2.down * (finalSpeed + SpawnManager.Instance.PlusAcceleration());
     }
 
+    //==================================================================================
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -12,15 +12,16 @@ public class ChoiceEnchant : MonoBehaviour
         get { return curEnchant; }
         set { curEnchant = value; }
     }
-    // Start is called before the first frame update
 
     [SerializeField] private TMP_Text text;
+
     //==================================================================================
 
     void OnBecameInvisible()
     {
         Destroy(transform.parent.gameObject);
     }
+
     //==================================================================================
 
     public void TextSet()

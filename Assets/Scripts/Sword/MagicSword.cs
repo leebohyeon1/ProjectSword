@@ -19,7 +19,7 @@ public class MagicSword : MonoBehaviour
     [SerializeField] protected float bulletSpeed;
 
     [Header("추적")]
-    public Transform followPos; // 플레이어 오브젝트
+    [SerializeField] protected Transform followPos; // 플레이어 오브젝트
     [SerializeField] protected float followDelay = 0.1f; // 따라오는 시간 차
     [SerializeField] protected int maxPositions = 50; // 최대 저장할 위치 수
 
@@ -52,6 +52,8 @@ public class MagicSword : MonoBehaviour
 
     private const int maxBuffLevel = 4;
 
+    //================================================================================================
+
     private void Start()
     {
         SetTrans();
@@ -61,6 +63,16 @@ public class MagicSword : MonoBehaviour
     {
         Follow();
     }
+
+    //================================================================================================
+
+    private void InitializeBullet(GameObject bullet)
+    {
+        var bulletController = bullet.GetComponent<BulletController>();
+        bulletController.SetDamage(attackPower + plusAttackPower);
+    }
+
+    //================================================================================================
 
     public virtual void SetTrans()
     {
@@ -118,12 +130,6 @@ public class MagicSword : MonoBehaviour
         InitializeBullet(newBullet);
         bulletPool.Add(newBullet);
         return newBullet;
-    }
-
-    private void InitializeBullet(GameObject bullet)
-    {
-        var bulletController = bullet.GetComponent<BulletController>();
-        bulletController.SetDamage(attackPower + plusAttackPower);
     }
 
     public virtual void Fire()

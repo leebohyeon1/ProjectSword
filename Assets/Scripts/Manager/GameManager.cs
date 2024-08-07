@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour
     [Header("½ºÅ³")]
     [SerializeField] private bool isSkill;
     [SerializeField] private float skillTimeScale;
-    //==================================================================================
 
+    //==================================================================================
 
     private void Awake()
     {
@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
     }
+
     //==================================================================================
 
     public void SkillOnOff()

@@ -46,10 +46,8 @@ public class PlayerStat : MonoBehaviour, IListener
         set
         {
             skillCount_ = Mathf.Min(value, maxSkillCount);
-         
-            if (skillCount_ == maxSkillCount)
+            if (skillCount_ == maxSkillCount && extraSkillCount == 0)
             {
-                if (extraSkillCount > 0) return;
                 float excess = value - maxSkillCount;
                 extraSkillCount = Mathf.Min(extraSkillCount + excess, maxExtraSkillCount);
             }
@@ -81,7 +79,6 @@ public class PlayerStat : MonoBehaviour, IListener
             }
         }
     }
-
 
     [Header("Åº¸·")]
     public GameObject bulletPrefab;
@@ -120,8 +117,8 @@ public class PlayerStat : MonoBehaviour, IListener
     public float skillRecoveryAmount = 0f;
     public float swapReTimer = 0f;
     public float swapRecoveryAmount = 0f;
-
-    //==================================================================================
+    
+    //=============================================================================
 
     void Awake()
     {
@@ -183,7 +180,7 @@ public class PlayerStat : MonoBehaviour, IListener
         }
     }
 
-    //==================================================================================
+    //=============================================================================
 
     public void ChangeWeapon()
     {
@@ -222,7 +219,6 @@ public class PlayerStat : MonoBehaviour, IListener
     public void TakeDamage(float damage)
     {
         curHp -= damage;
-
         GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
         if (curHp <= 0f)
         {
@@ -234,7 +230,6 @@ public class PlayerStat : MonoBehaviour, IListener
     public void HealHp(float heal)
     {
         curHp = Mathf.Min(curHp + heal, maxHp);
-
         GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
     }
 
@@ -254,10 +249,8 @@ public class PlayerStat : MonoBehaviour, IListener
     {
         int heal = damage <= damageQuarter[0] ? drainAmount[0] :
                     damage <= damageQuarter[1] ? drainAmount[1] : drainAmount[2];
-
         curHp = Mathf.Min(curHp + heal, maxHp);
         GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
-
     }
 
     public void AutoRecovery()
@@ -265,29 +258,21 @@ public class PlayerStat : MonoBehaviour, IListener
         if (hpReTimer > 0.1f)
         {
             hpReTimer = 0;
-
-            curHp += hpRecoveryAmount;
-            if (curHp >= maxHp)
-            {
-                curHp = maxHp;
-            }
-
+            curHp = Mathf.Min(curHp + hpRecoveryAmount, maxHp);
             GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
         }
 
         if (skillReTimer > 0.1f)
         {
             skillReTimer = 0;
-
-            skillCount += skillRecoveryAmount;
+            skillCount = Mathf.Min(skillCount + skillRecoveryAmount, maxSkillCount);
             EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT, this, skillCount / maxSkillCount);
         }
 
         if (swapReTimer > 0.1f)
         {
             swapReTimer = 0;
-
-            swapCount += swapRecoveryAmount;
+            swapCount = Mathf.Min(swapCount + swapRecoveryAmount, maxSwapCount);
             EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, swapCount / maxSwapCount);
         }
 
@@ -317,6 +302,8 @@ public class PlayerStat : MonoBehaviour, IListener
         }
     }
 
+    //=============================================================================
+
     #region GetFunc
 
     public GameObject GetBullet()
@@ -336,15 +323,14 @@ public class PlayerStat : MonoBehaviour, IListener
         bulletPool.Add(newBullet);
         return newBullet;
     }
+
     public Swords GetSwords() => weapon[weaponIndex];
     public List<GameObject> GetBulletPool() => bulletPool;
     public GameObject GetFirePos() => firePos;
-
     public int GetWeaponIndex() => weaponIndex;
     public float GetCurHP() => curHp;
     public float GetMaxHP() => maxHp;
-    public float GetAttackSpeed() => attackSpeed;   
-
+    public float GetAttackSpeed() => attackSpeed;
 
     #endregion
 
@@ -371,7 +357,6 @@ public class PlayerStat : MonoBehaviour, IListener
     }
 
     public Vector2 SetWeaponSize(int i) => skillSize[i];
-
     public void SetSKillTrans(Transform skillTransform) => weaponList[weaponIndex].GetComponent<SwordSkill>().SetTrans(skillTransform);
 
     public void SetBulletIce(float rate, float damage = 0)
@@ -388,7 +373,7 @@ public class PlayerStat : MonoBehaviour, IListener
     private void InitializeBullet(GameObject bullet)
     {
         var controller = bullet.GetComponent<BulletController>();
-        controller.SetDamage( CalculateDamage(attackDamage + upAttackDamage[weaponIndex]));
+        controller.SetDamage(CalculateDamage(attackDamage + upAttackDamage[weaponIndex]));
         controller.SetBulletType(bulletType);
     }
 
@@ -411,7 +396,6 @@ public class PlayerStat : MonoBehaviour, IListener
             var swordInstance = Instantiate(weapon[i].swordPrefab, swordPos[i].position, Quaternion.identity);
             var magicSword = swordInstance.GetComponent<MagicSword>();
             magicSword.SetSword(swordPos[i], weapon[i].swordAttackPower, weapon[i].swordAttackSpeed, weapon[i].swordBulletSpeed);
- 
             weaponList.Add(swordInstance);
         }
     }
@@ -424,11 +408,12 @@ public class PlayerStat : MonoBehaviour, IListener
     public void SetCriticalRate(float Rate)
     {
         criticalRate += Rate;
-        if(criticalRate <= 0)
+        if (criticalRate <= 0)
         {
             criticalRate = 0;
         }
     }
+
     #endregion
 
     #region Upgrade
@@ -443,7 +428,7 @@ public class PlayerStat : MonoBehaviour, IListener
         {
             ApplyUpgrade(enchant, 1);
         }
-        
+
         canDrain = enchant.isDrain;
         hpRecoveryAmount += enchant.hpRecovery;
         skillCoolDown += enchant.skillCoolDown;
@@ -470,5 +455,6 @@ public class PlayerStat : MonoBehaviour, IListener
             weaponList[index].GetComponent<MagicSword>().buffLevel += enchant.petUpgrade;
         }
     }
+
     #endregion
 }

@@ -11,6 +11,8 @@ public class PlayerFollower : MonoBehaviour
 
     RaycastHit2D hit;
 
+    //=============================================================================
+
     void Update()
     {
         // 벽에 가까운지 감지
@@ -29,6 +31,8 @@ public class PlayerFollower : MonoBehaviour
             rightFollower.transform.position = Vector2.MoveTowards(rightFollower.transform.position, new Vector2(transform.position.x + 1, transform.position.y - 1), 2f * Time.deltaTime);
         }
     }
+
+    //=============================================================================
 
     private bool IsNearWall(Vector2 direction)
     {
@@ -56,6 +60,8 @@ public class PlayerFollower : MonoBehaviour
         float distance = Vector2.Distance(transform.position, hit.point);
         leftFollower.transform.position = Vector2.MoveTowards(leftFollower.transform.position, playerBackward + new Vector3(transform.position.x - distance + 0.5f, transform.position.y), 2f * Time.deltaTime);
     }
+
+    //=============================================================================
 
     void OnDrawGizmosSelected()
     {
