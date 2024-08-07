@@ -7,23 +7,71 @@ public class TidebiteBullet : BulletController
     [SerializeField] private bool isMolar;
     [SerializeField] private int molarDamage = 0;
     [SerializeField] private int molarLevel = 0;
-    // Start is called before the first frame update
+
+    //=============================================================================
+
     void Start()
     {
         damageRate = 1f;
         playerStat = FindFirstObjectByType<PlayerStat>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    //=============================================================================
 
+    public void SetMolar(bool molar_bool)
+    {
+        isMolar = molar_bool;
     }
 
+    public void SetMolar(int level)
+    {
+        molarLevel = level;
+    }
+
+    public void SetMolarDamage(int molarDamage)
+    {
+        this.molarDamage = molarDamage;
+    }
+
+    public bool GetMolar() => isMolar;
+
+    //=============================================================================
+
+    public override void SetBulletType(BulletType bulletType)
+    {
+        base.SetBulletType(bulletType);
+    }
     public override void SetDamagebuff(float rate)
     {
         base.SetDamagebuff(rate);
     }
+    public override void SetDamage(int Damage)
+    {
+        base.SetDamage(Damage);
+    }
+    public override void SetSlowRate(float slowRate)
+    {
+        base.SetSlowRate(slowRate);
+    }
+    public override void SetIce(bool ice)
+    {
+        base.SetIce(ice);
+    }
+    public override void IncreaseDamage(float damage)
+    {
+        base.IncreaseDamage(damage);
+    }
+
+    public override bool GetSubBullet()
+    {
+        return base.GetSubBullet();
+    }
+    public override bool GetIce()
+    {
+        return base.GetIce();
+    }
+
+    //=============================================================================
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -31,7 +79,7 @@ public class TidebiteBullet : BulletController
         if (collision.CompareTag("Enemy"))
         {
             EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
-            
+
 
             if (enemyStat.GetIsMolar())
             {
@@ -40,7 +88,7 @@ public class TidebiteBullet : BulletController
             else
             {
                 enemyStat.TakeDamage((int)TotalDamage);
-                
+
             }
 
             gameObject.SetActive(false);
@@ -62,57 +110,5 @@ public class TidebiteBullet : BulletController
                 enemyStat.SetIsMolar(true);
             }
         }
-
-        //if(collision.CompareTag("Boss"))
-        //{
-        //    BossStat bossStat = collision.GetComponent<BossStat>();
-
-        //    if (bossStat.isMolar)
-        //    {
-        //        bossStat.TakeDamage((int)((damage + (molarDamage * molarLevel)) * damageRate));
-        //    }
-        //    else
-        //    {
-        //        bossStat.TakeDamage((int)TotalDamage);
-
-        //    }
-
-        //    gameObject.SetActive(false);
-
-        //    if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
-        //    {
-        //        playerStat.Drain((int)TotalDamage);
-        //    }
-
-        //    if (isIce && !bossStat.isIce && !isSkillBullet)
-        //    {
-        //        bossStat.isIce = true;
-        //        bossStat.DecreaseSpeed(slowRate);
-
-        //    }
-
-        //    if (isMolar)
-        //    {
-        //        bossStat.isMolar = true;
-        //    }
-        //}
-      
     }
-
-    public void SetMolar(bool molar_bool)
-    {
-        isMolar = molar_bool;
-    }
-
-    public void SetMolar(int level)
-    {
-        molarLevel = level;
-    }
-
-    public void SetMolarDamage(int molarDamage)
-    {
-        this.molarDamage = molarDamage;
-    }
-
-    public bool GetMolar => isMolar;
 }

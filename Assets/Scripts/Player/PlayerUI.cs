@@ -11,18 +11,22 @@ public class PlayerUI : MonoBehaviour
     private float Hp;
     private float MaxHp;
 
+    //=============================================================================
+
     private void Start()
     {
         healthBar = FindObjectOfType<HealthBar>();
 
-        Hp = GetComponent<PlayerStat>().curHp;
-        MaxHp = GetComponent<PlayerStat>().maxHp;
+        Hp = GetComponent<PlayerStat>().GetCurHP();
+        MaxHp = GetComponent<PlayerStat>().GetMaxHP();
     }
 
     private void Update()
     {
         healthBar.UpdateHp(Hp, MaxHp, 0);
     }
+
+    //=============================================================================
 
     public void UpdateHp(float hp, float maxHp)
     {

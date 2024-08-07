@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class PlayerFollower : MonoBehaviour
 {
-    public GameObject leftFollower; // 왼쪽 대각선 뒤 오브젝트
-    public GameObject rightFollower; // 오른쪽 대각선 뒤 오브젝트
-    public float followDelay = 0.5f; // 따라오는 시간 차
-    public int maxPositions = 50; // 최대 저장할 위치 수
-    public LayerMask wallLayer; // 벽 레이어 마스크
-    public float wallDetectionRadius = 0.5f; // 벽 감지 반경
+    [SerializeField] private GameObject leftFollower; // 왼쪽 대각선 뒤 오브젝트
+    [SerializeField] private GameObject rightFollower; // 오른쪽 대각선 뒤 오브젝트
+    [SerializeField] private LayerMask wallLayer; // 벽 레이어 마스크
+    [SerializeField] private float wallDetectionRadius = 0.5f; // 벽 감지 반경
 
     RaycastHit2D hit;
+
+    //=============================================================================
 
     void Update()
     {
@@ -31,6 +31,8 @@ public class PlayerFollower : MonoBehaviour
             rightFollower.transform.position = Vector2.MoveTowards(rightFollower.transform.position, new Vector2(transform.position.x + 1, transform.position.y - 1), 2f * Time.deltaTime);
         }
     }
+
+    //=============================================================================
 
     private bool IsNearWall(Vector2 direction)
     {
@@ -58,6 +60,8 @@ public class PlayerFollower : MonoBehaviour
         float distance = Vector2.Distance(transform.position, hit.point);
         leftFollower.transform.position = Vector2.MoveTowards(leftFollower.transform.position, playerBackward + new Vector3(transform.position.x - distance + 0.5f, transform.position.y), 2f * Time.deltaTime);
     }
+
+    //=============================================================================
 
     void OnDrawGizmosSelected()
     {

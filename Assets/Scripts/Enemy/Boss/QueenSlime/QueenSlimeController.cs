@@ -22,14 +22,14 @@ public class QueenSlimeController : BossController
 
     [Space(10f)]
     [SerializeField] private GameObject SkillPrefab;
-    
-    
+
+    //==================================================================================
+
     void Start()
     {
         bossStat = GetComponent<BossStat>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(!isSkill)
@@ -42,6 +42,8 @@ public class QueenSlimeController : BossController
         }
        
     }
+
+    //==================================================================================
 
     public override void Attack()
     {

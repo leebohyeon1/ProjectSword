@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class DandelionBullet : BulletController
 {
-    public bool isDandelion = false;
+    [SerializeField] private bool isDandelion = false;
 
-    public bool isLevel3 = false;
+    [SerializeField] private bool isLevel3 = false;
+
+    //=============================================================================
 
     void Start()
     {
@@ -14,70 +16,7 @@ public class DandelionBullet : BulletController
         playerStat = FindFirstObjectByType<PlayerStat>();
     }
 
-
-    public override void SetDamagebuff(float rate)
-    {
-        base.SetDamagebuff(rate);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-       
-        TotalDamage = damage * damageRate;
-        if (collision.CompareTag("Enemy"))
-        {
-            EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
-            if (isDandelion)
-            {
-                StartCoroutine(SkillB(collision));
-            }
-            else
-            {
-                enemyStat.TakeDamage((int)TotalDamage);
-                gameObject.SetActive(false);         
-            }
-
-            if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
-            {
-                playerStat.Drain((int)TotalDamage);
-            }
-
-            if (isIce && !enemyStat.GetIsIce() && !isSkillBullet)
-            {
-                enemyStat.SetIsIce(true);
-                enemyStat.DecreaseSpeed(slowRate);
-
-            }
-        }
-
-        //if(collision.CompareTag("Boss"))
-        //{
-        //    BossStat bossStat = collision.GetComponent<BossStat>();
-        //    if (isDandelion)
-        //    {
-        //        StartCoroutine(SkillB(collision));
-        //    }
-        //    else
-        //    {
-        //        bossStat.TakeDamage((int)TotalDamage);
-        //        gameObject.SetActive(false);
-        //    }
-
-        //    if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
-        //    {
-        //        playerStat.Drain((int)TotalDamage);
-        //    }
-
-        //    if (isIce && !bossStat.GetIsIce() && !isSkillBullet)
-        //    {
-        //        bossStat.SetIsIce(true);
-        //        bossStat.DecreaseSpeed(slowRate);
-
-        //    }
-        //}
-    }
-       
-    
+    //=============================================================================
 
     public IEnumerator SkillB(Collider2D collision)
     {
@@ -108,4 +47,88 @@ public class DandelionBullet : BulletController
         }
     }
 
+
+    public void SetDandelionSkillB(bool boolean)
+    {
+        isDandelion = boolean;
+    }
+
+    public void SetBuffLevel3(bool Boolean)
+    {
+        isLevel3 = Boolean;
+    }
+
+    //=============================================================================
+
+    public override void SetBulletType(BulletType bulletType)
+    {
+        base.SetBulletType(bulletType);
+    }
+
+    public override void SetDamagebuff(float rate)
+    {
+        base.SetDamagebuff(rate);
+    }
+
+    public override void SetDamage(int Damage)
+    {
+        base.SetDamage(Damage);
+    }
+
+    public override void SetSlowRate(float slowRate)
+    {
+        base.SetSlowRate(slowRate);
+    }
+
+    public override void SetIce(bool ice)
+    {
+        base.SetIce(ice);
+    }
+
+    public override void IncreaseDamage(float damage)
+    {
+        base.IncreaseDamage(damage);
+    }
+
+    public override bool GetSubBullet()
+    {
+        return base.GetSubBullet();
+    }
+    public override bool GetIce()
+    {
+        return base.GetIce();
+    }
+
+    //=============================================================================
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        TotalDamage = damage * damageRate;
+        if (collision.CompareTag("Enemy"))
+        {
+            EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
+            if (isDandelion)
+            {
+                StartCoroutine(SkillB(collision));
+            }
+            else
+            {
+                enemyStat.TakeDamage((int)TotalDamage);
+                gameObject.SetActive(false);
+            }
+
+            if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
+            {
+                playerStat.Drain((int)TotalDamage);
+            }
+
+            if (isIce && !enemyStat.GetIsIce() && !isSkillBullet)
+            {
+                enemyStat.SetIsIce(true);
+                enemyStat.DecreaseSpeed(slowRate);
+
+            }
+        }
+    }
 }

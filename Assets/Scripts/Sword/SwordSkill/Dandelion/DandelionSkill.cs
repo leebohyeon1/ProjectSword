@@ -7,18 +7,19 @@ public class DandelionSkill : SwordSkill
     PlayerStat playerStat;
 
     [Header("½ºÅ³")]
-    public float[] power;
-    public float[] duration;
+    [SerializeField] private float[] power;
+    [SerializeField] private float[] duration;
     private float[] skillTimer = new float[2];
     private bool[] skillActive = new bool[2];
 
     [Header("A")]
-    public float damageInterval = 1f;
+    [SerializeField] private float damageInterval = 1f;
     private float damageTimer;
-    public GameObject Panel;
+    [SerializeField] private GameObject Panel;
+    public GameObject panel { get { return Panel; } }
     private List<GameObject> ppp;
 
-
+    //==================================================================================
 
     void Start()
     {
@@ -76,6 +77,22 @@ public class DandelionSkill : SwordSkill
         }
     }
 
+    //==================================================================================
+
+    void SkillBOff()
+    {
+        foreach (GameObject bullet in playerStat.bulletPool_)
+        {
+            DandelionBullet bullets = bullet.GetComponent<DandelionBullet>();
+            bullets.SetDamagebuff(1);
+            bullets.SetDandelionSkillB( false);
+        }
+        skillActive[1] = false;
+       
+    }
+
+    //==================================================================================
+
     public override void SkillA()
     {
         if (skillPoint == null)
@@ -88,35 +105,22 @@ public class DandelionSkill : SwordSkill
         panel.transform.localScale = ChangeSkill(0);
 
         DandelionField dandelionField = panel.GetComponent<DandelionField>();
-        dandelionField.duration = duration[0];
-        dandelionField.damageAmount = (int)power[0];
-        dandelionField.damageInterval = damageInterval;
+        dandelionField.SetField(duration[0], damageInterval, (int)power[0]);
+
     }
 
     public override void SkillB()
     {
 
-        foreach(GameObject bullet in playerStat.bulletPool_)
-        {
-            DandelionBullet bullets = bullet.GetComponent<DandelionBullet>();
-            bullets.SetDamagebuff(power[1]);
-            bullets.isDandelion = true;
-
-        }
-        skillTimer[1] = 0f;
-        skillActive[1] = true;  
-    }
-
-    void SkillBOff()
-    {
         foreach (GameObject bullet in playerStat.bulletPool_)
         {
             DandelionBullet bullets = bullet.GetComponent<DandelionBullet>();
-            bullets.SetDamagebuff(1);
-            bullets.isDandelion = false;
+            bullets.SetDamagebuff(power[1]);
+            bullets.SetDandelionSkillB(true);
+
         }
-        skillActive[1] = false;
-       
+        skillTimer[1] = 0f;
+        skillActive[1] = true;
     }
 
     public override void Skill(int index)
@@ -140,6 +144,17 @@ public class DandelionSkill : SwordSkill
     {
         skillPoint = trans;
     }
+
+    public override Vector2[] GetSkillSize()
+    {
+        return base.GetSkillSize();
+    }
+
+    public override void SetSkillDamage(float Damage)
+    {
+        base.SetSkillDamage(Damage);
+    }
+
 
 
 }

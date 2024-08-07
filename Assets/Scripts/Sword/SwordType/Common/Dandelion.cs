@@ -10,21 +10,23 @@ public class Dandelion : MagicSword, IListener
     [Header("고유 능력 진화")]
 
     [Header("레벨 1")]
-    public int damageUp = 0;
+    [SerializeField] private int damageUp = 0;
 
     [Header("레벨 2")]
-    public float damageDownRate = 0.5f;
+    [SerializeField] private float damageDownRate = 0.5f;
 
     [Header("레벨 3")]
     private bool isLevel3 = false;
-    public Vector2 areaSize;
-    public float duration;
-    public int damage;
-    public float Interval;
+    [SerializeField] private Vector2 areaSize;
+    [SerializeField] private float duration;
+    [SerializeField] private int damage;
+    [SerializeField] private float Interval;
 
     [Header("레벨 4")]
-    public float durationUp;
-    public float IntervalDown;
+    [SerializeField] private float durationUp;
+    [SerializeField] private float IntervalDown;
+
+    //================================================================================================
 
     void Start()
     {
@@ -52,6 +54,63 @@ public class Dandelion : MagicSword, IListener
         }
     }
 
+    //================================================================================================
+
+
+    private void Buff1()
+    {
+        plusAttackPower += damageUp;
+    }
+
+    private void Buff2()
+    {
+        foreach (GameObject bullet in bulletPool)
+        {
+            DandelionBullet bullets = bullet.GetComponent<DandelionBullet>();
+            bullets.SetDamagebuff(damageDownRate);
+            bullets.SetDandelionSkillB (true);
+
+        }
+    }
+
+    private void Buff3()
+    {
+        isLevel3 = true;
+        foreach (GameObject bullet in bulletPool)
+        {
+            DandelionBullet bullets = bullet.GetComponent<DandelionBullet>();
+            bullets.SetBuffLevel3(true);
+        }
+    }
+
+    private void Buff4()
+    {
+        duration += durationUp;
+        Interval -= IntervalDown;
+    }
+
+    public void SubDanSkill(Vector3 pos)
+    {
+        GameObject panel = Instantiate(skill.panel,pos , Quaternion.identity);
+        panel.transform.localScale = areaSize;
+
+        DandelionField dandelionField = panel.GetComponent<DandelionField>();
+        dandelionField.SetField(duration, Interval, damage);
+
+    }
+
+    public void Attack()
+    {
+        timer += Time.deltaTime;
+        if (timer > attackSpeed)
+        {
+            Fire();
+            timer = 0f;
+        }
+    }
+
+    //================================================================================================
+
     public override void SetTrans()
     {
         base.SetTrans();
@@ -72,19 +131,15 @@ public class Dandelion : MagicSword, IListener
         base.Fire();
     }
 
-    public void Attack()
-    {
-        timer += Time.deltaTime;
-        if (timer > attackSpeed)
-        {
-            Fire();
-            timer = 0f;
-        }
-    }
-
     public override void SetFire()
     {
         base.SetFire();
+    }
+    public override GameObject GetBulletPrefab() => base.GetBulletPrefab();
+
+    public override void SetSword(Transform Trans, int AttackPower, float AttackSpeed, float BulletSpeed)
+    {
+        base.SetSword(Trans, AttackPower, AttackSpeed, BulletSpeed);
     }
 
     protected override void ApplyBuffEffects()
@@ -106,46 +161,4 @@ public class Dandelion : MagicSword, IListener
         }
     }
 
-    private void Buff1()
-    {
-        plusAttackPower += damageUp;
-    }
-
-    private void Buff2()
-    {
-        foreach (GameObject bullet in bulletPool)
-        {
-            DandelionBullet bullets = bullet.GetComponent<DandelionBullet>();
-            bullets.SetDamagebuff(damageDownRate);
-            bullets.isDandelion = true;
-
-        }
-    }
-
-    private void Buff3()
-    {
-        isLevel3 = true;
-        foreach (GameObject bullet in bulletPool)
-        {
-            DandelionBullet bullets = bullet.GetComponent<DandelionBullet>();
-            bullets.isLevel3 = true;
-        }
-    }
-
-    private void Buff4()
-    {
-        duration += durationUp;
-        Interval -= IntervalDown;
-    }
-
-    public void SubDanSkill(Vector3 pos)
-    {
-        GameObject panel = Instantiate(skill.Panel,pos , Quaternion.identity);
-        panel.transform.localScale = areaSize;
-
-        DandelionField dandelionField = panel.GetComponent<DandelionField>();
-        dandelionField.duration = duration;
-        dandelionField.damageAmount = damage;
-        dandelionField.damageInterval = Interval;
-    }
 }

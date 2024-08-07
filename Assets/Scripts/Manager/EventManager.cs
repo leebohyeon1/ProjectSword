@@ -15,6 +15,7 @@ public enum EVENT_TYPE
 
    DAN3
 };
+
 public interface IListener
 {
     void OnEvent(EVENT_TYPE Event_type, Component Sender, object Param = null);
@@ -23,11 +24,13 @@ public interface IListener
 public class EventManager : MonoBehaviour
 {
     public static EventManager Instance { get; private set; }
+
     //=========================================================
 
     public delegate void OnEvent(EVENT_TYPE Event_, Component Sender, object Param = null);
     private Dictionary<EVENT_TYPE, List<IListener>> Listeners =
         new Dictionary<EVENT_TYPE, List<IListener>>();
+
     //=========================================================
 
     private void Awake()
@@ -42,6 +45,7 @@ public class EventManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
     }
+
     //=========================================================
 
     //리스트에 리스너 오브젝트 추가

@@ -6,10 +6,11 @@ public class EnchantSetting : MonoBehaviour
 {
     PlayerStat playerStat;
 
-    public float[] firstPercentage;
-    public Upgrade[] upgrades;
+    [SerializeField] private float[] firstPercentage;
+    [SerializeField] private Upgrade[] upgrades;
 
-    public ChoiceEnchant[] choices;
+    [SerializeField] private ChoiceEnchant[] choices;
+
     //==================================================================================
 
     void Start()
@@ -19,37 +20,11 @@ public class EnchantSetting : MonoBehaviour
         for (int i = 0; i < choices.Length; i++)
         {
             int randomNum = Random.Range(0, 100);
-            choices[i].curEnchant = RandomEnchant(randomNum);
+            choices[i].Enchant = RandomEnchant(randomNum);
             choices[i].TextSet();
         } 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            PlayerStat playerStat = collision.GetComponent<PlayerStat>();
-            
-            int num = 0;
-            float minLength = Mathf.Infinity;
-            for (int i = 0; i < choices.Length; i++)
-            {
-                
-                float distance = Vector2.Distance(collision.transform.position, choices[i].transform.position);
-
-                
-                if(distance < minLength)
-                {
-                    minLength = distance;
-                    num = i;
-                }
-            }
-
-            playerStat.Upgrade(choices[num].curEnchant);
-
-            Destroy(gameObject);
-        }
-    }
     //==================================================================================
 
     public Enchant RandomEnchant(int randomRate)
@@ -69,6 +44,35 @@ public class EnchantSetting : MonoBehaviour
         {
             int num = Random.Range(0, 100);
             return upgrades[2].RandomUpgrade(num);
+        }
+    }
+
+    //==================================================================================
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            PlayerStat playerStat = collision.GetComponent<PlayerStat>();
+
+            int num = 0;
+            float minLength = Mathf.Infinity;
+            for (int i = 0; i < choices.Length; i++)
+            {
+
+                float distance = Vector2.Distance(collision.transform.position, choices[i].transform.position);
+
+
+                if (distance < minLength)
+                {
+                    minLength = distance;
+                    num = i;
+                }
+            }
+
+            playerStat.Upgrade(choices[num].Enchant);
+
+            Destroy(gameObject);
         }
     }
 }

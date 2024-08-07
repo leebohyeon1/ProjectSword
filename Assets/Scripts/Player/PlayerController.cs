@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour, IListener
     private bool isDragging = false;
     private float attackTimer;
 
+    //==================================================================================
+
     private void Start()
     {
         playerStat = GetComponent<PlayerStat>();
@@ -35,6 +37,8 @@ public class PlayerController : MonoBehaviour, IListener
     {
         attackTimer = 0;
     }
+
+    //==================================================================================
 
     public void Drag()
     {
@@ -64,9 +68,9 @@ public class PlayerController : MonoBehaviour, IListener
     public void HadleAttack()
     {
         attackTimer += Time.deltaTime;
-        if(attackTimer > (playerStat.attackSpeed - playerStat.upAttackSpeed[playerStat.weaponIndex])) 
+        if(attackTimer > (playerStat.GetAttackSpeed() - playerStat.upAttackSpeed[playerStat.GetWeaponIndex()])) 
         {
-            playerStat.firePos.GetComponents<SwordFire>()[playerStat.weaponIndex].Fire();
+            playerStat.GetFirePos().GetComponents<SwordFire>()[playerStat.GetWeaponIndex()].Fire();
         }
     }
  

@@ -10,15 +10,17 @@ public class Tidebite : MagicSword
     [Header("고유 능력 진화")]
 
     [Header("레벨 1")]
-    public int damageUp = 10;
+    [SerializeField] private int damageUp = 10;
 
     [Header("레벨 2")]
-    public int molarDamage = 5;
+    [SerializeField] private int molarDamage = 5;
 
 
     [Header("레벨 4")]
-    public int molarDamageUp = 2;
-    // Start is called before the first frame update
+    [SerializeField] private int molarDamageUp = 2;
+
+    //================================================================================================
+
     void Start()
     {
         SetTrans();
@@ -27,7 +29,6 @@ public class Tidebite : MagicSword
         InitializePool();
     }
 
-    // Update is called once per frame
     void Update()
     {
         Follow();
@@ -35,6 +36,42 @@ public class Tidebite : MagicSword
 
     }
 
+    //================================================================================================
+
+    private void Buff1()
+    {
+        plusAttackPower += damageUp;
+    }
+
+    private void Buff2()
+    {
+        foreach (GameObject bullet in bulletPool)
+        {
+           TidebiteBullet bullets = bullet.GetComponent<TidebiteBullet>();
+            //bullets.SetDamagebuff(damageDownRate);
+            bullets.SetMolar(true);
+            bullets.SetMolar(1);
+            bullets.SetMolarDamage(molarDamage);
+
+        }
+    }
+
+    private void Buff3()
+    {
+        foreach (GameObject bullet in bulletPool)
+        {
+            TidebiteBullet bullets = bullet.GetComponent<TidebiteBullet>();
+            bullets.SetMolar(2);
+        }
+    }
+
+    private void Buff4()
+    {
+        molarDamage += molarDamageUp;
+    }
+
+    //================================================================================================
+    
     public override void SetTrans()
     {
         base.SetTrans();
@@ -70,6 +107,13 @@ public class Tidebite : MagicSword
         base.SetFire();
     }
 
+    public override GameObject GetBulletPrefab() => base.GetBulletPrefab();
+
+    public override void SetSword(Transform Trans, int AttackPower, float AttackSpeed, float BulletSpeed)
+    {
+        base.SetSword(Trans, AttackPower, AttackSpeed, BulletSpeed);
+    }
+
     protected override void ApplyBuffEffects()
     {
         switch (buffLevel)
@@ -89,36 +133,5 @@ public class Tidebite : MagicSword
         }
     }
 
-    private void Buff1()
-    {
-        plusAttackPower += damageUp;
-    }
-
-    private void Buff2()
-    {
-        foreach (GameObject bullet in bulletPool)
-        {
-           TidebiteBullet bullets = bullet.GetComponent<TidebiteBullet>();
-            //bullets.SetDamagebuff(damageDownRate);
-            bullets.SetMolar(true);
-            bullets.SetMolar(1);
-            bullets.SetMolarDamage(molarDamage);
-
-        }
-    }
-
-    private void Buff3()
-    {
-        foreach (GameObject bullet in bulletPool)
-        {
-            TidebiteBullet bullets = bullet.GetComponent<TidebiteBullet>();
-            bullets.SetMolar(2);
-        }
-    }
-
-    private void Buff4()
-    {
-        molarDamage += molarDamageUp;
-    }
 
 }

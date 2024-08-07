@@ -5,24 +5,7 @@ using UnityEngine;
 
 public class EnemyUI : MonoBehaviour
 {
-    public TMP_Text text;
-
-    private void Awake()
-    {
-
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField]private TMP_Text text;
 
     public void UpdateHPText(int hp)
     {

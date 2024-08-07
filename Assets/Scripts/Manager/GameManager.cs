@@ -8,14 +8,13 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     
     [Header("일시 정지")]
-    public bool isPause = false;
+    [SerializeField] private bool isPause = false;
 
     [Header("스킬")]
-    [SerializeField]
-    private bool isSkill;
-    public float skillTimeScale;
-    //==================================================================================
+    [SerializeField] private bool isSkill;
+    [SerializeField] private float skillTimeScale;
 
+    //==================================================================================
 
     private void Awake()
     {
@@ -28,6 +27,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
     }
+
     //==================================================================================
 
     public void SkillOnOff()

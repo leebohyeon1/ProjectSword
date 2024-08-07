@@ -6,7 +6,6 @@ public class BossStat : EnemyStat
 {
     private PlayerStat playerStat;
 
-
     [Header("================")]
     [SerializeField] private int maxHp = 100;
 
@@ -22,7 +21,8 @@ public class BossStat : EnemyStat
     [SerializeField] private BulletType bulletType;
     private List<GameObject> bulletPool = new List<GameObject>();
 
-    // Start is called before the first frame update
+    //==================================================================================
+
     void Start()
     {
        
@@ -35,27 +35,13 @@ public class BossStat : EnemyStat
   
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
 
-    public override void TakeDamage(int damage, bool count)
-    {
-        hp -= damage;
-        GameUIManager.Instance.UpdateBossUI(maxHp, hp);
-
-        if (hp <= 0)
-        {
-            Destroy(gameObject);
-            SpawnManager.Instance.KillBoss();
-
-            playerStat.SetMaxSkillGage();
-            EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, swapGage);
-        }
-    }
-
+    //==================================================================================
+   
     private void InitializePool()
     {
         bulletPool.Clear();
@@ -72,33 +58,12 @@ public class BossStat : EnemyStat
         var controller = bullet.GetComponent<BossBulletController>();
         controller.InitializeBullet(CalculateDamage(damage), bulletType);
     }
-  
+
     private int CalculateDamage(int baseDamage)
     {
         bool isCritical = Random.Range(0f, 100f) < criticalRate;
         return isCritical ? Mathf.RoundToInt(baseDamage * (1 + criticalDamage / 100f)) : baseDamage;
-    }
-
-    public override void DecreaseSpeed(float rate)
-    {
-       base.DecreaseSpeed(rate);
-    }
-    public override void IncreaseSpeed(float rate)
-    {
-       base.IncreaseSpeed(rate);
-    }
-
-    protected override void ApplySpeed()
-    {
-        // 모든 속도 감소율을 적용하여 최종 속도를 계산
-        float totalRate = 0f;
-        foreach (float modifier in speedModifiers)
-        {
-            totalRate += modifier;
-        }
-
-        float finalSpeed = speed * (1 - totalRate / 100f);
-        GetComponent<Rigidbody2D>().velocity = Vector2.down * (finalSpeed + SpawnManager.Instance.plusAcceleration);
+   
     }
 
     public GameObject GetBullet()
@@ -127,6 +92,45 @@ public class BossStat : EnemyStat
     public float GetBulletSpeed() => bulletSpeed;
     public float GetAttackSpeed() => attackSpeed;
 
+    //==================================================================================
+
+    public override void TakeDamage(int damage, bool count)
+    {
+        hp -= damage;
+        GameUIManager.Instance.UpdateBossUI(maxHp, hp);
+
+        if (hp <= 0)
+        {
+            Destroy(gameObject);
+            SpawnManager.Instance.KillBoss();
+
+            playerStat.SetMaxSkillGage();
+            EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, swapGage);
+        }
+    }
+
+    public override void DecreaseSpeed(float rate)
+    {
+       base.DecreaseSpeed(rate);
+    }
+    public override void IncreaseSpeed(float rate)
+    {
+       base.IncreaseSpeed(rate);
+    }
+
+    protected override void ApplySpeed()
+    {
+        // 모든 속도 감소율을 적용하여 최종 속도를 계산
+        float totalRate = 0f;
+        foreach (float modifier in speedModifiers)
+        {
+            totalRate += modifier;
+        }
+
+        float finalSpeed = speed * (1 - totalRate / 100f);
+        GetComponent<Rigidbody2D>().velocity = Vector2.down * (finalSpeed + SpawnManager.Instance.PlusAcceleration());
+    }
+
     public override bool GetIsIce() => base.GetIsIce();
 
     public override bool GetIsMolar() => base.GetIsMolar();
@@ -141,4 +145,5 @@ public class BossStat : EnemyStat
         base.SetIsMolar(boolean);   
     }
 
+    public override int HP => base.HP;
 }

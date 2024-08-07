@@ -12,40 +12,42 @@ public class GameUIManager : MonoBehaviour, IListener
     public static GameUIManager Instance {  get; private set; }
 
     private PlayerStat playerStat;
+
     //====================================================================
     
     [Header("스킬 버튼")]
-    public Image skillBtn;
-    public Button skillDragBtn;
+    [SerializeField] private Image skillBtn;
+    [SerializeField] private Button skillDragBtn;
 
     [Header("스킬")]
-    public GameObject skillImageBar;
-    public Transform skillEndPoint;
+    [SerializeField] private GameObject skillImageBar;
+    [SerializeField] private Transform skillEndPoint;
 
     [Header("스왑 버튼")]
-    public Image swapBtn;
-    public GameObject[] keepSwapUI;
+    [SerializeField] private Image swapBtn;
+    [SerializeField] private GameObject[] keepSwapUI;
     private int keepSwap = 0;
     private bool canSwap = false;
 
     [Header("스왑")]
-    public GameObject[] swapImageBar;
-    public Transform swapEndPoint;
+    [SerializeField] private GameObject[] swapImageBar;
+    [SerializeField] private Transform swapEndPoint;
 
     [Header("일시정지 버튼")]
-    public GameObject pausePanel;
+    [SerializeField] private GameObject pausePanel;
     private bool isPause =false;
 
     [Header("스킬/스왑 판때기")]
-    public Image skillProfile;
-    public Image[] swapProfile;
+    [SerializeField] private Image skillProfile;
+    [SerializeField] private Image[] swapProfile;
 
     [Header("진척도")]
-    public Slider gameProgress;
+    [SerializeField] private Slider gameProgress;
 
     [Header("보스UI")]
-    public Slider bossHpBar;
-    public TMP_Text bossName;
+    [SerializeField] private Slider bossHpBar;
+    [SerializeField] private TMP_Text bossName;
+
     //==================================================================================
 
     void Awake()
@@ -138,6 +140,7 @@ public class GameUIManager : MonoBehaviour, IListener
                 break;
         }
     }
+
     //==================================================================================
 
     #region Btn
@@ -177,19 +180,31 @@ public class GameUIManager : MonoBehaviour, IListener
     }
     public void MoveSwapBar(float delay)
     {
-        int index = playerStat.weaponIndex;
+        int index = playerStat.GetWeaponIndex();
         swapImageBar[index].transform.DOMoveX(swapEndPoint.position.x, 0.7f).SetDelay(delay)
               .SetEase(Ease.OutCirc).OnComplete(() => swapImageBar[index].transform.position = swapImageBar[index].transform.parent.transform.position);
     }
+
+    public void SetSwapUIImage(Sprite mainWeapon, Sprite subWeapon)
+    {
+        swapProfile[0].sprite = mainWeapon;
+        swapProfile[1].sprite = subWeapon;
+    }
+
+    public void SetSkillImage(Sprite Weapon)
+    {
+        skillProfile.sprite = Weapon;
+    }
+
     #endregion
 
     #region GameProgress
 
     public void DisplayProgress()
     {
-        if (SpawnManager.Instance.bossCount != 0)
+        if (SpawnManager.Instance.BossCount() != 0)
         {
-            float progress = (float)SpawnManager.Instance.bossCount/SpawnManager.Instance.bossSpawnCount[SpawnManager.Instance.bossSpawnCount.Length - 1] ;
+            float progress = (float)SpawnManager.Instance.BossCount() /SpawnManager.Instance.BossSpawnCount()[SpawnManager.Instance.BossLength() - 1] ;
             gameProgress.value = progress;
         }
   

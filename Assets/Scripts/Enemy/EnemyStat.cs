@@ -6,8 +6,8 @@ public class EnemyStat : MonoBehaviour
 {
     private EnemyUI enemyUI;
 
-    public int hp = 1;
-    [SerializeField]protected float speed;
+    [SerializeField] protected int hp = 1;
+    [SerializeField] protected float speed;
     [SerializeField] protected int damage;
 
     [Header("게이지")]
@@ -24,6 +24,8 @@ public class EnemyStat : MonoBehaviour
     [Header("상태")]
     protected bool isIce = false;
     protected bool isMolar = false;
+
+    //==================================================================================
 
     private void Awake()
     {
@@ -44,6 +46,13 @@ public class EnemyStat : MonoBehaviour
     
     }
 
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
+    }
+
+    //==================================================================================
+
     public virtual void TakeDamage(int damage, bool Count = true)
     {
         hp -= damage;
@@ -61,11 +70,6 @@ public class EnemyStat : MonoBehaviour
                 EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, finalSwapGage);
             }
         }
-    }
-
-    private void OnBecameInvisible()
-    {
-        Destroy(gameObject);
     }
 
     public virtual void SetIsIce(bool boolean)
@@ -96,6 +100,8 @@ public class EnemyStat : MonoBehaviour
 
     public virtual bool GetIsMolar() => isMolar;
 
+    public virtual int HP => hp;   
+
     protected virtual void ApplySpeed()
     {
         // 모든 속도 감소율을 적용하여 최종 속도를 계산
@@ -106,9 +112,10 @@ public class EnemyStat : MonoBehaviour
         }
 
         float finalSpeed = speed * (1 - totalRate / 100f);
-        GetComponent<Rigidbody2D>().velocity = Vector2.down * (finalSpeed + SpawnManager.Instance.plusAcceleration);
+        GetComponent<Rigidbody2D>().velocity = Vector2.down * (finalSpeed + SpawnManager.Instance.PlusAcceleration());
     }
 
+    //==================================================================================
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -118,7 +125,7 @@ public class EnemyStat : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if(collision.GetComponent<DandelionBullet>() && collision.GetComponent<DandelionBullet>().isSubBullet)
+        if(collision.GetComponent<DandelionBullet>() && collision.GetComponent<DandelionBullet>().GetSubBullet())
         {
             EventManager.Instance.PostNotification(EVENT_TYPE.DAN3, this, transform.position);
 

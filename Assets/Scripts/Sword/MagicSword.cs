@@ -8,20 +8,20 @@ using UnityEngine;
 public class MagicSword : MonoBehaviour
 {
     [Header("탄막")]
-    public GameObject bulletPrefab;
-    public Transform bulletPoolTrans;
-    public int poolSize = 20;
+    [SerializeField] protected GameObject bulletPrefab;
+    [SerializeField] protected Transform bulletPoolTrans;
+    [SerializeField] private int poolSize = 20;
   
     [Header("행동")]
-    public int attackPower;
+    [SerializeField] protected int attackPower;
     protected int plusAttackPower;
-    public float attackSpeed;
-    public float bulletSpeed;
+    [SerializeField] protected float attackSpeed;
+    [SerializeField] protected float bulletSpeed;
 
     [Header("추적")]
-    public Transform followPos; // 플레이어 오브젝트
-    public float followDelay = 0.1f; // 따라오는 시간 차
-    public int maxPositions = 50; // 최대 저장할 위치 수
+    [SerializeField] protected Transform followPos; // 플레이어 오브젝트
+    [SerializeField] protected float followDelay = 0.1f; // 따라오는 시간 차
+    [SerializeField] protected int maxPositions = 50; // 최대 저장할 위치 수
 
     protected Queue<Vector3> positions;
     protected Transform followerTransform;
@@ -29,7 +29,7 @@ public class MagicSword : MonoBehaviour
     [SerializeField]
     protected List<GameObject> bulletPool = new List<GameObject>();
 
-    public GameObject firePos;
+    [SerializeField] protected GameObject firePos;
 
     [SerializeField]
     private int buffLevel_;
@@ -52,6 +52,8 @@ public class MagicSword : MonoBehaviour
 
     private const int maxBuffLevel = 4;
 
+    //================================================================================================
+
     private void Start()
     {
         SetTrans();
@@ -61,6 +63,16 @@ public class MagicSword : MonoBehaviour
     {
         Follow();
     }
+
+    //================================================================================================
+
+    private void InitializeBullet(GameObject bullet)
+    {
+        var bulletController = bullet.GetComponent<BulletController>();
+        bulletController.SetDamage(attackPower + plusAttackPower);
+    }
+
+    //================================================================================================
 
     public virtual void SetTrans()
     {
@@ -120,16 +132,10 @@ public class MagicSword : MonoBehaviour
         return newBullet;
     }
 
-    private void InitializeBullet(GameObject bullet)
-    {
-        var bulletController = bullet.GetComponent<BulletController>();
-        bulletController.damage = attackPower + plusAttackPower;
-    }
-
     public virtual void Fire()
     {
         GameObject bullet = GetBullet();
-        bullet.GetComponent<BulletController>().isSubBullet = true;
+        bullet.GetComponent<BulletController>().GetSubBullet();
         bullet.SetActive(true);
         bullet.transform.position = transform.position;
         bullet.transform.rotation = Quaternion.identity;
@@ -145,7 +151,7 @@ public class MagicSword : MonoBehaviour
     
     public virtual void SetFire()
     {
-        firePos.AddComponent<SwordFire>().magicSword = this;
+        firePos.AddComponent<SwordFire>().SetMagicSword(this);
     }
 
     protected virtual void ApplyBuffEffects()
@@ -153,5 +159,16 @@ public class MagicSword : MonoBehaviour
         // buffLevel에 따라 추가 효과를 여기에 적용
         // 예를 들어, 공격력, 발사 속도, 탄환 속도 등을 증가시킴
         // 이 메서드는 buffLevel이 변경될 때마다 호출됨
+    }
+
+    public virtual GameObject GetBulletPrefab() => bulletPrefab;
+
+    public virtual void SetSword(Transform Trans, int AttackPower, float AttackSpeed, float BulletSpeed)
+    {
+        followPos = Trans;
+        attackPower = AttackPower;
+        attackSpeed = AttackSpeed;
+        bulletSpeed = BulletSpeed;
+
     }
 }
