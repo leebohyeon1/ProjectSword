@@ -27,7 +27,23 @@ public class DandelionBullet : BulletController
             {
                 if (collision != null)
                 {
-                    collision.GetComponent<EnemyStat>().TakeDamage((int)TotalDamage);
+                    if (isTwinflip3)
+                    {
+                        Vector3 screenPosition = Camera.main.WorldToScreenPoint(collision.transform.position);
+
+                        // 화면의 절반 이하에 있는지 확인
+                        if (screenPosition.y < Screen.height / 2)
+                        {
+                            float dis = Vector2.Distance(playerStat.transform.position, collision.transform.position);
+                            Debug.Log("거리: " + dis);
+                            collision.GetComponent<EnemyStat>().TakeDamage(CalculateTwinDamage(dis));
+                        }
+                    }
+                    else
+                    {
+                        collision.GetComponent<EnemyStat>().TakeDamage((int)TotalDamage);
+                    }
+
                     gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
 
                     if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
@@ -90,6 +106,11 @@ public class DandelionBullet : BulletController
         base.IncreaseDamage(damage);
     }
 
+    public override void SetTwinflip3(bool twinflip3)
+    {
+        base.SetTwinflip3(twinflip3);
+    }
+
     public override bool GetSubBullet()
     {
         return base.GetSubBullet();
@@ -99,6 +120,10 @@ public class DandelionBullet : BulletController
         return base.GetIce();
     }
 
+    protected override int CalculateTwinDamage(float distance)
+    {
+        return base.CalculateTwinDamage(distance);
+    }
     //=============================================================================
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -114,7 +139,23 @@ public class DandelionBullet : BulletController
             }
             else
             {
-                enemyStat.TakeDamage((int)TotalDamage);
+                if (isTwinflip3)
+                {
+                    Vector3 screenPosition = Camera.main.WorldToScreenPoint(collision.transform.position);
+
+                    // 화면의 절반 이하에 있는지 확인
+                    if (screenPosition.y < Screen.height / 2)
+                    {
+                        float dis = Vector2.Distance(playerStat.transform.position, collision.transform.position);
+                        Debug.Log("거리: " + dis);
+                        enemyStat.TakeDamage(CalculateTwinDamage(dis));
+                    }
+                }
+                else
+                {
+                    enemyStat.TakeDamage((int)TotalDamage);
+                }
+
                 gameObject.SetActive(false);
             }
 

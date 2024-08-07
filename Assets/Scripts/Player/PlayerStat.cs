@@ -218,6 +218,11 @@ public class PlayerStat : MonoBehaviour, IListener
 
     public void TakeDamage(float damage)
     {
+        if(GameManager.Instance.GetSkillBool())
+        {
+            EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_OFF, this);
+        }
+
         curHp -= damage;
         GetComponent<PlayerUI>().UpdateHp(curHp, maxHp);
         if (curHp <= 0f)
@@ -375,6 +380,15 @@ public class PlayerStat : MonoBehaviour, IListener
         var controller = bullet.GetComponent<BulletController>();
         controller.SetDamage(CalculateDamage(attackDamage + upAttackDamage[weaponIndex]));
         controller.SetBulletType(bulletType);
+
+        if (GameManager.Instance.GetTwinflip3())
+        {
+            controller.SetTwinflip3(true);
+        }
+        else
+        {
+            controller.SetTwinflip3(false);
+        }
     }
 
     void InitializePool()

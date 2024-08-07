@@ -14,6 +14,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool isSkill;
     [SerializeField] private float skillTimeScale;
 
+    [Header("상태")]
+    [SerializeField] private bool isTwinflipLevel3;
+
+    private int[] TwinflipDamage;
+    public int[] TwinDam { get { return TwinflipDamage; } }
+
+    private float[] TwinflipDistance;
+    public float[] TwinDis { get { return TwinflipDistance; } }
+
     //==================================================================================
 
     private void Awake()
@@ -63,6 +72,21 @@ public class GameManager : MonoBehaviour
             Debug.Log("게임재개");
         }
     }
+
+    public void SetTwinflip3(bool twinflip, ref int[] dam, ref float[] dis)
+    {
+        isTwinflipLevel3 = twinflip;
+        TwinflipDamage = new int[dam.Length];
+        TwinflipDamage = dam;
+
+        TwinflipDistance = new float[dis.Length];
+        TwinflipDistance = dis;
+    }
+
+    public bool GetTwinflip3() => isTwinflipLevel3;
+
+   
+    //==================================================================================
 
     private void OnApplicationPause(bool pause) //플레이어가 다른 창으로 넘어갔을 때와 같은 플레이 중이 아닌 경우
     {
