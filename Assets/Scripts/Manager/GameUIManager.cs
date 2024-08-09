@@ -1,7 +1,5 @@
 using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
-using System.Net;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -43,6 +41,7 @@ public class GameUIManager : MonoBehaviour, IListener
 
     [Header("진척도")]
     [SerializeField] private Slider gameProgress;
+    [SerializeField] private RectTransform[] bossPoint;
 
     [Header("보스UI")]
     [SerializeField] private Slider bossHpBar;
@@ -87,6 +86,8 @@ public class GameUIManager : MonoBehaviour, IListener
         EventManager.Instance.AddListener(EVENT_TYPE.SWAP_ON, this);
 
         EventManager.Instance.AddListener(EVENT_TYPE.KEEP_SWAP, this);
+
+        PositionCheckpoints();
     }
 
     void Update()
@@ -235,6 +236,34 @@ public class GameUIManager : MonoBehaviour, IListener
     {
         bossHpBar.value = (float)hp/maxHp;
     }
+
+    private void PositionCheckpoints()
+    {
+        // Slider의 RectTransform 가져오기
+        RectTransform sliderRectTransform = gameProgress.GetComponent<RectTransform>();
+
+        // Slider의 크기 가져오기
+        float sliderWidth = sliderRectTransform.rect.width - 20;
+
+        // Slider의 최소값과 최대값 가져오기
+        float minValue = gameProgress.minValue;
+        float maxValue = SpawnManager.Instance.BossSpawnCount()[SpawnManager.Instance.BossSpawnCount().Length-1];
+
+        // 각 체크 포인트 위치 설정
+        for (int i = 0; i < bossPoint.Length; i++)
+        {
+            // 체크 포인트 위치를 Slider의 값으로 설정
+            float checkpointValue = (float)SpawnManager.Instance.BossSpawnCount()[i];
+
+            // 체크 포인트의 로컬 위치 설정
+            float normalizedPosition = (checkpointValue - minValue) / (maxValue - minValue);
+            float localPositionX = normalizedPosition * sliderWidth - (sliderWidth / 2);
+
+            // 체크 포인트 위치 갱신
+            bossPoint[i].anchoredPosition = new Vector2(localPositionX, bossPoint[i].anchoredPosition.y);
+        }
+    }
+
     #endregion
 
 }
