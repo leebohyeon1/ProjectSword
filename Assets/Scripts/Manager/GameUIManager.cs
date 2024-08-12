@@ -29,6 +29,7 @@ public class GameUIManager : MonoBehaviour, IListener
 
     [Header("스왑")]
     [SerializeField] private GameObject[] swapImageBar;
+    [SerializeField] private GameObject swapPanel;
     [SerializeField] private Transform swapEndPoint;
 
     [Header("일시정지 버튼")]
@@ -180,6 +181,7 @@ public class GameUIManager : MonoBehaviour, IListener
         Time.timeScale = 0.3f;
 
         int index = playerStat.GetWeaponIndex();
+        swapPanel.SetActive(true);
         swapImageBar[index].transform.DOMoveX(swapEndPoint.position.x, 0.2f).SetEase(Ease.OutCirc)
             .OnComplete(() => swapImageBar[index].transform.position = swapImageBar[index].transform.parent.transform.position);
 
@@ -187,6 +189,7 @@ public class GameUIManager : MonoBehaviour, IListener
 
         EventManager.Instance.PostNotification(EVENT_TYPE.CHANGE_WEAPON, this);
 
+        swapPanel.SetActive(false);
         Time.timeScale = 1f;
         swapImageBar[index].transform.DOMoveX(swapEndPoint.position.x, 0.6f).SetEase(Ease.OutCirc)
           .OnComplete(() => swapImageBar[index].transform.position = swapImageBar[index].transform.parent.transform.position);

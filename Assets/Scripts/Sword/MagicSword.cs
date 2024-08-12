@@ -84,18 +84,23 @@ public class MagicSword : MonoBehaviour
 
     protected virtual void Follow()
     {
-
-        if (positions.Count > maxPositions)
+        if (Time.timeScale > 0)
         {
-            positions.Dequeue(); // 큐가 가득 찬 경우 가장 오래된 위치 제거
-        }
+            // 현재 Time.deltaTime에 Time.timeScale을 곱해 Time.deltaTime을 보정
+            float adjustedDeltaTime = Time.deltaTime / Time.timeScale;
 
-        positions.Enqueue(followPos.position);
+            if (positions.Count > maxPositions)
+            {
+                positions.Dequeue(); // 큐가 가득 찬 경우 가장 오래된 위치 제거
+            }
 
-        // 위치가 일정 시간 이상 큐에 저장되었을 때 따라가도록 처리
-        if (positions.Count > (followDelay / Time.deltaTime))
-        {
-            followerTransform.position = positions.Dequeue();
+            positions.Enqueue(followPos.position);
+
+            // 위치가 일정 시간 이상 큐에 저장되었을 때 따라가도록 처리
+            if (positions.Count > (followDelay / adjustedDeltaTime))
+            {
+                followerTransform.position = positions.Dequeue();
+            }
         }
     }
 

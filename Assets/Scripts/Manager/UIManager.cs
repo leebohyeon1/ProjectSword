@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainUIManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
-    public static MainUIManager Instance { get; private set; }
+    public static UIManager Instance { get; private set; }
 
-    [SerializeField] private GameObject[] UI;
+    [SerializeField] private GameObject MainUI;
+    [SerializeField] private GameObject GameUI;
 
     //==================================================================================
 
@@ -21,14 +22,16 @@ public class MainUIManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        InitialUI();
     }
 
     void Start()
     {
-       
-
+     
     }
 
+    // Update is called once per frame
     void Update()
     {
         
@@ -36,23 +39,22 @@ public class MainUIManager : MonoBehaviour
 
     //==================================================================================
 
-    public void StartGameBtn()
+    void InitialUI()
     {
-        SceneManager.LoadScene(1);
-    }
-
-    public void SetUI(int index)
-    {
-        for(int i = 0; i < UI.Length; i++)
+        switch(SceneManager.GetActiveScene().buildIndex)
         {
-            if(i ==  index)
-            {
-                UI[i].SetActive(true);
-            }
-            else
-            {
-                UI[i].SetActive(false);
-            }
+            case 0:
+                MainUI.SetActive(true);
+                GameUI.SetActive(false);
+                break;
+            case 1:
+                MainUI.SetActive(false);
+                GameUI.SetActive(true);
+                break;
         }
     }
+
+
+
+
 }
