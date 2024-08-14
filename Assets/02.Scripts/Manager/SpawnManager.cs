@@ -24,8 +24,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float optionSpeed = 5f;
 
     [Space(20f)]
-    [SerializeField]
-    private Transform spawnPosition;
+    [SerializeField] private Transform spawnPosition;
+    [SerializeField] private Transform bossSpawnPosition;
 
     [Header("º¸½º")]
     [SerializeField] private int bossCount = 0;
@@ -164,7 +164,7 @@ public class SpawnManager : MonoBehaviour
         spawnTimer = 0f;
 
         GameUIManager.Instance.BossUIOn(bossPrefab[curEvent].name);
-        Instantiate(bossPrefab[curEvent]);
+        Instantiate(bossPrefab[curEvent],bossSpawnPosition);
         StartBossPatternSpawn();
 
         curEvent += 1;

@@ -1,7 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class QueenSlimeController : BossController
+public class KingSlimeController : BossController
 {
     private int attackCount = 0;
     [SerializeField] private int skillCount = 4;
@@ -16,10 +17,12 @@ public class QueenSlimeController : BossController
 
     [Space(10f)]
     [SerializeField] private int skillDamage = 10;
+    [SerializeField] private int explosionDamage = 40;
     [SerializeField] private float skillSpeed = 1;
 
     [Space(10f)]
-    [SerializeField] private GameObject SkillPrefab;
+    [SerializeField] private GameObject[] SkillPrefab;
+
 
     //==================================================================================
 
@@ -30,7 +33,7 @@ public class QueenSlimeController : BossController
 
     void Update()
     {
-        if(!isSkill)
+        if (!isSkill)
         {
             attackTimer += Time.deltaTime;
             if (attackTimer >= bossStat.GetAttackSpeed())
@@ -38,7 +41,7 @@ public class QueenSlimeController : BossController
                 Attack();
             }
         }
-       
+
     }
 
     //==================================================================================
@@ -57,7 +60,7 @@ public class QueenSlimeController : BossController
         attackTimer = 0f;
         attackCount++;
 
-        if (attackCount >= skillCount -1 )
+        if (attackCount >= skillCount - 1)
         {
             SKill();
         }
@@ -66,7 +69,7 @@ public class QueenSlimeController : BossController
 
     public override void SKill()
     {
-       isSkill = true;
+        isSkill = true;
         attackCount = 0;
         StartCoroutine(FireBullets());
     }
@@ -89,13 +92,27 @@ public class QueenSlimeController : BossController
         float angleStep = angleRange / (bulletCount - 1);
         float startAngle = -angleRange / 2;
 
+        // 무작위로 하나의 탄환을 선택
+        int randomIndex = Random.Range(0, bulletCount);
+
         for (int i = 0; i < bulletCount; i++)
         {
             float angle = startAngle + (angleStep * i);
             Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
-            GameObject bullet = Instantiate(SkillPrefab, transform.position, rotation);
-            bullet.GetComponent<BossSkillController>().InitializeSkill(skillDamage, BulletType.Water);
+            // 무작위로 선택된 탄환은 SkillPrefab[1], 나머지는 SkillPrefab[0] 사용
+            GameObject bulletPrefab = (i == randomIndex) ? SkillPrefab[1] : SkillPrefab[0];
+
+            GameObject bullet = Instantiate(bulletPrefab, transform.position, rotation);
+
+            if (i == randomIndex)
+            {
+                bullet.GetComponent<KingSlimeSkill>().explosionDamage = explosionDamage; // 폭발 데미지 설정
+            }
+            else
+            {
+                bullet.GetComponent<BossSkillController>().InitializeSkill(skillDamage, BulletType.Wind);
+            }
 
             Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
             bulletRb.velocity = rotation * Vector2.down * skillSpeed;
