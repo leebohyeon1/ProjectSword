@@ -141,6 +141,10 @@ public class TenkaiBullet : BulletController
     {
         base.SetIce(ice);
     }
+    public override void SetSubBullet()
+    {
+        base.SetSubBullet();
+    }
     public override void IncreaseDamage(float damage)
     {
         base.IncreaseDamage(damage);

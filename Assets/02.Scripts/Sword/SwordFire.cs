@@ -17,7 +17,7 @@ public class SwordFire : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     //================================================================================================
@@ -44,5 +44,18 @@ public class SwordFire : MonoBehaviour
     public virtual void SetMagicSword(MagicSword sword)
     {
         magicSword = sword;
+    }
+
+    public virtual void FlowerFire()
+    {
+        GameObject bullet = playerStat.GetBullet();
+        bullet.transform.position = transform.position;
+        bullet.transform.rotation = Quaternion.identity;
+        bullet.GetComponent<BulletController>().SetSubBullet();
+        bullet.SetActive(true);
+
+        Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
+
+        bulletRb.velocity = Vector2.up * (playerStat.bulletSpeed + playerStat.upBulletSpeed[playerStat.GetWeaponIndex()]);
     }
 }

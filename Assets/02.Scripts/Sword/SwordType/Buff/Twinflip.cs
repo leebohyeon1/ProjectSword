@@ -101,7 +101,7 @@ public class Twinflip : MagicSword
         isBuff[1] = false;
         iceBuffTimer = 0f;
 
-        playerStat.bulletType = playerStat.GetSwords().bulletType;
+        playerStat.bulletType = playerStat.GetCurSword().bulletType;
         playerStat.SetBulletIce(-power[1], -iceDamageUp);
 
 
@@ -142,6 +142,10 @@ public class Twinflip : MagicSword
         power[1] += buffPower[1];
     }
 
+    public void Evoltion1() { }
+    public void Evoltion2() { }
+    public void Evoltion3() { }
+    public void Evoltion4() { }
     //================================================================================================
 
     public override void SetTrans()
@@ -234,6 +238,25 @@ public class Twinflip : MagicSword
                 break;
             case 4:
                 Buff4();
+                break;
+        }
+    }
+
+    protected override void ApplyEvolutionEffects()
+    {
+        switch (evolutionLevel)
+        {
+            case 1:
+                Evoltion1();
+                break;
+            case 2:
+                Evoltion2();
+                break;
+            case 3:
+                Evoltion3();
+                break;
+            case 4:
+                Evoltion4();
                 break;
         }
     }

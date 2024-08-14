@@ -89,7 +89,10 @@ public class Tenkai : MagicSword
             timer = 0f;
         }
     }
-
+    public void Evoltion1() { }
+    public void Evoltion2() { }
+    public void Evoltion3() { }
+    public void Evoltion4() { }
     //================================================================================================
 
     public override void SetTrans()
@@ -166,7 +169,7 @@ public class Tenkai : MagicSword
             GameObject bullet = GetBullet();
             bullet.transform.position = transform.position;
             bullet.transform.rotation = Quaternion.identity;
-            bullet.GetComponent<BulletController>().GetSubBullet();
+            bullet.GetComponent<BulletController>().SetSubBullet();
             bullet.SetActive(true);
 
             //Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
@@ -199,6 +202,25 @@ public class Tenkai : MagicSword
                 break;
         }
     }
+    protected override void ApplyEvolutionEffects()
+    {
+        switch (evolutionLevel)
+        {
+            case 1:
+                Evoltion1();
+                break;
+            case 2:
+                Evoltion2();
+                break;
+            case 3:
+                Evoltion3();
+                break;
+            case 4:
+                Evoltion4();
+                break;
+        }
+    }
+
 
     //================================================================================================
 

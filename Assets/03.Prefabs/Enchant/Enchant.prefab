@@ -97,6 +97,9 @@ MonoBehaviour:
     - {fileID: 11400000, guid: cff4b1dd8b08b1c48a14749fd71eb612, type: 2}
     enchantsThird:
     - {fileID: 11400000, guid: e00843fff8540d14ebec15ede9be5fe8, type: 2}
+    - {fileID: 11400000, guid: 4fc272590dc2a7f45bf7c33155c12aaf, type: 2}
+    enchantsFourth: []
+    legendaryQuests: []
   - secondPercentage:
     - 65
     - 35
@@ -108,9 +111,12 @@ MonoBehaviour:
     - {fileID: 11400000, guid: e0e803d7baf64c84ba0c943f7cbcd5df, type: 2}
     - {fileID: 11400000, guid: c7f321bb24519a24d8d576c0674910db, type: 2}
     enchantsThird: []
+    enchantsFourth: []
+    legendaryQuests: []
   - secondPercentage:
     - 60
     - 25
+    - 15
     enchantsFirst:
     - {fileID: 11400000, guid: 567e46bfe10274d4997bfae7b1fc8057, type: 2}
     - {fileID: 11400000, guid: 5d679da51dbf7b5448383fd198b62b66, type: 2}
@@ -123,6 +129,10 @@ MonoBehaviour:
     enchantsThird:
     - {fileID: 11400000, guid: a32bccd435e55c841aa8b19975b97ec1, type: 2}
     - {fileID: 11400000, guid: 393407997aff526459f1c29d725f8a78, type: 2}
+    enchantsFourth: []
+    legendaryQuests:
+    - {fileID: 11400000, guid: 684b3d0e188fdc34886e2b84c9749a4c, type: 2}
+    - {fileID: 11400000, guid: 313d4678bd92fd942924fb62943cc104, type: 2}
   choices:
   - {fileID: 6290206324375516342}
   - {fileID: 7847337606756616807}

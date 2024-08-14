@@ -35,6 +35,9 @@ public class Enchant : ScriptableObject
     [Space(20f)]
 
     public float swapDamage = 0f;
- 
+    [Space(20f)]
+
+    public int evolutionRune = 0;
+
     public string enchantName;
 }

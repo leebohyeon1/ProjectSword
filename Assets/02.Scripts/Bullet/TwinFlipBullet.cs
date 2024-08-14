@@ -91,7 +91,10 @@ public class TwinFlipBullet : BulletController
     {
         return base.GetSubBullet();
     }
-
+    public override void SetSubBullet()
+    {
+        base.SetSubBullet();
+    }
     public override bool GetIce()
     {
         return base.GetIce();

@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     [Header("상태")]
     [SerializeField] private bool isTwinflipLevel3;
+    [SerializeField] private bool isLegendaryQuest;
+    public int flowerLevel = 0;
 
     private int[] TwinflipDamage;
     public int[] TwinDam { get { return TwinflipDamage; } }
@@ -82,10 +84,15 @@ public class GameManager : MonoBehaviour
         TwinflipDistance = new float[dis.Length];
         TwinflipDistance = dis;
     }
+    
+    public void SetLegendaryQuest(bool boolean)
+    {
+        isLegendaryQuest = boolean;
+    }
 
     public bool GetTwinflip3() => isTwinflipLevel3;
+    public bool GetLegendaryQuest() => isLegendaryQuest;
 
-   
     //==================================================================================
 
     private void OnApplicationPause(bool pause) //플레이어가 다른 창으로 넘어갔을 때와 같은 플레이 중이 아닌 경우

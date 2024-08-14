@@ -329,7 +329,9 @@ public class PlayerStat : MonoBehaviour, IListener
         return newBullet;
     }
 
-    public Swords GetSwords() => weapon[weaponIndex];
+    public Swords GetCurSword() => weapon[weaponIndex];
+    public List<GameObject> GetSwords() => weaponList;
+
     public List<GameObject> GetBulletPool() => bulletPool;
     public GameObject GetFirePos() => firePos;
     public int GetWeaponIndex() => weaponIndex;
@@ -467,6 +469,11 @@ public class PlayerStat : MonoBehaviour, IListener
         if (enchant.petUpgrade != 0)
         {
             weaponList[index].GetComponent<MagicSword>().buffLevel += enchant.petUpgrade;
+        }
+
+        if (enchant.evolutionRune != 0)
+        {
+            weaponList[index].GetComponent<MagicSword>().evolutionLevel += enchant.evolutionRune;
         }
     }
 

@@ -66,7 +66,10 @@ public class TidebiteBullet : BulletController
     {
         base.SetTwinflip3(twinflip3);
     }
-
+    public override void SetSubBullet()
+    {
+        base.SetSubBullet();
+    }
     public override bool GetSubBullet()
     {
         return base.GetSubBullet();
