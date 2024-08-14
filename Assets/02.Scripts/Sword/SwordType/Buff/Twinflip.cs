@@ -101,7 +101,7 @@ public class Twinflip : MagicSword
         isBuff[1] = false;
         iceBuffTimer = 0f;
 
-        playerStat.bulletType = playerStat.GetSwords().bulletType;
+        playerStat.bulletType = playerStat.GetCurSword().bulletType;
         playerStat.SetBulletIce(-power[1], -iceDamageUp);
 
 

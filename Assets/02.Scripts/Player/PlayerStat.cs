@@ -329,7 +329,9 @@ public class PlayerStat : MonoBehaviour, IListener
         return newBullet;
     }
 
-    public Swords GetSwords() => weapon[weaponIndex];
+    public Swords GetCurSword() => weapon[weaponIndex];
+    public List<GameObject> GetSwords() => weaponList;
+
     public List<GameObject> GetBulletPool() => bulletPool;
     public GameObject GetFirePos() => firePos;
     public int GetWeaponIndex() => weaponIndex;

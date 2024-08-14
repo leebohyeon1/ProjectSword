@@ -48,8 +48,26 @@ public class MagicSword : MonoBehaviour
             ApplyBuffEffects();
         }
     }
-
     private const int maxBuffLevel = 4;
+
+    [SerializeField] private int evolutionLevel_;
+    public int evolutionLevel
+    {
+        get => evolutionLevel_;
+        set
+        {
+            if (evolutionLevel >= maxEvolutionLevel)
+            {
+                return;
+            }
+
+            evolutionLevel_ = Mathf.Min(value, maxEvolutionLevel);
+
+
+            ApplyBuffEffects();
+        }
+    }
+    private const int maxEvolutionLevel = 4;
 
     //================================================================================================
 
@@ -165,6 +183,10 @@ public class MagicSword : MonoBehaviour
         // 이 메서드는 buffLevel이 변경될 때마다 호출됨
     }
 
+    protected virtual void ApplyEvolutionEffects()
+    {
+
+    }
     public virtual GameObject GetBulletPrefab() => bulletPrefab;
 
     public virtual void SetSword(Transform Trans, int AttackPower, float AttackSpeed, float BulletSpeed)

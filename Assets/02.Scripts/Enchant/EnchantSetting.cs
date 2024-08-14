@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnchantSetting : MonoBehaviour
@@ -17,6 +18,58 @@ public class EnchantSetting : MonoBehaviour
     {
         playerStat = FindFirstObjectByType<PlayerStat>();
 
+        for (int i = 0; i < 2; i++)
+        {
+            MagicSword magicSword = playerStat.GetSwords()[i].GetComponent<MagicSword>();
+            if (magicSword != null && magicSword.buffLevel == 4)
+            {
+                List<Enchant> numbersList = new List<Enchant>(upgrades[1].enchantsSecond);
+ 
+                // 특정 값(예: 3)을 제거
+                numbersList.Remove(upgrades[1].enchantsSecond[i]);  // 첫 번째로 발견된 3만 제거됩니다.
+
+                // 리스트를 배열로 다시 변환
+                upgrades[1].enchantsSecond = numbersList.ToArray();
+
+            }
+            if (upgrades[1].enchantsSecond.Length == 0)
+            {
+                upgrades[1].secondPercentage[0] = 100;
+            }
+
+            if (magicSword != null && magicSword.evolutionLevel == 4)
+            {
+                List<Enchant> numbersList = new List<Enchant>(upgrades[0].enchantsThird);
+   
+                // 특정 값(예: 3)을 제거
+                numbersList.Remove(upgrades[0].enchantsThird[i]);  // 첫 번째로 발견된 3만 제거됩니다.
+
+                // 리스트를 배열로 다시 변환
+                upgrades[0].enchantsThird = numbersList.ToArray();
+
+            }
+            if (upgrades[0].enchantsThird.Length == 0)
+            {
+                upgrades[0].secondPercentage[0] += 10;
+                upgrades[0].secondPercentage[1] += 10;
+            }
+
+            
+            if (magicSword != null && magicSword.evolutionLevel == 4)
+            {
+                upgrades[2].enchantsFourth.Add(upgrades[2].legendaryQuests[i]);
+            }
+            
+     
+        }
+
+        if (!GameManager.Instance.GetLegendaryQuest())
+        {
+            upgrades[2].secondPercentage[0] -= 10;
+            upgrades[2].secondPercentage[1] -= 10;
+            upgrades[2].secondPercentage[2] -= 10;
+        }
+        
         for (int i = 0; i < choices.Length; i++)
         {
             int randomNum = Random.Range(0, 100);
@@ -85,23 +138,53 @@ public class Upgrade
     public Enchant[] enchantsFirst;
     public Enchant[] enchantsSecond;
     public Enchant[] enchantsThird;
+    public List<Enchant> enchantsFourth;
+
+    public Enchant[] legendaryQuests;
 
     public Enchant RandomUpgrade(int randomRate)
     {
-        if (randomRate <= secondPercentage[0])
+        if (enchantsFourth.Count ==0)
         {
-            int num = Random.Range(0, enchantsFirst.Length);
-            return enchantsFirst[num];
-        }
-        else if (randomRate <= secondPercentage[0] + secondPercentage[1])
-        {
-            int num = Random.Range(0, enchantsSecond.Length);
-            return enchantsSecond[num];
+            if (randomRate <= secondPercentage[0])
+            {
+                int num = Random.Range(0, enchantsFirst.Length);
+                return enchantsFirst[num];
+            }
+            else if (randomRate <= secondPercentage[0] + secondPercentage[1])
+            {
+                int num = Random.Range(0, enchantsSecond.Length);
+                return enchantsSecond[num];
+            }
+            else
+            {
+                int num = Random.Range(0, enchantsThird.Length);
+                return enchantsThird[num];
+            }
         }
         else
         {
-            int num = Random.Range(0, enchantsThird.Length);
-            return enchantsThird[num];
+            if (randomRate <= secondPercentage[0])
+            {
+                int num = Random.Range(0, enchantsFirst.Length);
+                return enchantsFirst[num];
+            }
+            else if (randomRate <= secondPercentage[0] + secondPercentage[1])
+            {
+                int num = Random.Range(0, enchantsSecond.Length);
+                return enchantsSecond[num];
+            }
+            else if( randomRate <= secondPercentage[0] + secondPercentage[1] + secondPercentage[3])
+            {
+                int num = Random.Range(0, enchantsThird.Length);
+                return enchantsThird[num];
+            }
+            else
+            {
+                int num = Random.Range(0, enchantsFourth.Count);
+                return enchantsFourth[num];
+            }
         }
+      
     }
 }
