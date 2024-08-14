@@ -470,6 +470,11 @@ public class PlayerStat : MonoBehaviour, IListener
         {
             weaponList[index].GetComponent<MagicSword>().buffLevel += enchant.petUpgrade;
         }
+
+        if (enchant.evolutionRune != 0)
+        {
+            weaponList[index].GetComponent<MagicSword>().evolutionLevel += enchant.evolutionRune;
+        }
     }
 
     #endregion

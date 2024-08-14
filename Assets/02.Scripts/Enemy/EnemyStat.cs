@@ -66,6 +66,7 @@ public class EnemyStat : MonoBehaviour
                 float finalSkillGage = isBless ? skillGage * multiplyGage : skillGage;
                 float finalSwapGage = isBless ? swapGage * multiplyGage : swapGage;
 
+                EventManager.Instance.PostNotification(EVENT_TYPE.FLOWER, this);
                 EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT, this, finalSkillGage);
                 EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, finalSwapGage);
             }

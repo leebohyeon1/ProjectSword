@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [Header("ป๓ลย")]
     [SerializeField] private bool isTwinflipLevel3;
     [SerializeField] private bool isLegendaryQuest;
+    public int flowerLevel = 0;
 
     private int[] TwinflipDamage;
     public int[] TwinDam { get { return TwinflipDamage; } }

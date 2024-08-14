@@ -13,7 +13,7 @@ public enum EVENT_TYPE
    KEEP_SWAP,
    FIRE,
 
-   DAN3
+   DAN3, FLOWER, COUNT_FLOWER
 };
 
 public interface IListener

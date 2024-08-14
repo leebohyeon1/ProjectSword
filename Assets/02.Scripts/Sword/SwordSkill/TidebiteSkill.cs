@@ -56,7 +56,7 @@ public class TidebiteSkill : SwordSkill
         BigBullet.transform.localScale *= 2;
         BigBullet.GetComponent<BulletController>().SetDamage((int)(power[1] + skillDamageUp));
         //BigBullet.GetComponent<BulletController>().damageRate = 1f;
-        BigBullet.GetComponent<BulletController>().GetSubBullet();
+        BigBullet.GetComponent<BulletController>().SetSubBullet();
        BigBullet.GetComponent<Rigidbody2D>().velocity = Vector2.up * playerStat.bulletSpeed* 1.2f;
        
     }

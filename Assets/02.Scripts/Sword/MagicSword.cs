@@ -157,7 +157,7 @@ public class MagicSword : MonoBehaviour
     public virtual void Fire()
     {
         GameObject bullet = GetBullet();
-        bullet.GetComponent<BulletController>().GetSubBullet();
+        bullet.GetComponent<BulletController>().SetSubBullet();
         bullet.SetActive(true);
         bullet.transform.position = transform.position;
         bullet.transform.rotation = Quaternion.identity;

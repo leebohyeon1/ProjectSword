@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour, IListener
     private Vector3 characterStartPos;
     private bool isDragging = false;
     private float attackTimer;
-
+    private int flowerCount = 0;
     //==================================================================================
 
     private void Start()
@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour, IListener
         rb = GetComponent<Rigidbody2D>();
 
         EventManager.Instance.AddListener(EVENT_TYPE.FIRE, this);
+        EventManager.Instance.AddListener(EVENT_TYPE.FLOWER, this);
     }
     void Update()
     {
@@ -35,7 +36,32 @@ public class PlayerController : MonoBehaviour, IListener
 
     public void OnEvent(EVENT_TYPE Event_type, Component Sender, object Param = null)
     {
-        attackTimer = 0;
+        switch (Event_type)
+        {
+        case EVENT_TYPE.FIRE:
+                attackTimer = 0;
+                break; 
+        case EVENT_TYPE.COUNT_FLOWER:
+                flowerCount++;
+                if (flowerCount >= 2)
+                {
+                    if (GameManager.Instance.flowerLevel >1)
+                    {
+                    
+                        StartCoroutine(FlowerAttack());
+                    }
+                    else
+                    {
+                   
+                            ExtraAttacK();
+
+                    }
+                flowerCount = 0;
+                 }
+        break;
+        }
+
+
     }
 
     //==================================================================================
@@ -73,5 +99,16 @@ public class PlayerController : MonoBehaviour, IListener
             playerStat.GetFirePos().GetComponents<SwordFire>()[playerStat.GetWeaponIndex()].Fire();
         }
     }
+    
+    public void ExtraAttacK()
+    {
+        playerStat.GetFirePos().GetComponents<SwordFire>()[playerStat.GetWeaponIndex()].FlowerFire();
+    }
  
+    public IEnumerator FlowerAttack()
+    {
+        playerStat.GetFirePos().GetComponents<SwordFire>()[playerStat.GetWeaponIndex()].FlowerFire();
+        yield return new WaitForSeconds(0.1f);
+        playerStat.GetFirePos().GetComponents<SwordFire>()[playerStat.GetWeaponIndex()].FlowerFire();
+    }
 }

@@ -70,6 +70,10 @@ public class BulletController : MonoBehaviour
     }
 
     public virtual bool GetSubBullet() => isSubBullet;
+    public virtual void SetSubBullet()
+    {
+        isSubBullet = true;
+    }
 
     public virtual bool GetIce() => isIce;
 

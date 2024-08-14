@@ -6,7 +6,7 @@ public class DandelionBullet : BulletController
 {
     [SerializeField] private bool isDandelion = false;
 
-    [SerializeField] private bool isLevel3 = false;
+    [SerializeField] private bool isFlower = false;
 
     //=============================================================================
 
@@ -69,9 +69,9 @@ public class DandelionBullet : BulletController
         isDandelion = boolean;
     }
 
-    public void SetBuffLevel3(bool Boolean)
+    public void SetFlower(bool Boolean)
     {
-        isLevel3 = Boolean;
+        isFlower = Boolean;
     }
 
     //=============================================================================
@@ -115,6 +115,10 @@ public class DandelionBullet : BulletController
     {
         return base.GetSubBullet();
     }
+    public override void SetSubBullet()
+    {
+        base.SetSubBullet();
+    }
     public override bool GetIce()
     {
         return base.GetIce();
@@ -133,6 +137,11 @@ public class DandelionBullet : BulletController
         if (collision.CompareTag("Enemy"))
         {
             EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
+            if(!isSubBullet && isFlower)
+            {
+                EventManager.Instance.PostNotification(EVENT_TYPE.COUNT_FLOWER, this);
+            }
+
             if (isDandelion)
             {
                 StartCoroutine(SkillB(collision));

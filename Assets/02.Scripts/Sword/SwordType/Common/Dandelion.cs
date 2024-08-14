@@ -1,9 +1,12 @@
+using GooglePlayGames.BasicApi;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Dandelion : MagicSword, IListener
 {
+    private PlayerStat playerStat;
     private float timer = 0f;
     private DandelionSkill skill;
 
@@ -16,7 +19,7 @@ public class Dandelion : MagicSword, IListener
     [SerializeField] private float damageDownRate = 0.5f;
 
     [Header("레벨 3")]
-    private bool isLevel3 = false;
+    private bool isDanLevel3 = false;
     [SerializeField] private Vector2 areaSize;
     [SerializeField] private float duration;
     [SerializeField] private int damage;
@@ -26,6 +29,17 @@ public class Dandelion : MagicSword, IListener
     [SerializeField] private float durationUp;
     [SerializeField] private float IntervalDown;
 
+    [Header("진화의 룬")]
+
+    [Header("레벨 1")]
+    [SerializeField] private float attackSpeedUp = 0;
+    [Header("레벨 2")]
+    [SerializeField] private float bulletSpeedUp = 0;
+    [Header("레벨 3")]
+    [SerializeField] private bool canFlower = false;
+    [SerializeField] private float flowerTIme = 2f;
+    [Header("레벨 4")]
+    [SerializeField] private float flowerTimeUp = 1f;
     //================================================================================================
 
     void Start()
@@ -35,8 +49,10 @@ public class Dandelion : MagicSword, IListener
         SetFire();
         InitializePool();
         skill = GetComponent<DandelionSkill>();
-        
+        playerStat = FindFirstObjectByType<PlayerStat>();
+
         EventManager.Instance.AddListener(EVENT_TYPE.DAN3,this);
+        EventManager.Instance.AddListener(EVENT_TYPE.FLOWER,this);
     }
 
     // Update is called once per frame
@@ -48,10 +64,24 @@ public class Dandelion : MagicSword, IListener
 
     public void OnEvent(EVENT_TYPE Event_type, Component Sender, object Param = null)
     {
-        if (isLevel3)
+        switch (Event_type)
         {
-            SubDanSkill((Vector3)Param);
+            case EVENT_TYPE.FLOWER:
+               if(canFlower)
+                {
+                    StopCoroutine("FLower");
+                    StartCoroutine("FLower");
+                }
+                break;
+            case EVENT_TYPE.DAN3:
+                if (isDanLevel3)
+                {
+                    SubDanSkill((Vector3)Param);
+                }
+                break;
         }
+
+        
     }
 
     //================================================================================================
@@ -75,12 +105,8 @@ public class Dandelion : MagicSword, IListener
 
     private void Buff3()
     {
-        isLevel3 = true;
-        foreach (GameObject bullet in bulletPool)
-        {
-            DandelionBullet bullets = bullet.GetComponent<DandelionBullet>();
-            bullets.SetBuffLevel3(true);
-        }
+        isDanLevel3 = true;
+ 
     }
 
     private void Buff4()
@@ -97,6 +123,55 @@ public class Dandelion : MagicSword, IListener
         DandelionField dandelionField = panel.GetComponent<DandelionField>();
         dandelionField.SetField(duration, Interval, damage);
 
+    }
+
+
+    public void Evoltion1() 
+    {
+        for(int i =0; i < 2; i++)
+        {
+            if (playerStat.GetSwords()[i].GetComponent<Dandelion>() == this)
+            {
+                playerStat.upAttackSpeed[i] -= attackSpeedUp;
+                break;
+            }
+        }
+    }
+    public void Evoltion2()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            if (playerStat.GetSwords()[i].GetComponent<Dandelion>() == this)
+            {
+                playerStat.upBulletSpeed[i] += bulletSpeedUp;
+                break;
+            }
+        }
+    }
+    public void Evoltion3() 
+    {
+        GameManager.Instance.flowerLevel = 1;
+        canFlower = true; 
+    }
+    public void Evoltion4() {
+        GameManager.Instance.flowerLevel = 2;
+        flowerTIme += flowerTimeUp;
+    }
+
+    public IEnumerator FLower()
+    {
+        foreach (GameObject bullet in bulletPool)
+        {
+            DandelionBullet bullets = bullet.GetComponent<DandelionBullet>();
+            bullets.SetFlower(true);
+        }
+        yield return new WaitForSeconds(flowerTIme);
+
+        foreach (GameObject bullet in bulletPool)
+        {
+            DandelionBullet bullets = bullet.GetComponent<DandelionBullet>();
+            bullets.SetFlower(false);
+        }        
     }
 
     public void Attack()
@@ -157,6 +232,25 @@ public class Dandelion : MagicSword, IListener
                 break;
             case 4:
                 Buff4();
+                break;
+        }
+    }
+
+    protected override void ApplyEvolutionEffects()
+    {
+        switch (evolutionLevel)
+        {
+            case 1:
+                Evoltion1();
+                break;
+            case 2:
+                Evoltion2();
+                break;
+            case 3:
+                Evoltion3();
+                break;
+            case 4:
+                Evoltion4();
                 break;
         }
     }

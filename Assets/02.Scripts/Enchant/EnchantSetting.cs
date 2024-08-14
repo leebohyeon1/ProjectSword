@@ -60,7 +60,6 @@ public class EnchantSetting : MonoBehaviour
                 upgrades[2].enchantsFourth.Add(upgrades[2].legendaryQuests[i]);
             }
             
-     
         }
 
         if (!GameManager.Instance.GetLegendaryQuest())
