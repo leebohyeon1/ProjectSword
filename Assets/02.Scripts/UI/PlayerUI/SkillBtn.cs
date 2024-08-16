@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -135,6 +136,12 @@ public class SkillBtn : MonoBehaviour,
         isDragging = false;
 
         GameManager.Instance.SkillOnOff();
+
+        Tidebite tidebite = playerStat.GetSwords()[playerStat.GetWeaponIndex()].GetComponent<Tidebite>();
+        if (tidebite != null)
+        {
+            tidebite.SetLevel3();
+        }
         playerStat.UseSkill(skill_Index);
         transform.position = startPosition;
         GameUIManager.Instance.MoveSkillBar();

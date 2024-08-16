@@ -1,5 +1,5 @@
+using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyStat : MonoBehaviour
@@ -24,7 +24,12 @@ public class EnemyStat : MonoBehaviour
     [Header("ป๓ลย")]
     protected bool isIce = false;
     protected bool isMolar = false;
+    protected bool canBite = false;
 
+    protected int biteDamage = 0;
+    protected float biteTimer = 0f;
+
+    protected float defaultSkillGage = 0;
     //==================================================================================
 
     private void Awake()
@@ -37,6 +42,8 @@ public class EnemyStat : MonoBehaviour
         enemyUI = GetComponent<EnemyUI>();
         enemyUI.UpdateHPText(hp);
 
+        defaultSkillGage = skillGage;
+
         ApplySpeed();
 
         if (isBless )
@@ -44,6 +51,19 @@ public class EnemyStat : MonoBehaviour
             GetComponent<SpriteRenderer>().color =  Color.white;
         }
     
+    }
+
+    private void Update()
+    {
+        if(biteDamage > 0)
+        {
+            biteTimer += Time.deltaTime;
+            if (biteTimer > 3)
+            {
+                StartCoroutine(Bite());
+               
+            }
+        }    
     }
 
     private void OnBecameInvisible()
@@ -57,6 +77,11 @@ public class EnemyStat : MonoBehaviour
     {
         hp -= damage;
         enemyUI.UpdateHPText(hp);
+        
+        if(canBite)
+        {
+            biteDamage += damage;
+        }
 
         if (hp <= 0)
         {
@@ -101,6 +126,8 @@ public class EnemyStat : MonoBehaviour
 
     public virtual bool GetIsMolar() => isMolar;
 
+    public virtual void SetBite() { canBite = true; }
+
     public virtual int HP => hp;   
 
     protected virtual void ApplySpeed()
@@ -116,6 +143,24 @@ public class EnemyStat : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = Vector2.down * (finalSpeed + SpawnManager.Instance.PlusAcceleration());
     }
 
+    protected virtual IEnumerator Bite()
+    {
+        canBite = false; 
+        TakeDamage(biteDamage / 2);
+        biteDamage = 0;
+        biteTimer = 0;
+        yield return new WaitForSeconds(10f);
+        canBite = true;
+    }
+
+    public virtual IEnumerator Ten1()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            TakeDamage(1);
+            yield return new WaitForSeconds(1f);
+        }
+    }
     //==================================================================================
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -130,6 +175,14 @@ public class EnemyStat : MonoBehaviour
         {
             EventManager.Instance.PostNotification(EVENT_TYPE.DAN3, this, transform.position);
 
+        }
+
+        if (collision.GetComponent<TenkaiBullet>() && collision.GetComponent<TenkaiBullet>().GetDiffusion()){
+            skillGage += collision.GetComponent<TenkaiBullet>().GetSkillGage();
+        }
+        else
+        {
+            skillGage = defaultSkillGage;
         }
     }
 }

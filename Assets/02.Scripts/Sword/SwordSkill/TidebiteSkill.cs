@@ -42,7 +42,15 @@ public class TidebiteSkill : SwordSkill
                 EnemyStat enemyStat = enemy.GetComponent<EnemyStat>();
                 if (enemyStat != null)
                 {
-                    enemyStat.TakeDamage((int)(power[0] + skillDamageUp));
+                    if(GameManager.Instance.GetTidebite3())
+                    {
+                        enemyStat.TakeDamage((int)((power[0] + skillDamageUp)*2));
+                    }
+                    else
+                    {
+                        enemyStat.TakeDamage((int)(power[0] + skillDamageUp));
+                    }
+                    
                 }
             }
         }

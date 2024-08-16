@@ -13,6 +13,7 @@ public class TidebiteBullet : BulletController
     void Start()
     {
         damageRate = 1f;
+
         playerStat = FindFirstObjectByType<PlayerStat>();
     }
 
@@ -87,11 +88,24 @@ public class TidebiteBullet : BulletController
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (GameManager.Instance.GetTidebite3() && !isSubBullet)
+        {
+            damageRate = 2f;
+        }
+        else
+        {
+            damageRate = 1f;
+        }
+
         TotalDamage = damage * damageRate;
         if (collision.CompareTag("Enemy"))
         {
             EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
 
+            if(GameManager.Instance.GetTidebite4() && !isSubBullet)
+            {
+                enemyStat.SetBite();
+            }
          
 
             if (enemyStat.GetIsMolar())

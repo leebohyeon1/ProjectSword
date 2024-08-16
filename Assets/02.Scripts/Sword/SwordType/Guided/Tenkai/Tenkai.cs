@@ -11,7 +11,9 @@ public class Tenkai : MagicSword
     PlayerStat playerStat;
 
     [Header("고유 능력 진화")]
-
+    private bool isbuffLevel2;
+    private bool isbuffLevel3;
+    private bool isbuffLevel4;
     [Header("레벨 1")]
     [SerializeField] private int damageUp = 10;
 
@@ -24,6 +26,15 @@ public class Tenkai : MagicSword
     [Header("레벨 4")]
     [SerializeField] private int buff4Damage = 4;
 
+
+    [Header("진화의 룬")]
+
+    [Header("레벨 3")]
+    [SerializeField] private float skillGageUp;
+
+    private bool isLevel4;
+
+
     //================================================================================================
 
     void Start()
@@ -35,6 +46,7 @@ public class Tenkai : MagicSword
         InitializePool();
 
         Pos = new Vector3(transform.position.x, transform.position.y + (detectRadius.y / 2), 0);
+    
     }
 
     void Update()
@@ -52,6 +64,7 @@ public class Tenkai : MagicSword
     
     private void Buff2()
     {
+        isbuffLevel2 = true;
         foreach (GameObject bullet in bulletPool)
         {
             TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
@@ -61,6 +74,7 @@ public class Tenkai : MagicSword
     
     private void Buff3()
     {
+        isbuffLevel3 = true;
         foreach (GameObject bullet in bulletPool)
         {
             TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
@@ -70,6 +84,7 @@ public class Tenkai : MagicSword
     
     private void Buff4()
     {
+        isbuffLevel4 = true;
         foreach (GameObject bullet in bulletPool)
         {
             TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
@@ -89,10 +104,75 @@ public class Tenkai : MagicSword
             timer = 0f;
         }
     }
-    public void Evoltion1() { }
-    public void Evoltion2() { }
-    public void Evoltion3() { }
-    public void Evoltion4() { }
+    public void Evoltion1() {
+        GameManager.Instance.SetTenkaiLevel1(true);
+    }
+
+    public void Evoltion2()
+    {
+        GameManager.Instance.SetTenkaiLevel2(true);
+    }
+    
+    public void Evoltion3()
+    {
+        GameManager.Instance.SetTenkaiLevel3(true);
+        foreach (GameObject bullet in bulletPool)
+        {
+            TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
+            bullets.SetSkillGage(skillGageUp);
+        }
+    }
+    
+    public void Evoltion4() {
+        isLevel4 = true;   
+    }
+
+    public override void SetLevel()
+    {
+        if (isbuffLevel2)
+        {
+            foreach (GameObject bullet in bulletPool)
+            {
+                TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
+                bullets.SetBuff2(true, buff2Slow);
+            }
+
+        }
+        if (isbuffLevel3) 
+        {
+            foreach (GameObject bullet in bulletPool)
+            {
+                TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
+                bullets.SetBuff3(buff3DiffusionCount);
+            }
+        }
+        if (isbuffLevel4)
+        {
+            foreach (GameObject bullet in bulletPool)
+            {
+                TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
+                bullets.SetBuff4(buff4Damage);
+            }
+        }
+
+        if (GameManager.Instance.GetTenkai(3))
+        {
+            foreach (GameObject bullet in bulletPool)
+            {
+                TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
+                bullets.SetSkillGage(skillGageUp);
+            }
+        }
+        if (isLevel4)
+        {
+            foreach (GameObject bullet in bulletPool)
+            {
+                TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
+                bullets.IncreaseDiffusionCount(1);
+            }
+        }
+    }
+
     //================================================================================================
 
     public override void SetTrans()

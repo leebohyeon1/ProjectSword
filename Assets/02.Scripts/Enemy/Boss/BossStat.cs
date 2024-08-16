@@ -37,7 +37,14 @@ public class BossStat : EnemyStat
 
     void Update()
     {
-        
+        if (biteDamage > 0)
+        {
+            biteTimer += Time.deltaTime;
+            if (biteTimer > 3)
+            {
+                StartCoroutine(Bite());
+            }
+        }
     }
 
     //==================================================================================
@@ -99,6 +106,11 @@ public class BossStat : EnemyStat
         hp -= damage;
         GameUIManager.Instance.UpdateBossUI(maxHp, hp);
 
+        if (canBite)
+        {
+            biteDamage += damage;
+        }
+
         if (hp <= 0)
         {
             Destroy(gameObject);
@@ -131,9 +143,19 @@ public class BossStat : EnemyStat
         GetComponent<Rigidbody2D>().velocity = Vector2.down * (finalSpeed + SpawnManager.Instance.PlusAcceleration());
     }
 
+    protected override IEnumerator Bite()
+    {
+        return base.Bite();
+    }
+
     public override bool GetIsIce() => base.GetIsIce();
 
     public override bool GetIsMolar() => base.GetIsMolar();
+
+    public override void SetBite()
+    {
+        base.SetBite(); 
+    }
 
     public override void SetIsIce(bool boolean)
     {
@@ -143,6 +165,10 @@ public class BossStat : EnemyStat
     public override void SetIsMolar(bool boolean)
     {
         base.SetIsMolar(boolean);   
+    }
+    public override IEnumerator Ten1()
+    {
+        return base.Ten1();
     }
 
     public override int HP => base.HP;

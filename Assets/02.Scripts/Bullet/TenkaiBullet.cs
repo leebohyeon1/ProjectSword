@@ -6,6 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 public class TenkaiBullet : BulletController
 {
     private int diffusionCount_;
+    [SerializeField] private bool isDiffusionBullet = false;
     [SerializeField] private int diffusionCount = 1;
     [SerializeField] private float detectionRadius;
     [SerializeField] private LayerMask enemyLayer;
@@ -18,6 +19,7 @@ public class TenkaiBullet : BulletController
     private bool buff4 = false; 
     private int buff4Damage;
 
+    private float skillGageUp = 0f;
     //=============================================================================
 
     void Start()
@@ -37,6 +39,11 @@ public class TenkaiBullet : BulletController
 
     void FindNextTarget(Collider2D collider)
     {
+        if(GameManager.Instance.GetTenkai(3) && !isSubBullet)
+        {
+            isDiffusionBullet = true;
+        }
+            
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, detectionRadius, enemyLayer);
 
         Transform closestEnemy = null;
@@ -100,7 +107,10 @@ public class TenkaiBullet : BulletController
     }
 
     public void SetDiffusionCount(int count) { diffusionCount = count; }
-
+    public void SetSkillGage(float Gage)
+    {
+        skillGageUp = Gage; 
+    }
     public void IncreaseDiffusionCount(int count)
     {
         diffusionCount += count;
@@ -112,6 +122,7 @@ public class TenkaiBullet : BulletController
     }
 
     public LayerMask GetEnemyLayer() => enemyLayer;
+    public float GetSkillGage() => skillGageUp;
 
     private void NoCollision()
     {
@@ -154,9 +165,15 @@ public class TenkaiBullet : BulletController
     {
         return base.GetSubBullet();
     }
+
     public override bool GetIce()
     {
         return base.GetIce();
+    }
+
+    public bool GetDiffusion()
+    {
+        return isDiffusionBullet;
     }
 
     protected override int CalculateTwinDamage(float distance)
@@ -173,6 +190,8 @@ public class TenkaiBullet : BulletController
         if (collision.CompareTag("Enemy"))
         {
             EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
+
+
             if (diffusionCount_ == 0 && buff4)
             {
                 TotalDamage = (buff4Damage + damage) * damageRate;
@@ -220,7 +239,6 @@ public class TenkaiBullet : BulletController
             }
             else
             {
-
                 gameObject.SetActive(false);
                 diffusionCount_ = 0;
             }
@@ -228,8 +246,6 @@ public class TenkaiBullet : BulletController
             if (buff2)
             {
                 enemyStat.DecreaseSpeed(buff2Slow);
-
-
             }
 
             if (isIce && !enemyStat.GetIsMolar() && !isSkillBullet)
@@ -241,6 +257,16 @@ public class TenkaiBullet : BulletController
             if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
             {
                 playerStat.Drain((int)TotalDamage);
+            }
+
+            if(GameManager.Instance.GetTenkai(1) && !isSubBullet)
+            {
+                StartCoroutine(enemyStat.Ten1());
+            }
+            
+            if (GameManager.Instance.GetTenkai(2) && !isSubBullet && bulletType == BulletType.Thunder)
+            {
+                enemyStat.TakeDamage(1);
             }
 
             diffusionCount_--;
