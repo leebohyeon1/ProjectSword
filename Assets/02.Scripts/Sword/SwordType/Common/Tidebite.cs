@@ -11,6 +11,8 @@ public class Tidebite : MagicSword
 
     [Header("고유 능력 진화")]
 
+    private bool isBuffLevel2 = false;
+    private bool isBuffLevel3 = false;
     [Header("레벨 1")]
     [SerializeField] private int damageUp = 10;
 
@@ -86,7 +88,7 @@ public class Tidebite : MagicSword
     {
         for (int i = 0; i < 2; i++)
         {
-            if (playerStat.GetSwords()[i].GetComponent<Tenkai>() == this)
+            if (playerStat.GetSwords()[i].GetComponent<Tidebite>() == this)
             {
                 playerStat.upAttackDamage[i] += attackDamageUp1;
                 break;
@@ -97,9 +99,9 @@ public class Tidebite : MagicSword
     {
         for (int i = 0; i < 2; i++)
         {
-            if (playerStat.GetSwords()[i].GetComponent<Tenkai>() == this)
+            if (playerStat.GetSwords()[i].GetComponent<Tidebite>() == this)
             {
-                playerStat.upAttackDamage[i] += attackDamageUp1;
+                playerStat.upAttackDamage[i] += attackDamageUp2;
                 break;
             }
         }
@@ -109,7 +111,10 @@ public class Tidebite : MagicSword
         level3 = true;
             
     }
-    public void Evoltion4() { }
+    public void Evoltion4() 
+    {
+        GameManager.Instance.SetTidebiteLevel4(true);
+    }
 
     public void SetLevel3() 
     {
@@ -124,6 +129,30 @@ public class Tidebite : MagicSword
         GameManager.Instance.SetTidebiteLevel3(true);
         yield return new WaitForSeconds(Level3Duration);
         GameManager.Instance.SetTidebiteLevel3(false);
+    }
+
+    public override void SetLevel()
+    {
+        if (isBuffLevel2)
+        {
+            foreach (GameObject bullet in bulletPool)
+            {
+                TidebiteBullet bullets = bullet.GetComponent<TidebiteBullet>();
+                //bullets.SetDamagebuff(damageDownRate);
+                bullets.SetMolar(true);
+                bullets.SetMolar(1);
+                bullets.SetMolarDamage(molarDamage);
+
+            }
+        }
+        if (isBuffLevel3)
+        {
+            foreach (GameObject bullet in bulletPool)
+            {
+                TidebiteBullet bullets = bullet.GetComponent<TidebiteBullet>();
+                bullets.SetMolar(2);
+            }
+        }
     }
     //================================================================================================
 

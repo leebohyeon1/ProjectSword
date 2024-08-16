@@ -102,6 +102,10 @@ public class TidebiteBullet : BulletController
         {
             EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
 
+            if(GameManager.Instance.GetTidebite4() && !isSubBullet)
+            {
+                enemyStat.SetBite();
+            }
          
 
             if (enemyStat.GetIsMolar())

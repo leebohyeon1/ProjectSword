@@ -16,8 +16,15 @@ public class GameManager : MonoBehaviour
 
     [Header("상태")]
     [SerializeField] private bool isTwinflipLevel3;
+
     [SerializeField] private bool isTidebiteLevel3;
     [SerializeField] private bool isTidebiteLevel4;
+
+
+    [SerializeField] private bool isTenkaiLevel1;
+    [SerializeField] private bool isTenkaiLevel2;
+    [SerializeField] private bool isTenkaiLevel3;
+
     [SerializeField] private bool isLegendaryQuest;
     public int flowerLevel = 0;
 
@@ -95,6 +102,20 @@ public class GameManager : MonoBehaviour
     {
         isTidebiteLevel4 = boolean;
     }
+
+    public void SetTenkaiLevel1(bool boolean)
+    {
+        isTenkaiLevel1 = boolean;
+    }
+    public void SetTenkaiLevel2(bool boolean)
+    {
+        isTenkaiLevel2 = boolean;
+    }
+    public void SetTenkaiLevel3(bool boolean)
+    {
+        isTenkaiLevel3 = boolean;
+    }
+
     public void SetLegendaryQuest(bool boolean)
     {
         isLegendaryQuest = boolean;
@@ -104,6 +125,21 @@ public class GameManager : MonoBehaviour
     public bool GetLegendaryQuest() => isLegendaryQuest;
     public bool GetTidebite3() => isTidebiteLevel3;
     public bool GetTidebite4() => isTidebiteLevel4;
+    public bool GetTenkai(int num)
+    {
+        switch (num)
+        {
+            case 1:
+                return isTenkaiLevel1;
+            case 2:
+                return isTenkaiLevel2;
+            case 3:
+                return isTenkaiLevel3;
+            default:
+                return false;
+        }
+    }
+
     //==================================================================================
 
     private void OnApplicationPause(bool pause) //플레이어가 다른 창으로 넘어갔을 때와 같은 플레이 중이 아닌 경우

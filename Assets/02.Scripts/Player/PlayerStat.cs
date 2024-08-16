@@ -211,6 +211,8 @@ public class PlayerStat : MonoBehaviour, IListener
         skillCount = 0f;
         InitializePool();
 
+        weaponList[weaponIndex].GetComponent<MagicSword>().SetLevel();
+
         EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT, this, skillCount / maxSkillCount);
         EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, swapCount / maxSwapCount);
         EventManager.Instance.PostNotification(EVENT_TYPE.KEEP_SWAP, this, keepSwap);

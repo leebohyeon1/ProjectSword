@@ -10,7 +10,7 @@ public class MagicSword : MonoBehaviour
     [SerializeField] protected GameObject bulletPrefab;
     [SerializeField] protected Transform bulletPoolTrans;
     [SerializeField] private int poolSize = 20;
-  
+
     [Header("Çàµ¿")]
     [SerializeField] protected int attackPower;
     protected int plusAttackPower;
@@ -44,7 +44,7 @@ public class MagicSword : MonoBehaviour
 
             buffLevel_ = Mathf.Min(value, maxBuffLevel);
 
-          
+
             ApplyBuffEffects();
         }
     }
@@ -97,7 +97,7 @@ public class MagicSword : MonoBehaviour
         followerTransform = transform;
 
         firePos = GameObject.Find("FirePos");
-             
+
     }
 
     protected virtual void Follow()
@@ -164,13 +164,13 @@ public class MagicSword : MonoBehaviour
 
         bullet.GetComponent<Rigidbody2D>().velocity = Vector2.up * bulletSpeed;
     }
-    
+
     public virtual void SetBullet()
     {
         var swordFire = firePos.GetComponent<SwordFire>();
         swordFire.enabled = !swordFire.enabled;
     }
-    
+
     public virtual void SetFire()
     {
         firePos.AddComponent<SwordFire>().SetMagicSword(this);
@@ -196,5 +196,9 @@ public class MagicSword : MonoBehaviour
         attackSpeed = AttackSpeed;
         bulletSpeed = BulletSpeed;
 
+    }
+
+    public virtual void SetLevel()
+    {
     }
 }

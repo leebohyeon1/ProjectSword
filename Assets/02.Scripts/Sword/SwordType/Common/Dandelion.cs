@@ -12,6 +12,7 @@ public class Dandelion : MagicSword, IListener
 
     [Header("고유 능력 진화")]
 
+    private bool isBuffLevel2;
     [Header("레벨 1")]
     [SerializeField] private int damageUp = 0;
 
@@ -94,6 +95,7 @@ public class Dandelion : MagicSword, IListener
 
     private void Buff2()
     {
+        isBuffLevel2 = true;
         foreach (GameObject bullet in bulletPool)
         {
             DandelionBullet bullets = bullet.GetComponent<DandelionBullet>();
@@ -106,7 +108,6 @@ public class Dandelion : MagicSword, IListener
     private void Buff3()
     {
         isDanLevel3 = true;
- 
     }
 
     private void Buff4()
@@ -184,6 +185,19 @@ public class Dandelion : MagicSword, IListener
         }
     }
 
+    public override void SetLevel()
+    {
+        if (isBuffLevel2)
+        {
+            foreach (GameObject bullet in bulletPool)
+            {
+                DandelionBullet bullets = bullet.GetComponent<DandelionBullet>();
+                bullets.SetDamagebuff(damageDownRate);
+                bullets.SetDandelionSkillB(true);
+
+            }
+        }
+    }
     //================================================================================================
 
     public override void SetTrans()

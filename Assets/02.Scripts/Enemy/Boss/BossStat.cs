@@ -106,7 +106,7 @@ public class BossStat : EnemyStat
         hp -= damage;
         GameUIManager.Instance.UpdateBossUI(maxHp, hp);
 
-        if (GameManager.Instance.GetTidebite4() && canBite)
+        if (canBite)
         {
             biteDamage += damage;
         }
@@ -152,6 +152,11 @@ public class BossStat : EnemyStat
 
     public override bool GetIsMolar() => base.GetIsMolar();
 
+    public override void SetBite()
+    {
+        base.SetBite(); 
+    }
+
     public override void SetIsIce(bool boolean)
     {
         base.SetIsIce(boolean); 
@@ -160,6 +165,10 @@ public class BossStat : EnemyStat
     public override void SetIsMolar(bool boolean)
     {
         base.SetIsMolar(boolean);   
+    }
+    public override IEnumerator Ten1()
+    {
+        return base.Ten1();
     }
 
     public override int HP => base.HP;
