@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     [Header("상태")]
     [SerializeField] private bool isTwinflipLevel3;
+    [SerializeField] private bool isTidebiteLevel3;
+    [SerializeField] private bool isTidebiteLevel4;
     [SerializeField] private bool isLegendaryQuest;
     public int flowerLevel = 0;
 
@@ -84,7 +86,15 @@ public class GameManager : MonoBehaviour
         TwinflipDistance = new float[dis.Length];
         TwinflipDistance = dis;
     }
-    
+
+    public void SetTidebiteLevel3(bool boolean)
+    {
+        isTidebiteLevel3 = boolean;
+    }
+    public void SetTidebiteLevel4(bool boolean)
+    {
+        isTidebiteLevel4 = boolean;
+    }
     public void SetLegendaryQuest(bool boolean)
     {
         isLegendaryQuest = boolean;
@@ -92,7 +102,8 @@ public class GameManager : MonoBehaviour
 
     public bool GetTwinflip3() => isTwinflipLevel3;
     public bool GetLegendaryQuest() => isLegendaryQuest;
-
+    public bool GetTidebite3() => isTidebiteLevel3;
+    public bool GetTidebite4() => isTidebiteLevel4;
     //==================================================================================
 
     private void OnApplicationPause(bool pause) //플레이어가 다른 창으로 넘어갔을 때와 같은 플레이 중이 아닌 경우

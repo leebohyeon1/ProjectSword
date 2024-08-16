@@ -1,9 +1,13 @@
 
+using GooglePlayGames.BasicApi;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Tidebite : MagicSword
 {
     private float timer = 0f;
+    PlayerStat playerStat;
 
     [Header("고유 능력 진화")]
 
@@ -13,10 +17,20 @@ public class Tidebite : MagicSword
     [Header("레벨 2")]
     [SerializeField] private int molarDamage = 5;
 
-
     [Header("레벨 4")]
     [SerializeField] private int molarDamageUp = 2;
 
+    [Header("진화의 룬")]
+    
+    [Header("레벨 1")]
+    [SerializeField] private int attackDamageUp1 = 4;
+
+    [Header("레벨 2")]
+    [SerializeField] private int attackDamageUp2 = 4;
+
+    [Header("레벨 3")]
+    private bool level3 =false;
+    [SerializeField] private float Level3Duration = 2f;
     //================================================================================================
 
     void Start()
@@ -31,7 +45,6 @@ public class Tidebite : MagicSword
     {
         Follow();
         Attack();
-
     }
 
     //================================================================================================
@@ -69,15 +82,55 @@ public class Tidebite : MagicSword
     }
 
 
-    public void Evoltion1() { }
-    public void Evoltion2() { }
-    public void Evoltion3() { }
+    public void Evoltion1()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            if (playerStat.GetSwords()[i].GetComponent<Tenkai>() == this)
+            {
+                playerStat.upAttackDamage[i] += attackDamageUp1;
+                break;
+            }
+        }
+    }
+    public void Evoltion2()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            if (playerStat.GetSwords()[i].GetComponent<Tenkai>() == this)
+            {
+                playerStat.upAttackDamage[i] += attackDamageUp1;
+                break;
+            }
+        }
+    }
+    public void Evoltion3() 
+    {
+        level3 = true;
+            
+    }
     public void Evoltion4() { }
+
+    public void SetLevel3() 
+    {
+        if(level3 )
+        {
+            StartCoroutine(Level3());
+        }
+    }
+
+    private IEnumerator Level3()
+    {
+        GameManager.Instance.SetTidebiteLevel3(true);
+        yield return new WaitForSeconds(Level3Duration);
+        GameManager.Instance.SetTidebiteLevel3(false);
+    }
     //================================================================================================
 
     public override void SetTrans()
     {
         base.SetTrans();
+        playerStat = FindFirstObjectByType<PlayerStat>();
     }
 
     protected override void Follow()

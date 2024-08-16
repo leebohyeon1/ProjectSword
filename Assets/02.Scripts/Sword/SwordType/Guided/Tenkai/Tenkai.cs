@@ -24,6 +24,15 @@ public class Tenkai : MagicSword
     [Header("레벨 4")]
     [SerializeField] private int buff4Damage = 4;
 
+
+    [Header("진화의 룬")]
+
+    [Header("레벨 1")]
+    [SerializeField] private int attackDamageUp1 = 4;
+    
+    [Header("레벨 2")]
+    [SerializeField] private int attackDamageUp2 = 4;
+
     //================================================================================================
 
     void Start()
@@ -89,8 +98,14 @@ public class Tenkai : MagicSword
             timer = 0f;
         }
     }
-    public void Evoltion1() { }
-    public void Evoltion2() { }
+    public void Evoltion1() {
+
+    }
+
+    public void Evoltion2()
+    {
+
+    }
     public void Evoltion3() { }
     public void Evoltion4() { }
     //================================================================================================

@@ -447,6 +447,8 @@ public class PlayerStat : MonoBehaviour, IListener
 
         canDrain = enchant.isDrain;
         hpRecoveryAmount += enchant.hpRecovery;
+        skillRecoveryAmount += enchant.skillRecovery;
+        swapRecoveryAmount += enchant.swapRecovery;
         skillCoolDown += enchant.skillCoolDown;
         swapDamage += enchant.swapDamage;
 

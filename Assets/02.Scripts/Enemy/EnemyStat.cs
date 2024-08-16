@@ -1,5 +1,5 @@
+using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyStat : MonoBehaviour
@@ -24,7 +24,10 @@ public class EnemyStat : MonoBehaviour
     [Header("ป๓ลย")]
     protected bool isIce = false;
     protected bool isMolar = false;
+    protected bool canBite = true;
 
+    protected int biteDamage = 0;
+    protected float biteTimer = 0f;
     //==================================================================================
 
     private void Awake()
@@ -46,6 +49,19 @@ public class EnemyStat : MonoBehaviour
     
     }
 
+    private void Update()
+    {
+        if(biteDamage > 0)
+        {
+            biteTimer += Time.deltaTime;
+            if (biteTimer > 3)
+            {
+                StartCoroutine(Bite());
+               
+            }
+        }    
+    }
+
     private void OnBecameInvisible()
     {
         Destroy(gameObject);
@@ -57,6 +73,11 @@ public class EnemyStat : MonoBehaviour
     {
         hp -= damage;
         enemyUI.UpdateHPText(hp);
+        
+        if(GameManager.Instance.GetTidebite4() && canBite)
+        {
+            biteDamage += damage;
+        }
 
         if (hp <= 0)
         {
@@ -116,6 +137,15 @@ public class EnemyStat : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = Vector2.down * (finalSpeed + SpawnManager.Instance.PlusAcceleration());
     }
 
+    protected virtual IEnumerator Bite()
+    {
+        canBite = false; 
+        TakeDamage(biteDamage / 2);
+        biteDamage = 0;
+        biteTimer = 0;
+        yield return new WaitForSeconds(10f);
+        canBite = true;
+    }
     //==================================================================================
 
     private void OnTriggerEnter2D(Collider2D collision)

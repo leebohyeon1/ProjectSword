@@ -37,7 +37,14 @@ public class BossStat : EnemyStat
 
     void Update()
     {
-        
+        if (biteDamage > 0)
+        {
+            biteTimer += Time.deltaTime;
+            if (biteTimer > 3)
+            {
+                StartCoroutine(Bite());
+            }
+        }
     }
 
     //==================================================================================
@@ -99,6 +106,11 @@ public class BossStat : EnemyStat
         hp -= damage;
         GameUIManager.Instance.UpdateBossUI(maxHp, hp);
 
+        if (GameManager.Instance.GetTidebite4() && canBite)
+        {
+            biteDamage += damage;
+        }
+
         if (hp <= 0)
         {
             Destroy(gameObject);
@@ -129,6 +141,11 @@ public class BossStat : EnemyStat
 
         float finalSpeed = speed * (1 - totalRate / 100f);
         GetComponent<Rigidbody2D>().velocity = Vector2.down * (finalSpeed + SpawnManager.Instance.PlusAcceleration());
+    }
+
+    protected override IEnumerator Bite()
+    {
+        return base.Bite();
     }
 
     public override bool GetIsIce() => base.GetIsIce();

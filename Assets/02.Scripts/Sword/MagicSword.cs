@@ -64,7 +64,7 @@ public class MagicSword : MonoBehaviour
             evolutionLevel_ = Mathf.Min(value, maxEvolutionLevel);
 
 
-            ApplyBuffEffects();
+            ApplyEvolutionEffects();
         }
     }
     private const int maxEvolutionLevel = 4;
