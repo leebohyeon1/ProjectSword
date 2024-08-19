@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862fa96b88725d349aa7d0d959eec9ee, type: 3}
   m_Name: TwinFlip
   m_EditorClassIdentifier: 
-  attackdamage: 4
-  attackSpeed: 0.8
+  attackdamage: 3
+  attackSpeed: 1.5
   skillCost: 40
   skillCool: 7
-  bulletSpeed: 10
+  bulletSpeed: 3
   bulletType: 1
   swordPrefab: {fileID: 1755657448561907817, guid: a81022d4a661ed647a8ca6725587a841, type: 3}
   swordAttackPower: 0

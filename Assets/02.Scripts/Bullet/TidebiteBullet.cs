@@ -46,9 +46,9 @@ public class TidebiteBullet : BulletController
     {
         base.SetDamagebuff(rate);
     }
-    public override void SetDamage(int Damage)
+    public override void SetDamage(int Damage, float Cri = 0, bool f = false)
     {
-        base.SetDamage(Damage);
+        base.SetDamage(Damage, Cri, f);
     }
     public override void SetSlowRate(float slowRate)
     {
@@ -62,7 +62,10 @@ public class TidebiteBullet : BulletController
     {
         base.IncreaseDamage(damage);
     }
-
+    public override BulletType GetBulletType()
+    {
+        return base.GetBulletType();
+    }
     public override void SetTwinflip3(bool twinflip3)
     {
         base.SetTwinflip3(twinflip3);
@@ -97,12 +100,19 @@ public class TidebiteBullet : BulletController
             damageRate = 1f;
         }
 
-        TotalDamage = damage * damageRate;
         if (collision.CompareTag("Enemy"))
         {
             EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
+            if (enemyStat.GetIsIce())
+            {
+                TotalDamage = (damage + damageUp) * damageRate;
+            }
+            else
+            {
+                TotalDamage = damage * damageRate;
+            }
 
-            if(GameManager.Instance.GetTidebite4() && !isSubBullet)
+            if (GameManager.Instance.GetTidebite4() && !isSubBullet)
             {
                 enemyStat.SetBite();
             }
@@ -120,12 +130,20 @@ public class TidebiteBullet : BulletController
                     if (screenPosition.y < Screen.height / 2)
                     {
                         float dis = Vector2.Distance(playerStat.transform.position, collision.transform.position);
-                        Debug.Log("거리: " + dis);
-                        enemyStat.TakeDamage(CalculateTwinDamage(dis));
+                        TotalDamage = CalculateTwinDamage(dis);
+                        if (isCritical)
+                        {
+                            TotalDamage *= (1 + criticalDamage / 100);
+                        }
+                        enemyStat.TakeDamage((int)TotalDamage);
                     }
                 }
                 else
                 {
+                    if (isCritical)
+                    {
+                        TotalDamage *= (1 + criticalDamage / 100);
+                    }
                     enemyStat.TakeDamage((int)TotalDamage);
                 }
 
@@ -141,12 +159,20 @@ public class TidebiteBullet : BulletController
                     if (screenPosition.y < Screen.height / 2)
                     {
                         float dis = Vector2.Distance(playerStat.transform.position, collision.transform.position);
-                        Debug.Log("거리: " + dis);
-                        enemyStat.TakeDamage(CalculateTwinDamage(dis));
+                        TotalDamage = CalculateTwinDamage(dis);
+                        if (isCritical)
+                        {
+                            TotalDamage *= (1 + criticalDamage / 100);
+                        }
+                        enemyStat.TakeDamage((int)TotalDamage);
                     }
                 }
                 else
                 {
+                    if (isCritical)
+                    {
+                        TotalDamage *= (1 + criticalDamage / 100);
+                    }
                     enemyStat.TakeDamage((int)TotalDamage);
                 }
             }

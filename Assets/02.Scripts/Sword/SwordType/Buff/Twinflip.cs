@@ -18,12 +18,17 @@ public class Twinflip : MagicSword
     private float fireBuffTimer;
     private float iceBuffTimer;
 
+    [Header("불속성 총알 변화")]
+    [SerializeField] private float changeAttackSpeed;
+    [SerializeField] private int changeAttackDamage;
+    [SerializeField] private float changeBulletSpeed;
+
     [Header("고유 능력 진화")]
 
     [Header("레벨 1")]
     [SerializeField] private int damageUp = 10;
     private int index = 0;
-
+    private int iindex = 0;
     [Header("레벨 2")]
     [SerializeField] private float[] buffPower = new float[2];
 
@@ -34,6 +39,23 @@ public class Twinflip : MagicSword
     [Header("레벨 4")]
     [SerializeField] private int iceDamageUp = 2;
 
+
+    [Header("진화의 룬")]
+
+    private bool level2 = false;
+    private bool level3 = false;
+    [Header("레벨 1")]
+    [SerializeField] private float attackSpeedUp = 0f;
+    [SerializeField] private float slowRateUp = 0f;
+
+    [Header("레벨 2")]
+    [SerializeField] private float criticalRateUp = 0f;
+    [SerializeField] private float plusDamage = 0f;
+
+    [Header("레벨 3")]
+    [SerializeField] private bool canPenetration;
+
+    BulletType type;
     //==================================================================================
 
     private void Awake()
@@ -49,6 +71,16 @@ public class Twinflip : MagicSword
         SetTrans();
         SetFire();
         InitializePool();
+
+        for (int i = 0; i < 2; i++)
+        {
+            if (playerStat.GetSwords()[i].GetComponent<Twinflip>() == this)
+            {
+                playerStat.upAttackSpeed[i] -= attackSpeedUp;
+                iindex = i;
+                break;
+            }
+        }
     }
 
     void Update()
@@ -61,12 +93,18 @@ public class Twinflip : MagicSword
     private void FireBuff()
     {
         playerStat.SetCriticalRate(power[0]);
+
         fireBuffTimer = 0f;
         isBuff[0] = true;
     }
 
     private void IceBuff()
     {
+        foreach (GameObject bullet in playerStat.bulletPool_)
+        {
+            BulletController bul = bullet.GetComponent<BulletController>(); 
+            type = bul.GetBulletType();
+        }
         playerStat.bulletType = BulletType.Ice;
         if (isBuff[3])
         {
@@ -74,7 +112,7 @@ public class Twinflip : MagicSword
         }
         else
         {
-            playerStat.SetBulletIce(power[1]);
+            playerStat.SetBulletIce(power[1], 0);
         }
             
         iceBuffTimer = 0f;
@@ -101,7 +139,7 @@ public class Twinflip : MagicSword
         isBuff[1] = false;
         iceBuffTimer = 0f;
 
-        playerStat.bulletType = playerStat.GetCurSword().bulletType;
+        playerStat.bulletType = type;
         playerStat.SetBulletIce(-power[1], -iceDamageUp);
 
 
@@ -121,8 +159,6 @@ public class Twinflip : MagicSword
         {
             playerStat.upAttackDamage[index] += damageUp;
         }
-
-        Debug.Log(11);
     }
 
     private void Buff2()
@@ -142,10 +178,97 @@ public class Twinflip : MagicSword
         power[1] += buffPower[1];
     }
 
-    public void Evoltion1() { }
-    public void Evoltion2() { }
-    public void Evoltion3() { }
-    public void Evoltion4() { }
+    public void Evoltion1()
+    {
+        foreach (GameObject bullet in playerStat.bulletPool_)
+        {
+            TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
+            if (bullets.GetBulletType() == BulletType.Fire)
+            {
+                playerStat.upAttackSpeed[index] -= attackSpeedUp;
+                break;
+            }
+            else
+            {
+                power[1] += slowRateUp;
+                break;
+            }
+        }
+    }
+    public void Evoltion2()
+    {
+        level2 = true;
+        foreach (GameObject bullet in playerStat.bulletPool_)
+        {
+            TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
+            if (bullets.GetBulletType() == BulletType.Fire)
+            {
+                playerStat.SetCriticalRate(criticalRateUp);
+                break;
+            }
+            else
+            {
+                bullets.IncreaseDamage(plusDamage);
+            }
+        }
+    }
+    public void Evoltion3()
+    {
+        level3 = true;
+        foreach (GameObject bullet in playerStat.bulletPool_)
+        {
+            TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
+            bullets.Spear(); 
+        }
+    }
+    public void Evoltion4() 
+    {
+        GameManager.Instance.SetTwinflip4(true);
+    }
+
+
+    public override void SetLevel()
+    {
+        if (level2)
+        {
+            foreach (GameObject bullet in playerStat.bulletPool_)
+            {
+                TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
+                if (bullets.GetBulletType() == BulletType.Fire)
+                {
+                    playerStat.SetCriticalRate(criticalRateUp);
+                    break;
+                }
+                else
+                {
+                    bullets.IncreaseDamage(plusDamage);
+                }
+            }
+        }
+        if (level3)
+        {
+            foreach (GameObject bullet in playerStat.bulletPool_)
+            {
+                TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
+                bullets.Spear();
+            }
+        }
+    }
+
+    public void ChangeFireBullet()
+    {
+        playerStat.upAttackDamage[iindex] += changeAttackDamage;
+
+        playerStat.upAttackSpeed[iindex] -= changeAttackSpeed;
+        playerStat.upBulletSpeed[iindex] += changeBulletSpeed;
+    }
+
+    public void ChangeIceBullet()
+    {
+        playerStat.upAttackSpeed[iindex] -= changeAttackDamage;
+        playerStat.upAttackSpeed[iindex] += changeAttackSpeed;
+        playerStat.upBulletSpeed[iindex] -= changeBulletSpeed;
+    }
     //================================================================================================
 
     public override void SetTrans()
