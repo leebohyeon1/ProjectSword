@@ -140,9 +140,9 @@ public class TenkaiBullet : BulletController
     {
         base.SetDamagebuff(rate);
     }
-    public override void SetDamage(int Damage)
+    public override void SetDamage(int Damage, float Cri = 0, bool f = false)
     {
-        base.SetDamage(Damage);
+        base.SetDamage(Damage,Cri, f);
     }
     public override void SetSlowRate(float slowRate)
     {
@@ -155,6 +155,10 @@ public class TenkaiBullet : BulletController
     public override void SetSubBullet()
     {
         base.SetSubBullet();
+    }
+    public override BulletType GetBulletType()
+    {
+        return base.GetBulletType();
     }
     public override void IncreaseDamage(float damage)
     {
@@ -185,17 +189,27 @@ public class TenkaiBullet : BulletController
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        TotalDamage = damage * damageRate;
 
         if (collision.CompareTag("Enemy"))
         {
             EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
 
+            if (enemyStat.GetIsIce())
+            {
+                TotalDamage = (damage + damageUp) * damageRate;
+            }
+            else
+            {
+                TotalDamage = damage * damageRate;
+            }
 
             if (diffusionCount_ == 0 && buff4)
             {
-                TotalDamage = (buff4Damage + damage) * damageRate;
-
+                if (enemyStat.GetIsIce())
+                {
+                    TotalDamage = (buff4Damage + damage + damageUp) * damageRate;
+                }
+             
                 if (isTwinflip3)
                 {
                     Vector3 screenPosition = Camera.main.WorldToScreenPoint(collision.transform.position);
@@ -204,12 +218,22 @@ public class TenkaiBullet : BulletController
                     if (screenPosition.y < Screen.height / 2)
                     {
                         float dis = Vector2.Distance(playerStat.transform.position, collision.transform.position);
-                        Debug.Log("거리: " + dis);
-                        enemyStat.TakeDamage(CalculateTwinDamage(dis));
+     
+                        TotalDamage = CalculateTwinDamage(dis);
+                        if (isCritical)
+                        {
+                            TotalDamage *= (1 + criticalDamage / 100);
+                        }
+                        enemyStat.TakeDamage((int)TotalDamage);
                     }
                 }
                 else
                 {
+                    if (isCritical)
+                    {
+                        TotalDamage *= (1 + criticalDamage / 100);
+                    }
+
                     enemyStat.TakeDamage((int)TotalDamage);
                 }
             }
@@ -223,12 +247,21 @@ public class TenkaiBullet : BulletController
                     if (screenPosition.y < Screen.height / 2)
                     {
                         float dis = Vector2.Distance(playerStat.transform.position, collision.transform.position);
-                        Debug.Log("거리: " + dis);
-                        enemyStat.TakeDamage(CalculateTwinDamage(dis));
+
+                        TotalDamage = CalculateTwinDamage(dis);
+                        if (isCritical)
+                        {
+                            TotalDamage *= (1 + criticalDamage / 100);
+                        }
+                        enemyStat.TakeDamage((int)TotalDamage);
                     }
                 }
                 else
                 {
+                    if (isCritical)
+                    {
+                        TotalDamage *= (1 + criticalDamage / 100);
+                    }
                     enemyStat.TakeDamage((int)TotalDamage);
                 }
             }

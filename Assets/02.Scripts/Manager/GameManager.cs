@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     [Header("ป๓ลย")]
     [SerializeField] private bool isTwinflipLevel3;
+    [SerializeField] private bool isTwinflipLevel4;
 
     [SerializeField] private bool isTidebiteLevel3;
     [SerializeField] private bool isTidebiteLevel4;
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool isTenkaiLevel1;
     [SerializeField] private bool isTenkaiLevel2;
     [SerializeField] private bool isTenkaiLevel3;
+
 
     [SerializeField] private bool isLegendaryQuest;
     public int flowerLevel = 0;
@@ -93,6 +95,10 @@ public class GameManager : MonoBehaviour
         TwinflipDistance = new float[dis.Length];
         TwinflipDistance = dis;
     }
+    public void SetTwinflip4(bool twinflip)
+    {
+        isTidebiteLevel4 = twinflip;
+    }
 
     public void SetTidebiteLevel3(bool boolean)
     {
@@ -122,6 +128,8 @@ public class GameManager : MonoBehaviour
     }
 
     public bool GetTwinflip3() => isTwinflipLevel3;
+    public bool GetTwinflip4() => isTwinflipLevel4;
+
     public bool GetLegendaryQuest() => isLegendaryQuest;
     public bool GetTidebite3() => isTidebiteLevel3;
     public bool GetTidebite4() => isTidebiteLevel4;

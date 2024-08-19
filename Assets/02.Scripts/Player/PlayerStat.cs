@@ -29,6 +29,7 @@ public class PlayerStat : MonoBehaviour, IListener
     [SerializeField] private GameObject firePos;
     [SerializeField] private float criticalRate = 0f;
     [SerializeField] private float criticalDamage = 150f;
+    private bool critical = false;
 
     [Header("½ºÅ³")]
     [SerializeField] private float skillCool;
@@ -117,6 +118,8 @@ public class PlayerStat : MonoBehaviour, IListener
     public float skillRecoveryAmount = 0f;
     public float swapReTimer = 0f;
     public float swapRecoveryAmount = 0f;
+
+
     
     //=============================================================================
 
@@ -291,7 +294,8 @@ public class PlayerStat : MonoBehaviour, IListener
     private int CalculateDamage(int baseDamage)
     {
         bool isCritical = Random.Range(0f, 100f) < criticalRate;
-        return isCritical ? Mathf.RoundToInt(baseDamage * (1 + criticalDamage / 100f)) : baseDamage;
+        critical = isCritical;
+        return baseDamage;
     }
 
     private void CalculationSkillCount()
@@ -382,7 +386,7 @@ public class PlayerStat : MonoBehaviour, IListener
     private void InitializeBullet(GameObject bullet)
     {
         var controller = bullet.GetComponent<BulletController>();
-        controller.SetDamage(CalculateDamage(attackDamage + upAttackDamage[weaponIndex]));
+        controller.SetDamage(CalculateDamage(attackDamage + upAttackDamage[weaponIndex]), criticalDamage, critical);
         controller.SetBulletType(bulletType);
 
         if (GameManager.Instance.GetTwinflip3())

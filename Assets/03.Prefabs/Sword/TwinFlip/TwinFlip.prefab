@@ -106,13 +106,13 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
-  skillDamageUp: 7
+  skillDamageUp: 9
   duration:
-  - 5
+  - 1
   - 10
   isBuff: 0
   slowRate: 50
-  bulletSpeedSlow: 5
+  bulletSpeedSlow: 1
   Panel: {fileID: 8251858154578419569, guid: aa95c3f9e743da2419e5c09fe13f3a88, type: 3}
 --- !u!114 &-5001709836024687580
 MonoBehaviour:
@@ -138,10 +138,14 @@ MonoBehaviour:
   bulletPool: []
   firePos: {fileID: 0}
   buffLevel_: 0
+  evolutionLevel_: 0
   power:
   - 30
   - 10
   duration: 6
+  changeAttackSpeed: 2
+  changeAttackDamage: 5
+  changeBulletSpeed: 1
   damageUp: 10
   buffPower:
   - 10
@@ -152,6 +156,11 @@ MonoBehaviour:
   - 2
   - 1
   iceDamageUp: 10
+  attackSpeedUp: 0
+  slowRateUp: 0
+  criticalRateUp: 0
+  plusDamage: 0
+  canPenetration: 0
 --- !u!1 &5488745084292017874
 GameObject:
   m_ObjectHideFlags: 0

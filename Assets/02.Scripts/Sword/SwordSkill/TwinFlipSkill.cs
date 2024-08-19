@@ -23,7 +23,8 @@ public class TwinFlipSkill : SwordSkill
     [SerializeField] private GameObject Panel;
     private List<GameObject> enemyList = new List<GameObject>();
     private List<GameObject> ppp = new List<GameObject>();
-
+    private int index;
+    private BulletType bull;
     //==================================================================================
 
     void Start()
@@ -95,7 +96,7 @@ public class TwinFlipSkill : SwordSkill
     public void SkillBOff()
     {
 
-        playerStat.bulletSpeed += bulletSpeedSlow;
+        playerStat.upAttackSpeed[index] += bulletSpeedSlow;
         foreach (GameObject bullet in playerStat.bulletPool_)
         {
             if (bullet.GetComponent<TwinFlipBullet>() != null)
@@ -130,7 +131,6 @@ public class TwinFlipSkill : SwordSkill
     {
         if (skillPoint == null)
         {
-            Debug.LogError("SkillPoint가 설정되지 않았습니다. SkillA를 실행할 수 없습니다.");
             return;
         }
 
@@ -142,22 +142,35 @@ public class TwinFlipSkill : SwordSkill
         panel.transform.localScale = ChangeSkill(0);
         ppp.Add(panel);
 
+        if (bull != BulletType.Ice)
+        GetComponent<Twinflip>().ChangeIceBullet();
+
+
         foreach (GameObject bullet in playerStat.bulletPool_)
         {
             TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
             bullets.SetBulletType( BulletType.Ice);
+            bull = BulletType.Ice;
         }
-
+ 
     }
     public override void SkillB()
     {
-        playerStat.bulletSpeed -= bulletSpeedSlow;
+        index = playerStat.GetWeaponIndex();
+        playerStat.upAttackSpeed[index] -= bulletSpeedSlow;
+
+        if (bull != BulletType.Fire)
+        GetComponent<Twinflip>().ChangeFireBullet();
+
+
         foreach (GameObject bullet in playerStat.bulletPool_)
         {
             TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
             bullets.SetBSkill(true);
             bullets.SetBulletType(BulletType.Fire);
+            bull = BulletType.Fire;
         }
+
         skillTimer[1] = 0f;
         skillActive[1] = true;
     }

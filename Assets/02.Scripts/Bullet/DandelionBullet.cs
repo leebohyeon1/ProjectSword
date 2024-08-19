@@ -36,11 +36,20 @@ public class DandelionBullet : BulletController
                         {
                             float dis = Vector2.Distance(playerStat.transform.position, collision.transform.position);
                             Debug.Log("거리: " + dis);
-                            collision.GetComponent<EnemyStat>().TakeDamage(CalculateTwinDamage(dis));
+                            TotalDamage = CalculateTwinDamage(dis);
+                            if (isCritical)
+                            {
+                                TotalDamage *= (1 + criticalDamage / 100);
+                            }
+                            collision.GetComponent<EnemyStat>().TakeDamage((int)TotalDamage);
                         }
                     }
                     else
                     {
+                        if (isCritical)
+                        {
+                            TotalDamage *= (1 + criticalDamage / 100);
+                        }
                         collision.GetComponent<EnemyStat>().TakeDamage((int)TotalDamage);
                     }
 
@@ -86,9 +95,9 @@ public class DandelionBullet : BulletController
         base.SetDamagebuff(rate);
     }
 
-    public override void SetDamage(int Damage)
+    public override void SetDamage(int Damage, float Cri = 0, bool f = false)
     {
-        base.SetDamage(Damage);
+        base.SetDamage(Damage, Cri, f);
     }
 
     public override void SetSlowRate(float slowRate)
@@ -110,7 +119,10 @@ public class DandelionBullet : BulletController
     {
         base.SetTwinflip3(twinflip3);
     }
-
+    public override BulletType GetBulletType()
+    {
+        return base.GetBulletType();
+    }
     public override bool GetSubBullet()
     {
         return base.GetSubBullet();
@@ -133,11 +145,21 @@ public class DandelionBullet : BulletController
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        TotalDamage = damage * damageRate;
+      
         if (collision.CompareTag("Enemy"))
         {
             EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
-            if(!isSubBullet && isFlower)
+            
+            if (enemyStat.GetIsIce())
+            {
+                TotalDamage = (damage + damageUp) * damageRate;
+            }
+            else
+            {
+                TotalDamage = damage * damageRate;
+            }
+
+            if (!isSubBullet && isFlower)
             {
                 EventManager.Instance.PostNotification(EVENT_TYPE.COUNT_FLOWER, this);
             }
@@ -156,12 +178,16 @@ public class DandelionBullet : BulletController
                     if (screenPosition.y < Screen.height / 2)
                     {
                         float dis = Vector2.Distance(playerStat.transform.position, collision.transform.position);
-                        Debug.Log("거리: " + dis);
+
                         enemyStat.TakeDamage(CalculateTwinDamage(dis));
                     }
                 }
                 else
                 {
+                    if (isCritical)
+                    {
+                        TotalDamage *= (1 + criticalDamage / 100);
+                    }
                     enemyStat.TakeDamage((int)TotalDamage);
                 }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class TwinFlipBullet : BulletController
@@ -11,6 +12,7 @@ public class TwinFlipBullet : BulletController
     [SerializeField] private int[] upDamage;
     [SerializeField] private float[] distance;
 
+    private bool canPenetration = false;
     //=============================================================================
 
     void Start()
@@ -65,9 +67,9 @@ public class TwinFlipBullet : BulletController
     {
         base.SetDamagebuff(rate);
     }
-    public override void SetDamage(int Damage)
+    public override void SetDamage(int Damage, float Cri = 0, bool f = false)
     {
-        base.SetDamage(Damage);
+        base.SetDamage(Damage, Cri, f);
     }
     public override void SetSlowRate(float slowRate)
     {
@@ -86,7 +88,10 @@ public class TwinFlipBullet : BulletController
     {
         base.SetTwinflip3(twinflip3);
     }
-
+    public override BulletType GetBulletType()
+    {
+        return base.GetBulletType();
+    }
     public override bool GetSubBullet()
     {
         return base.GetSubBullet();
@@ -105,15 +110,41 @@ public class TwinFlipBullet : BulletController
         return base.CalculateTwinDamage(distance);
     }
 
+    public void Spear()
+    { 
+        canPenetration = true;
+    }
+
     //=============================================================================
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        TotalDamage = damage * damageRate;
+  
         if (collision.CompareTag("Enemy"))
         {
             EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
 
+            if (enemyStat.GetIsIce())
+            {
+                TotalDamage = (damage + damageUp) * damageRate;
+            }
+            else
+            {
+                TotalDamage = damage * damageRate;
+            }
+
+            if(GameManager.Instance.GetTwinflip4())
+            {
+                if (!enemyStat.GetFireStigma() && bulletType == BulletType.Fire)
+                {
+                    enemyStat.SetIsFIreStigma(true);
+                }
+                else if (!enemyStat.GetIceStigma() && bulletType == BulletType.Ice)
+                {
+                    enemyStat.SetIsIceStigma(true);
+                }
+            }
+   
 
             if (isBSkill)
             {
@@ -129,12 +160,41 @@ public class TwinFlipBullet : BulletController
                     if (screenPosition.y < Screen.height / 2)
                     {
                         float dis1 = Vector2.Distance(playerStat.transform.position, collision.transform.position);
-                        Debug.Log("거리: " + dis1);
-                        enemyStat.TakeDamage(CalculateTwinDamage(dis1));
+                        TotalDamage = CalculateTwinDamage(dis);
+                        if (enemyStat.GetFireStigma() && bulletType == BulletType.Fire && !isCritical)
+                        {
+                            TotalDamage += (1 + criticalDamage / 100);
+                            enemyStat.SetIsFIreStigma(false);
+                        } 
+                        else if (isCritical)
+                        {
+                            TotalDamage *= (1 + criticalDamage / 100);
+                        }
+
+                        if (enemyStat.GetIceStigma() && bulletType == BulletType.Ice)
+                        {
+                            TotalDamage *= 1.5f;
+                        }
+
+                        enemyStat.TakeDamage((int)TotalDamage);
                     }
                 }
                 else
                 {
+                    if (enemyStat.GetFireStigma() && bulletType == BulletType.Fire && !isCritical)
+                    {
+                        TotalDamage += (1 + criticalDamage / 100);
+                        enemyStat.SetIsFIreStigma(false);
+                    }
+                    else if(isCritical)
+                    {
+                        TotalDamage *= (1 + criticalDamage / 100);
+                    }
+
+                    if (enemyStat.GetIceStigma() && bulletType == BulletType.Ice)
+                    {
+                        TotalDamage *= 1.5f;
+                    }
                     enemyStat.TakeDamage((int)TotalDamage);
                 }
 
@@ -149,15 +209,45 @@ public class TwinFlipBullet : BulletController
                     if (screenPosition.y < Screen.height / 2)
                     {
                         float dis1 = Vector2.Distance(playerStat.transform.position, collision.transform.position);
-                        Debug.Log("거리: " + dis1);
-                        enemyStat.TakeDamage(CalculateTwinDamage(dis1));
+                        TotalDamage = CalculateTwinDamage(dis1);
+                        
+                        if (enemyStat.GetFireStigma() && bulletType == BulletType.Fire && !isCritical)
+                        {
+                            TotalDamage += (1 + criticalDamage / 100);
+                            enemyStat.SetIsFIreStigma(false);
+                        }
+                        else if (isCritical)
+                        {
+                            TotalDamage *= (1 + criticalDamage / 100);
+                        }
+
+                        if (enemyStat.GetIceStigma() && bulletType == BulletType.Ice)
+                        {
+                            TotalDamage *= 1.5f;
+                        }
+                        enemyStat.TakeDamage((int)TotalDamage);
                     }
                 }
                 else
                 {
+                    if (enemyStat.GetFireStigma() && bulletType == BulletType.Fire && !isCritical)
+                    {
+                        TotalDamage += (1 + criticalDamage / 100);
+                        enemyStat.SetIsFIreStigma(false);
+                    }
+                    else if(isCritical)
+                    {
+                        TotalDamage *= (1 + criticalDamage / 100);
+                    }
+
+                    if (enemyStat.GetIceStigma() && bulletType == BulletType.Ice)
+                    {
+                        TotalDamage *= 1.5f;
+                    }
                     enemyStat.TakeDamage((int)TotalDamage);
                 }
             }
+
 
             if (playerStat.canDrain && !isSkillBullet && !isSubBullet)
             {
@@ -169,10 +259,17 @@ public class TwinFlipBullet : BulletController
             {
                 enemyStat.SetIsIce(true);
                 enemyStat.DecreaseSpeed(slowRate);
-
             }
 
-            gameObject.SetActive(false);
+            if(!canPenetration)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                canPenetration = false;
+            }
+    
         }
     }
 }

@@ -162,13 +162,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  criticalDamage: 0
   damageRate: 0
   TotalDamage: 0
-  bulletType: 2
+  bulletType: 1
   isSkillBullet: 0
   isSubBullet: 0
   isIce: 0
+  isTwinflip3: 0
+  isCritical: 0
   slowRate: 0
+  damageUp: 0
   player: {fileID: 0}
   isBSkill: 0
   upDamage: 01000000020000000300000004000000

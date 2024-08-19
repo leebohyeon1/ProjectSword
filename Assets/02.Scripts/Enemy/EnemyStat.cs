@@ -25,6 +25,23 @@ public class EnemyStat : MonoBehaviour
     protected bool isIce = false;
     protected bool isMolar = false;
     protected bool canBite = false;
+    protected bool isFIreStigma = false;
+    protected bool isIceStigma;
+  
+    public bool IceStigma
+    {
+        get { return isIceStigma; }
+        private set
+        {
+            isIceStigma = value;
+            StartCoroutine(IceStigmaOff());
+        }
+    }
+
+    protected bool canStigma = true;
+
+    protected float IceTime = 5f;
+    protected float IceReturnTime = 15f;
 
     protected int biteDamage = 0;
     protected float biteTimer = 0f;
@@ -108,6 +125,21 @@ public class EnemyStat : MonoBehaviour
         isMolar = boolean;
     }
 
+    public virtual void SetIsFIreStigma(bool boolean)
+    {
+        isFIreStigma = boolean;
+    }
+
+    public virtual void SetIsIceStigma(bool boolean, float time = 5f)
+    {
+        if(canStigma)
+        {
+            IceStigma = boolean;
+            IceTime = time;
+            canStigma = false;
+        }
+    }
+
     public virtual void DecreaseSpeed(float rate)
     {
         // 속도 감소율 추가
@@ -126,6 +158,9 @@ public class EnemyStat : MonoBehaviour
 
     public virtual bool GetIsMolar() => isMolar;
 
+    public virtual bool GetFireStigma() => isFIreStigma;
+    public virtual bool GetIceStigma() => IceStigma;
+
     public virtual void SetBite() { canBite = true; }
 
     public virtual int HP => hp;   
@@ -142,7 +177,20 @@ public class EnemyStat : MonoBehaviour
         float finalSpeed = speed * (1 - totalRate / 100f);
         GetComponent<Rigidbody2D>().velocity = Vector2.down * (finalSpeed + SpawnManager.Instance.PlusAcceleration());
     }
+    protected virtual void CalSpeed()
+    {
+        float totalRate = 0f;
+        foreach (float modifier in speedModifiers)
+        {
+            totalRate += modifier;
+        }
 
+        if(totalRate >= 75f)
+        {
+            IceTime += 5;
+        }
+        
+    }
     protected virtual IEnumerator Bite()
     {
         canBite = false; 
@@ -160,6 +208,15 @@ public class EnemyStat : MonoBehaviour
             TakeDamage(1);
             yield return new WaitForSeconds(1f);
         }
+    }
+
+    public virtual IEnumerator IceStigmaOff()
+    {
+        yield return new WaitForSeconds(IceTime);
+        IceStigma = false;
+
+        yield return new WaitForSeconds(IceReturnTime);
+        canStigma = true;
     }
     //==================================================================================
 

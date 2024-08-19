@@ -13,7 +13,11 @@ public class PlayerController : MonoBehaviour, IListener
     private Vector3 characterStartPos;
     private bool isDragging = false;
     private float attackTimer;
+    private float attackSpeed;
+  
     private int flowerCount = 0;
+
+    
     //==================================================================================
 
     private void Start()
@@ -94,7 +98,14 @@ public class PlayerController : MonoBehaviour, IListener
     public void HadleAttack()
     {
         attackTimer += Time.deltaTime;
-        if(attackTimer > (playerStat.GetAttackSpeed() - playerStat.upAttackSpeed[playerStat.GetWeaponIndex()])) 
+        attackSpeed = (playerStat.GetAttackSpeed() - playerStat.upAttackSpeed[playerStat.GetWeaponIndex()]);
+        
+        if (attackSpeed < 0.2f)
+        {
+            attackSpeed = 0.2f;
+        }
+
+        if (attackTimer > attackSpeed) 
         {
             playerStat.GetFirePos().GetComponents<SwordFire>()[playerStat.GetWeaponIndex()].Fire();
         }

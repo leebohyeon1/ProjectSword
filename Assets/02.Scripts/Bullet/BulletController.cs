@@ -8,6 +8,7 @@ public class BulletController : MonoBehaviour
     protected PlayerStat playerStat;
 
     [SerializeField] protected int damage;
+    [SerializeField] protected float criticalDamage;
     [SerializeField] protected float damageRate = 1f;
     [SerializeField] protected float TotalDamage;
 
@@ -18,6 +19,8 @@ public class BulletController : MonoBehaviour
 
     [SerializeField] protected bool isIce = false;
     [SerializeField] protected bool isTwinflip3 = false;
+    [SerializeField] protected bool isCritical = false;
+   
     [SerializeField] protected float slowRate = 0f;
     [SerializeField] protected float damageUp = 0f;
 
@@ -40,9 +43,11 @@ public class BulletController : MonoBehaviour
         this.bulletType = bulletType;
     }
 
-    public virtual void SetDamage(int Damage)
+    public virtual void SetDamage(int Damage, float Critical = 0, bool boolean = false )
     {
         damage = Damage;
+        isCritical = boolean;
+        criticalDamage = Critical;
     }
 
     public virtual void SetSlowRate(float slowRate)
@@ -70,6 +75,8 @@ public class BulletController : MonoBehaviour
     }
 
     public virtual bool GetSubBullet() => isSubBullet;
+    public virtual BulletType GetBulletType() => bulletType;
+
     public virtual void SetSubBullet()
     {
         isSubBullet = true;
@@ -106,11 +113,11 @@ public class BulletController : MonoBehaviour
         
         if (enemyStat.GetIsIce())
         {
-            TotalDamage = damage * damageRate;
+            TotalDamage = (damage + damageUp) * damageRate;
         }
         else
         {
-            TotalDamage = (damage + damageUp) * damageRate;
+            TotalDamage = damage * damageRate;
         }
 
         if (collision.CompareTag("Enemy"))

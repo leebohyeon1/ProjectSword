@@ -28,5 +28,5 @@ MonoBehaviour:
   swapRecovery: 0
   skillRecovery: 0
   swapDamage: 0
-  upgradeRune: 1
+  evolutionRune: 1
   enchantName: EvolutionRune [M]

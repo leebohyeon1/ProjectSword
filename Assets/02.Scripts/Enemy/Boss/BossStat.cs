@@ -152,6 +152,16 @@ public class BossStat : EnemyStat
 
     public override bool GetIsMolar() => base.GetIsMolar();
 
+    public override bool GetFireStigma()
+    {
+        return base.GetFireStigma();
+    }
+
+    public override bool GetIceStigma()
+    {
+        return base.GetIceStigma();
+    }
+
     public override void SetBite()
     {
         base.SetBite(); 
@@ -166,9 +176,24 @@ public class BossStat : EnemyStat
     {
         base.SetIsMolar(boolean);   
     }
+
+    public override void SetIsFIreStigma(bool boolean)
+    {
+        base.SetIsFIreStigma(boolean);
+    }
+
+    public override void SetIsIceStigma(bool boolean, float time)
+    {
+        base.SetIsIceStigma(boolean, time);
+    }
+
     public override IEnumerator Ten1()
     {
         return base.Ten1();
+    }
+    public override IEnumerator IceStigmaOff()
+    {
+        return base.IceStigmaOff();
     }
 
     public override int HP => base.HP;
