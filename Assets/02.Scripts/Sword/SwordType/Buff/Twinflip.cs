@@ -56,6 +56,7 @@ public class Twinflip : MagicSword
     [SerializeField] private bool canPenetration;
 
     BulletType type;
+    int swapDamage;
     //==================================================================================
 
     private void Awake()
@@ -253,21 +254,76 @@ public class Twinflip : MagicSword
                 bullets.Spear();
             }
         }
+
+        
+    }
+
+    public override void ActiveSwapBuff()
+    {
+        switch (playerStat.swapBuff[index])
+        {
+            case 0:
+            case 1:
+            case 2:
+                swapDamage = 1;
+                break;
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+                swapDamage = 2;
+                break;
+            case 10:
+                swapDamage = 3;
+                break;
+        }
+
+        StartCoroutine(TwinSwapBuff());
+    }
+
+    public IEnumerator TwinSwapBuff()
+    {
+        for(int i = 0; i < 2; i++)
+        {
+            List<GameObject> pool = playerStat.GetSwords()[i].GetComponent<MagicSword>().BulletPool;
+            playerStat.GetSwords()[i].GetComponent<MagicSword>().IncreaseSubDamage(swapDamage);
+            foreach (GameObject bullet in pool)
+            {
+                bullet.GetComponent<BulletController>().SetTwinSwap(true);   
+            }
+        }
+
+        yield return new WaitForSeconds(swapBuffPower[playerStat.swapBuff[index]]);
+        for (int i = 0; i < 2; i++)
+        {
+            List<GameObject> pool = playerStat.GetSwords()[i].GetComponent<MagicSword>().BulletPool;
+            playerStat.GetSwords()[i].GetComponent<MagicSword>().IncreaseSubDamage(-swapDamage);
+            foreach (GameObject bullet in pool)
+            {
+                bullet.GetComponent<BulletController>().SetTwinSwap(false);
+            }
+        }
     }
 
     public void ChangeFireBullet()
     {
+       
         playerStat.upAttackDamage[iindex] += changeAttackDamage;
-
         playerStat.upAttackSpeed[iindex] -= changeAttackSpeed;
         playerStat.upBulletSpeed[iindex] += changeBulletSpeed;
+       
     }
 
     public void ChangeIceBullet()
     {
-        playerStat.upAttackSpeed[iindex] -= changeAttackDamage;
+        
+        playerStat.upAttackDamage[iindex] -= changeAttackDamage;
         playerStat.upAttackSpeed[iindex] += changeAttackSpeed;
         playerStat.upBulletSpeed[iindex] -= changeBulletSpeed;
+        
     }
     //================================================================================================
 

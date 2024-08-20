@@ -33,6 +33,9 @@ public class Tidebite : MagicSword
     [Header("·¹º§ 3")]
     private bool level3 =false;
     [SerializeField] private float Level3Duration = 2f;
+
+    int index;
+    int swapBuffDamage;
     //================================================================================================
 
     void Start()
@@ -41,6 +44,16 @@ public class Tidebite : MagicSword
 
         SetFire();
         InitializePool();
+
+
+        for (int i = 0; i < 2; i++)
+        {
+            if (playerStat.GetSwords()[i].GetComponent<Tidebite>() == this)
+            {
+                index = i;
+                break;
+            }
+        }
     }
 
     void Update()
@@ -153,6 +166,39 @@ public class Tidebite : MagicSword
                 bullets.SetMolar(2);
             }
         }
+    }
+
+    public override void ActiveSwapBuff()
+    {
+        switch (playerStat.swapBuff[index])
+        {
+            case 0:
+                swapBuffDamage = 0;
+                break;
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+                swapBuffDamage = 1;
+                break;
+            case 10:
+                swapBuffDamage = 2;
+                break;
+        }
+
+        StartCoroutine(TidebiteBuff());
+    }
+
+    public IEnumerator TidebiteBuff()
+    {
+        playerStat.upAttackDamage[index] += swapBuffDamage;
+        yield return new WaitForSeconds(swapBuffPower[playerStat.swapBuff[index]]);
+        playerStat.upAttackDamage[index] -= swapBuffDamage;
     }
     //================================================================================================
 

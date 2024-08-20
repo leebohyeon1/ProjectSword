@@ -1,3 +1,4 @@
+using GooglePlayGames.BasicApi;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,9 @@ using UnityEngine;
 
 public class MagicSword : MonoBehaviour
 {
+    [Header("½º¿Ò")]
+    [SerializeField] protected float[] swapBuffPower;
+
     [Header("Åº¸·")]
     [SerializeField] protected GameObject bulletPrefab;
     [SerializeField] protected Transform bulletPoolTrans;
@@ -201,4 +205,15 @@ public class MagicSword : MonoBehaviour
     public virtual void SetLevel()
     {
     }
+
+    public virtual void ActiveSwapBuff()
+    {
+    }
+
+    public virtual void IncreaseSubDamage(int dam)
+    {
+        plusAttackPower += dam;
+    }
+
+    public virtual List<GameObject> BulletPool => bulletPool;
 }

@@ -100,7 +100,11 @@ public class SpawnManager : MonoBehaviour
     {
         curCount++;
         bossCount++;
-        hpCount++;
+        if(!isboss)
+        {
+            hpCount++;
+        }
+        
 
         if (bossCount >= bossSpawnCount[curEvent])
         {

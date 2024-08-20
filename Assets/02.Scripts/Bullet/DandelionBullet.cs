@@ -149,7 +149,15 @@ public class DandelionBullet : BulletController
         if (collision.CompareTag("Enemy"))
         {
             EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
-            
+
+            if (!isCritical && isSubBullet && isTwinSwap)
+            {
+                if (Random.value < 0.2f)
+                {
+                    isCritical = true;
+                }
+            }
+
             if (enemyStat.GetIsIce())
             {
                 TotalDamage = (damage + damageUp) * damageRate;

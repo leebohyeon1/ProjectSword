@@ -1,4 +1,5 @@
 using GooglePlayGames.BasicApi;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -41,6 +42,8 @@ public class Dandelion : MagicSword, IListener
     [SerializeField] private float flowerTIme = 2f;
     [Header("·¹º§ 4")]
     [SerializeField] private float flowerTimeUp = 1f;
+
+    int index;
     //================================================================================================
 
     void Start()
@@ -54,6 +57,15 @@ public class Dandelion : MagicSword, IListener
 
         EventManager.Instance.AddListener(EVENT_TYPE.DAN3,this);
         EventManager.Instance.AddListener(EVENT_TYPE.FLOWER,this);
+
+        for (int i = 0; i < 2; i++)
+        {
+            if (playerStat.GetSwords()[i].GetComponent<Dandelion>() == this)
+            {
+                index =  i;
+                break;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -129,25 +141,14 @@ public class Dandelion : MagicSword, IListener
 
     public void Evoltion1() 
     {
-        for(int i =0; i < 2; i++)
-        {
-            if (playerStat.GetSwords()[i].GetComponent<Dandelion>() == this)
-            {
-                playerStat.upAttackSpeed[i] -= attackSpeedUp;
-                break;
-            }
-        }
+
+        playerStat.upAttackSpeed[index] -= attackSpeedUp;
     }
     public void Evoltion2()
     {
-        for (int i = 0; i < 2; i++)
-        {
-            if (playerStat.GetSwords()[i].GetComponent<Dandelion>() == this)
-            {
-                playerStat.upBulletSpeed[i] += bulletSpeedUp;
-                break;
-            }
-        }
+
+        playerStat.upBulletSpeed[index] += bulletSpeedUp;
+
     }
     public void Evoltion3() 
     {
@@ -197,6 +198,18 @@ public class Dandelion : MagicSword, IListener
 
             }
         }
+    }
+
+    public override void ActiveSwapBuff()
+    {
+        StartCoroutine(DadelionBuff());
+    }
+
+    public IEnumerator DadelionBuff()
+    {
+        playerStat.upAttackSpeed[index] += 100;
+        yield return new WaitForSeconds(swapBuffPower[playerStat.swapBuff[index]]);
+        playerStat.upAttackSpeed[index] -= 100;
     }
     //================================================================================================
 

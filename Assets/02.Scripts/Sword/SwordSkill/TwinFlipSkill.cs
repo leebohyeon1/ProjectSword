@@ -24,7 +24,7 @@ public class TwinFlipSkill : SwordSkill
     private List<GameObject> enemyList = new List<GameObject>();
     private List<GameObject> ppp = new List<GameObject>();
     private int index;
-    private BulletType bull;
+    private BulletType bull = BulletType.Ice;
     //==================================================================================
 
     void Start()
@@ -143,7 +143,10 @@ public class TwinFlipSkill : SwordSkill
         ppp.Add(panel);
 
         if (bull != BulletType.Ice)
-        GetComponent<Twinflip>().ChangeIceBullet();
+        {
+            GetComponent<Twinflip>().ChangeIceBullet();
+        }
+        
 
 
         foreach (GameObject bullet in playerStat.bulletPool_)

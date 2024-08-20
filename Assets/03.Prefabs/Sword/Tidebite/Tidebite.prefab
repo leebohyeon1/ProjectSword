@@ -122,10 +122,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847a3e4166ed3a14cb0168ec7de60bcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swapBuffPower:
+  - 10
+  - 15
+  - 20
+  - 25
+  - 30
+  - 50
+  - 75
+  - 80
+  - 85
+  - 90
+  - 100
   bulletPrefab: {fileID: 2641036828859503304, guid: f3b4f2298be1b5747998e260bec344a8, type: 3}
   bulletPoolTrans: {fileID: 3748162384991684777}
   poolSize: 20
-  attckPower: 0
+  attackPower: 0
   attackSpeed: 0
   bulletSpeed: 0
   followPos: {fileID: 0}
@@ -133,6 +145,14 @@ MonoBehaviour:
   maxPositions: 50
   bulletPool: []
   firePos: {fileID: 0}
+  buffLevel_: 0
+  evolutionLevel_: 0
+  damageUp: 10
+  molarDamage: 5
+  molarDamageUp: 2
+  attackDamageUp1: 4
+  attackDamageUp2: 4
+  Level3Duration: 2
 --- !u!1 &8649867307507198165
 GameObject:
   m_ObjectHideFlags: 0

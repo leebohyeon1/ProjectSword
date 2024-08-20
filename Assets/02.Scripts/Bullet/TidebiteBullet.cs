@@ -116,7 +116,13 @@ public class TidebiteBullet : BulletController
             {
                 enemyStat.SetBite();
             }
-         
+            if (!isCritical && isSubBullet && isTwinSwap)
+            {
+                if (Random.value < 0.2f)
+                {
+                    isCritical = true;
+                }
+            }
 
             if (enemyStat.GetIsMolar())
             {
