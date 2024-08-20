@@ -114,7 +114,10 @@ public class TwinFlipBullet : BulletController
     { 
         canPenetration = true;
     }
-
+    public override void SetTwinSwap(bool bo)
+    {
+        base.SetTwinSwap(bo);
+    }
     //=============================================================================
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -90,6 +90,7 @@ public class BulletController : MonoBehaviour
         isTwinSwap = bo;
     }
 
+
     protected virtual int CalculateTwinDamage(float dis)
     {
         if (dis >= GameManager.Instance.TwinDis[0])

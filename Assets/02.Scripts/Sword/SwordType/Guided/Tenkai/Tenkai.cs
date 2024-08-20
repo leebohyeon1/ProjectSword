@@ -213,6 +213,10 @@ public class Tenkai : MagicSword
         base.InitializePool();
     }
 
+    public override void IncreaseSubDamage(int dam)
+    {
+        base.IncreaseSubDamage(dam);
+    }
     public override void SetBullet()
     {
         firePos.GetComponent<TenkaiFire>().enabled = !firePos.GetComponent<TenkaiFire>().enabled;

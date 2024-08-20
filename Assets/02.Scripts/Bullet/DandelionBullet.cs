@@ -114,7 +114,10 @@ public class DandelionBullet : BulletController
     {
         base.IncreaseDamage(damage);
     }
-
+    public override void SetTwinSwap(bool bo)
+    {
+        base.SetTwinSwap(bo);
+    }
     public override void SetTwinflip3(bool twinflip3)
     {
         base.SetTwinflip3(twinflip3);

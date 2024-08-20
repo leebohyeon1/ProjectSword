@@ -395,6 +395,11 @@ public class Twinflip : MagicSword
         base.InitializePool();
     }
 
+
+    public override void IncreaseSubDamage(int dam)
+    {
+        base.IncreaseSubDamage(dam);
+    }
     public override GameObject GetBulletPrefab() => base.GetBulletPrefab();
 
     public override void SetSword(Transform Trans, int AttackPower, float AttackSpeed, float BulletSpeed)

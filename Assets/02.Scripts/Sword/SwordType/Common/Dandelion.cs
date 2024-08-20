@@ -200,6 +200,10 @@ public class Dandelion : MagicSword, IListener
         }
     }
 
+    public override void IncreaseSubDamage(int dam)
+    {
+        base.IncreaseSubDamage(dam);
+    }
     public override void ActiveSwapBuff()
     {
         StartCoroutine(DadelionBuff());

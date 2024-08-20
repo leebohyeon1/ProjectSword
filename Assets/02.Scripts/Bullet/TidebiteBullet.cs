@@ -86,7 +86,10 @@ public class TidebiteBullet : BulletController
     {
         return base.CalculateTwinDamage(distance);
     }
-
+    public override void SetTwinSwap(bool bo)
+    {
+        base.SetTwinSwap(bo);
+    }
     //=============================================================================
 
     private void OnTriggerEnter2D(Collider2D collision)

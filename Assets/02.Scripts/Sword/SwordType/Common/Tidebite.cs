@@ -245,6 +245,10 @@ public class Tidebite : MagicSword
         base.SetSword(Trans, AttackPower, AttackSpeed, BulletSpeed);
     }
 
+    public override void IncreaseSubDamage(int dam)
+    {
+        base.IncreaseSubDamage(dam);
+    }
     protected override void ApplyBuffEffects()
     {
         switch (buffLevel)

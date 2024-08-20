@@ -174,7 +174,10 @@ public class TenkaiBullet : BulletController
     {
         return base.GetIce();
     }
-
+    public override void SetTwinSwap(bool bo)
+    {
+        base.SetTwinSwap(bo);
+    }
     public bool GetDiffusion()
     {
         return isDiffusionBullet;
