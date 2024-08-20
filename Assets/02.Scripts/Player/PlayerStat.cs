@@ -451,7 +451,16 @@ public class PlayerStat : MonoBehaviour, IListener
             ApplyUpgrade(enchant, 1);
         }
 
-        canDrain = enchant.isDrain;
+        if(!canDrain)
+        {
+            canDrain = enchant.isDrain;
+        }
+
+        if (enchant.isLegedary)
+        {
+            GameManager.Instance.SetCanLegendaryQuest(false);
+        }
+
         hpRecoveryAmount += enchant.hpRecovery;
         skillRecoveryAmount += enchant.skillRecovery;
         swapRecoveryAmount += enchant.swapRecovery;

@@ -872,6 +872,9 @@ MonoBehaviour:
   - {fileID: 3000195901687093016, guid: f622b2a75e5ee0c4fb9f9e25e9abc7fe, type: 3}
   spawnInterval: 2
   plusAcceleration: 0
+  hpUpInterval: 8
+  hpUpAmount: 4
+  totalHp: 0
   enchantOption: {fileID: 76547456678739192, guid: b311e423518f8ea4aa8aa250b4fd1bfd, type: 3}
   spawnCount: 5
   curCount: 0
@@ -1105,10 +1108,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2284149096743789701, guid: 0b8212a35d4d25949947906a993013e6, type: 3}
-      propertyPath: weapon.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: a73a29ea3ae198145ab80d4df4d636c3, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

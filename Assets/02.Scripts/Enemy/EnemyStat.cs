@@ -6,7 +6,8 @@ public class EnemyStat : MonoBehaviour
 {
     private EnemyUI enemyUI;
 
-    [SerializeField] protected int hp = 1;
+    protected int hp = 1;
+    [SerializeField] private int defaultHp;
     [SerializeField] protected float speed;
     [SerializeField] protected int damage;
 
@@ -52,6 +53,7 @@ public class EnemyStat : MonoBehaviour
     private void Awake()
     {
         isBless = Random.value * 100f < blessRate;
+        hp = defaultHp;
     }
 
     void Start()
@@ -217,6 +219,11 @@ public class EnemyStat : MonoBehaviour
 
         yield return new WaitForSeconds(IceReturnTime);
         canStigma = true;
+    }
+
+    public void IncreaseHp(int HP)
+    {
+        hp += HP;
     }
     //==================================================================================
 

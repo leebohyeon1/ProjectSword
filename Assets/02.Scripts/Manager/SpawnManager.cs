@@ -8,13 +8,16 @@ public class SpawnManager : MonoBehaviour
     public static SpawnManager Instance {  get; private set; }
 
     //==================================================================================
-
     [Header("적 스폰")]
     [SerializeField] private GameObject[] Patterns; // 적 프리팹
     private GameObject curPattern;
     [SerializeField] private float spawnInterval = 2.0f; // 적 생성 주기
     private float spawnTimer = 0.0f;
     [SerializeField] private float plusAcceleration = 0;
+    [SerializeField] private int hpUpInterval = 2;
+    [SerializeField] private int hpUpAmount = 4;
+    private int hpCount = 0;
+    public int totalHp = 0;
 
     [Header("선택지")]
     [SerializeField] private GameObject enchantOption;
@@ -97,11 +100,18 @@ public class SpawnManager : MonoBehaviour
     {
         curCount++;
         bossCount++;
+        hpCount++;
 
-        if(bossCount >= bossSpawnCount[curEvent])
+        if (bossCount >= bossSpawnCount[curEvent])
         {
             SpawnBoss();
             return;
+        }
+
+        if(hpCount >= hpUpInterval)
+        {
+            hpCount = 0;
+            totalHp += hpUpAmount;
         }
 
         int randomRate = Random.Range(0, 100);
