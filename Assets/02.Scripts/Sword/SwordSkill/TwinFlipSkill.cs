@@ -7,13 +7,14 @@ public class TwinFlipSkill : SwordSkill
     PlayerStat playerStat;
 
     [Header("½ºÅ³")]
+    [SerializeField] private float[] aPower;
+    [SerializeField] private LengthDamage[] bPower;
     [SerializeField] private float[] duration;
     private float[] skillTimer = new float[2];
     private bool[] skillActive = new bool[2];
-    [SerializeField] private bool isBuff = false;
 
     [Header("A")]
-    [SerializeField] private float slowRate;
+    private List<float> slowRate;
     private float slowCheckTimer;
 
     [Header("B")]
@@ -57,7 +58,8 @@ public class TwinFlipSkill : SwordSkill
                             enemyList.Add(Enemy);
                             if (enemyStat != null)
                             {
-                                enemyStat.DecreaseSpeed(slowRate);
+                                slowRate.Add(aPower[skillLevel]);
+                                enemyStat.DecreaseSpeed(aPower[skillLevel]);
                             }
                         }
 
@@ -91,8 +93,6 @@ public class TwinFlipSkill : SwordSkill
 
     //==================================================================================
 
-    public void SetBuff(bool boolean) { isBuff = boolean; }
-
     public void SkillBOff()
     {
 
@@ -111,18 +111,20 @@ public class TwinFlipSkill : SwordSkill
 
     private void RestoreAllEnemySpeeds()
     {
-        foreach (GameObject enemy in enemyList)
+        for (int i = 0; i < enemyList.Count;i++)
         {
+            GameObject enemy = enemyList[i];
             if (enemy != null)
             {
                 EnemyStat enemyStat = enemy.GetComponent<EnemyStat>();
                 if (enemyStat != null)
                 {
-                    enemyStat.IncreaseSpeed(slowRate);
+                    enemyStat.IncreaseSpeed(slowRate[i]);
                 }
             }
         }
         enemyList.Clear();
+        slowRate.Clear();
     }
 
     //==================================================================================
@@ -170,6 +172,7 @@ public class TwinFlipSkill : SwordSkill
         {
             TwinFlipBullet bullets = bullet.GetComponent<TwinFlipBullet>();
             bullets.SetBSkill(true);
+            bullets.DamageUp(bPower[skillLevel]);
             bullets.SetBulletType(BulletType.Fire);
             bull = BulletType.Fire;
         }
@@ -204,9 +207,9 @@ public class TwinFlipSkill : SwordSkill
         return base.GetSkillSize();
     }
 
-    public override void SetSkillDamage(float Damage)
+    public override void SetSkillLevel(int Damage)
     {
-        base.SetSkillDamage(Damage);
+        base.SetSkillLevel(Damage);
     }
 
     //==================================================================================
@@ -220,6 +223,19 @@ public class TwinFlipSkill : SwordSkill
             Gizmos.DrawLine(new Vector3(100, playerStat.transform.position.y + bullet.GetDistance()[i], 0), new Vector3(-100, transform.position.y + bullet.GetDistance()[i], 0));
         }
     }
+}
+
+[System.Serializable]
+public class LengthDamage
+{
+   public int firstLenDamage;
+   public int SecondLentDamage;
+   public int thirdLenDamage;
+   public int fourthLenDamage;
+
+    [Space(20f)]
+  public int lastMultiplyDamage;
+
 }
 
 

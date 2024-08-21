@@ -10,7 +10,7 @@ public class SwordSkill : MonoBehaviour
 
     [SerializeField] protected LayerMask enemyLayer;
 
-    [SerializeField] protected float skillDamageUp;
+    [SerializeField] protected int skillLevel;
 
     //================================================================================================
 
@@ -25,10 +25,22 @@ public class SwordSkill : MonoBehaviour
 
     public virtual Vector2[] GetSkillSize() { return skillSize; }
 
-    public virtual void SetSkillDamage(float Damage)
+    public virtual void SetSkillLevel(int level)
     {
-        skillDamageUp += Damage;
-        if(skillDamageUp <= 0) skillDamageUp = 0;
+        skillLevel += level;
+        if (skillLevel > 15)
+        {
+            skillLevel = 15;
+        }
+        else
+        {
+            SkillBuff();
+        }
+        
     }
 
+    public virtual void SkillBuff()
+    {
+
+    }
 }

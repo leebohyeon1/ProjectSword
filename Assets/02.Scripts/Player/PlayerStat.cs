@@ -101,8 +101,7 @@ public class PlayerStat : MonoBehaviour, IListener
     public int[] upAttackDamage = new int[2];
     public float[] upAttackSpeed = new float[2];
     public float[] upBulletSpeed = new float[2];
-    public float[] upSkillDamage = new float[2];
-    public int[] skillBuff = new int[2];
+    public int[] upSkillLevel = new int[2];
     public int[] swapBuff = new int[2];
     public float skillCoolDown = 0f;
     public float swapDamage = 0f;
@@ -487,7 +486,7 @@ public class PlayerStat : MonoBehaviour, IListener
 
         foreach (var weapon in weapon)
         {
-            weapon.swordPrefab.GetComponent<SwordSkill>().SetSkillDamage(upSkillDamage[weaponIndex]);
+            weapon.swordPrefab.GetComponent<SwordSkill>().SetSkillLevel(upSkillLevel[weaponIndex]);
         }
 
         HealHp(enchant.hpUp);
@@ -498,8 +497,7 @@ public class PlayerStat : MonoBehaviour, IListener
         upAttackDamage[index] += enchant.attackDamage;
         upAttackSpeed[index] += enchant.attackSpeed;
         upBulletSpeed[index] += enchant.bulletSpeed;
-        upSkillDamage[index] += enchant.skillDamage;
-        skillBuff[index] += enchant.skillBuff;
+        upSkillLevel[index] += enchant.skillLevel;
         swapBuff[index] += enchant.swapBuff;
         if (enchant.petUpgrade != 0)
         {

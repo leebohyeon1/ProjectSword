@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Sword", menuName = "Swords")]
+[CreateAssetMenu(fileName = "Sword", menuName = "ScriptableObjects/Swords")]
 public class Swords : ScriptableObject
 {
     [Header("АјАн")]

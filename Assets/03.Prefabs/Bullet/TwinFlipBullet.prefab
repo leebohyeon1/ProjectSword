@@ -171,11 +171,12 @@ MonoBehaviour:
   isIce: 0
   isTwinflip3: 0
   isCritical: 0
+  isTwinSwap: 0
   slowRate: 0
   damageUp: 0
   player: {fileID: 0}
   isBSkill: 0
-  upDamage: 01000000020000000300000004000000
+  upDamage: 0100000002000000030000000400000002000000
   distance:
   - 7
   - 5

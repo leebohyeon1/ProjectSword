@@ -7,7 +7,8 @@ public class TenkaiSkill : SwordSkill
     PlayerStat playerStat;
 
     [Header("½ºÅ³")]
-    [SerializeField] private float[] power;
+    [SerializeField] private float[] aPower;
+    [SerializeField] private float[] bPower;
     [SerializeField] private float[] duration;
     private float[] skillTimer = new float[2];
     private bool[] skillActive = new bool[2];
@@ -50,7 +51,7 @@ public class TenkaiSkill : SwordSkill
                         if (Enemy != null)
                         {
                             EnemyStat enemyStat = Enemy.GetComponent<EnemyStat>();
-                            enemyStat.TakeDamage((int)(power[0] + skillDamageUp));
+                            enemyStat.TakeDamage((int)aPower[skillLevel]);
                      
                             enemyList.Add(Enemy);
                             if (enemyStat != null)
@@ -135,7 +136,7 @@ public class TenkaiSkill : SwordSkill
         foreach (GameObject bullet in playerStat.bulletPool_)
         {
             TenkaiBullet bullets = bullet.GetComponent<TenkaiBullet>();
-            bullets.IncreaseDiffusionCount(1);
+            bullets.IncreaseDiffusionCount((int)bPower[skillLevel]);
         }
         skillTimer[1] = 0f;
         skillActive[1] = true;
@@ -166,9 +167,9 @@ public class TenkaiSkill : SwordSkill
         return base.GetSkillSize();
     }
 
-    public override void SetSkillDamage(float Damage)
+    public override void SetSkillLevel(int Damage)
     {
-        base.SetSkillDamage(Damage);
+        base.SetSkillLevel(Damage);
     }
 
 
