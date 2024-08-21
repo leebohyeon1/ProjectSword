@@ -127,6 +127,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c9972bd750cef24da82907322f29184, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swapBuffPower:
+  - 1
+  - 1.1
+  - 1.2
+  - 1.3
+  - 1.4
+  - 1.5
+  - 1.6
+  - 1.7
+  - 1.8
+  - 1.9
+  - 3
   bulletPrefab: {fileID: 2641036828859503304, guid: 4a97d522e9a5466468758b2fea965d66, type: 3}
   bulletPoolTrans: {fileID: 4659732989768760477}
   poolSize: 20
@@ -139,6 +151,7 @@ MonoBehaviour:
   bulletPool: []
   firePos: {fileID: 0}
   buffLevel_: 0
+  evolutionLevel_: 0
   damageUp: 10
   damageDownRate: 0.5
   areaSize: {x: 2, y: 1}
@@ -147,6 +160,11 @@ MonoBehaviour:
   Interval: 1
   durationUp: 1
   IntervalDown: 0.4
+  attackSpeedUp: 0
+  bulletSpeedUp: 0
+  canFlower: 0
+  flowerTIme: 2
+  flowerTimeUp: 1
 --- !u!1 &5682485270371804699
 GameObject:
   m_ObjectHideFlags: 0

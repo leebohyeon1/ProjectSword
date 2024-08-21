@@ -20,6 +20,7 @@ public class BulletController : MonoBehaviour
     [SerializeField] protected bool isIce = false;
     [SerializeField] protected bool isTwinflip3 = false;
     [SerializeField] protected bool isCritical = false;
+    [SerializeField] protected bool isTwinSwap = false;
    
     [SerializeField] protected float slowRate = 0f;
     [SerializeField] protected float damageUp = 0f;
@@ -83,6 +84,12 @@ public class BulletController : MonoBehaviour
     }
 
     public virtual bool GetIce() => isIce;
+
+    public virtual void SetTwinSwap(bool bo)
+    {
+        isTwinSwap = bo;
+    }
+
 
     protected virtual int CalculateTwinDamage(float dis)
     {

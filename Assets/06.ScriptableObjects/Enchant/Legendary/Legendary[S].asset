@@ -28,5 +28,6 @@ MonoBehaviour:
   swapRecovery: 0
   skillRecovery: 0
   swapDamage: 0
-  upgradeRune: 0
+  evolutionRune: 0
+  isLegedary: 1
   enchantName: Legendary[S]

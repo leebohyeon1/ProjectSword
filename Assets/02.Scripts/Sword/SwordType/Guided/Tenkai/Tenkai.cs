@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,7 +34,7 @@ public class Tenkai : MagicSword
     [SerializeField] private float skillGageUp;
 
     private bool isLevel4;
-
+    int index;
 
     //================================================================================================
 
@@ -46,7 +47,15 @@ public class Tenkai : MagicSword
         InitializePool();
 
         Pos = new Vector3(transform.position.x, transform.position.y + (detectRadius.y / 2), 0);
-    
+
+        for (int i = 0; i < 2; i++)
+        {
+            if (playerStat.GetSwords()[i].GetComponent<Tidebite>() == this)
+            {
+                index = i;
+                break;
+            }
+        }
     }
 
     void Update()
@@ -173,6 +182,11 @@ public class Tenkai : MagicSword
         }
     }
 
+    public override void ActiveSwapBuff()
+    {
+        playerStat.swapCount += swapBuffPower[playerStat.swapBuff[index]];
+    }
+
     //================================================================================================
 
     public override void SetTrans()
@@ -199,6 +213,10 @@ public class Tenkai : MagicSword
         base.InitializePool();
     }
 
+    public override void IncreaseSubDamage(int dam)
+    {
+        base.IncreaseSubDamage(dam);
+    }
     public override void SetBullet()
     {
         firePos.GetComponent<TenkaiFire>().enabled = !firePos.GetComponent<TenkaiFire>().enabled;

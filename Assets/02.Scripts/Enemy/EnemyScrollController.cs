@@ -10,6 +10,11 @@ public class EnemyScrollController : MonoBehaviour
 
     //==================================================================================
 
+    private void Start()
+    {
+        IncreaseHp(SpawnManager.Instance.totalHp);    
+    }
+
     void Update()
     {
         //transform.Translate(Vector3.down * moveSpeed * Time.deltaTime);
@@ -38,6 +43,14 @@ public class EnemyScrollController : MonoBehaviour
                 return nextThirdPattern;
             default:
                 return nextFirstPattern;
+        }
+    }
+
+    public void IncreaseHp(int hp)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).GetComponent<EnemyStat>().IncreaseHp(hp);
         }
     }
 }

@@ -80,6 +80,7 @@ public class PlayerStat : MonoBehaviour, IListener
             }
         }
     }
+    public GameObject SwapPanel;
 
     [Header("Åº¸·")]
     public GameObject bulletPrefab;
@@ -104,6 +105,7 @@ public class PlayerStat : MonoBehaviour, IListener
     public int[] swapBuff = new int[2];
     public float skillCoolDown = 0f;
     public float swapDamage = 0f;
+    private float swapDamageUp = 0f;
 
     [Header("ÈíÇ÷")]
     public bool canDrain = false;
@@ -118,7 +120,7 @@ public class PlayerStat : MonoBehaviour, IListener
     public float swapReTimer = 0f;
     public float swapRecoveryAmount = 0f;
 
-
+    public LayerMask enemyLayer;
     
     //=============================================================================
 
@@ -186,6 +188,7 @@ public class PlayerStat : MonoBehaviour, IListener
 
     public void ChangeWeapon()
     {
+        SwapAttack();
         weaponIndex = (weaponIndex + 1) % weapon.Length;
 
         foreach (GameObject bullet in TrashPool)
@@ -214,10 +217,24 @@ public class PlayerStat : MonoBehaviour, IListener
         InitializePool();
 
         weaponList[weaponIndex].GetComponent<MagicSword>().SetLevel();
-
+        weaponList[weaponIndex].GetComponent<MagicSword>().ActiveSwapBuff();
         EventManager.Instance.PostNotification(EVENT_TYPE.SKILL_COUNT, this, skillCount / maxSkillCount);
         EventManager.Instance.PostNotification(EVENT_TYPE.SWAP_COUNT, this, swapCount / maxSwapCount);
         EventManager.Instance.PostNotification(EVENT_TYPE.KEEP_SWAP, this, keepSwap);
+    }
+
+    public void SwapAttack()
+    {
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(SwapPanel.transform.position, SwapPanel.transform.lossyScale,0, enemyLayer);
+        foreach(Collider2D collider in colliders)
+        {
+            if (collider.GetComponent<EnemyStat>() != null)
+            {
+                Debug.Log(collider.gameObject.name);
+                collider.GetComponent<EnemyStat>().TakeDamage((int)(swapDamage + swapDamageUp));
+            }
+         
+        }
     }
 
     public void TakeDamage(float damage)
@@ -358,6 +375,7 @@ public class PlayerStat : MonoBehaviour, IListener
         bulletPrefab = currentWeapon.swordPrefab.GetComponent<MagicSword>().GetBulletPrefab();
         bulletSpeed = currentWeapon.bulletSpeed;
         bulletType = currentWeapon.bulletType;
+        swapDamage = currentWeapon.swapDamage;
 
         for (int i = 0; i < skillSize.Length; i++)
         {
@@ -450,12 +468,21 @@ public class PlayerStat : MonoBehaviour, IListener
             ApplyUpgrade(enchant, 1);
         }
 
-        canDrain = enchant.isDrain;
+        if(!canDrain)
+        {
+            canDrain = enchant.isDrain;
+        }
+
+        if (enchant.isLegedary)
+        {
+            GameManager.Instance.SetCanLegendaryQuest(false);
+        }
+
         hpRecoveryAmount += enchant.hpRecovery;
         skillRecoveryAmount += enchant.skillRecovery;
         swapRecoveryAmount += enchant.swapRecovery;
         skillCoolDown += enchant.skillCoolDown;
-        swapDamage += enchant.swapDamage;
+        swapDamageUp += enchant.swapDamage;
 
         foreach (var weapon in weapon)
         {

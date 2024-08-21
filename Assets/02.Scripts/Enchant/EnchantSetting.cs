@@ -55,14 +55,15 @@ public class EnchantSetting : MonoBehaviour
             }
 
             
-            if (magicSword != null && magicSword.evolutionLevel == 4)
+            if (magicSword != null && magicSword.evolutionLevel == 4 && GameManager.Instance.CanLegendaryQuest)
             {
                 upgrades[2].enchantsFourth.Add(upgrades[2].legendaryQuests[i]);
+                GameManager.Instance.SetLegendaryQuest(true);
             }
             
         }
 
-        if (!GameManager.Instance.GetLegendaryQuest())
+        if (GameManager.Instance.GetLegendaryQuest())
         {
             upgrades[2].secondPercentage[0] -= 10;
             upgrades[2].secondPercentage[1] -= 10;

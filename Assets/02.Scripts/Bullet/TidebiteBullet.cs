@@ -86,7 +86,10 @@ public class TidebiteBullet : BulletController
     {
         return base.CalculateTwinDamage(distance);
     }
-
+    public override void SetTwinSwap(bool bo)
+    {
+        base.SetTwinSwap(bo);
+    }
     //=============================================================================
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -116,7 +119,13 @@ public class TidebiteBullet : BulletController
             {
                 enemyStat.SetBite();
             }
-         
+            if (!isCritical && isSubBullet && isTwinSwap)
+            {
+                if (Random.value < 0.2f)
+                {
+                    isCritical = true;
+                }
+            }
 
             if (enemyStat.GetIsMolar())
             {

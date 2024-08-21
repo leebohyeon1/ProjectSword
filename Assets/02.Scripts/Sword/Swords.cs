@@ -9,6 +9,9 @@ public class Swords : ScriptableObject
     public int attackdamage;
     public float attackSpeed;
 
+    [Header("스왑")]
+    public float swapDamage;
+
     [Header("스킬")]
     public float skillCost;
     public float skillCool;

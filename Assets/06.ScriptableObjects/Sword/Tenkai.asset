@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackdamage: 1
   attackSpeed: 4
+  swapDamage: 1
   skillCost: 40
   skillCool: 7
   bulletSpeed: 0

@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
 
 
     [SerializeField] private bool isLegendaryQuest;
+    [SerializeField] private bool canLegendaryQuest;
     public int flowerLevel = 0;
 
     private int[] TwinflipDamage;
@@ -126,9 +127,14 @@ public class GameManager : MonoBehaviour
     {
         isLegendaryQuest = boolean;
     }
+    public void SetCanLegendaryQuest(bool boolean)
+    {
+        canLegendaryQuest = boolean;
+    }
 
     public bool GetTwinflip3() => isTwinflipLevel3;
     public bool GetTwinflip4() => isTwinflipLevel4;
+    public bool CanLegendaryQuest => canLegendaryQuest;
 
     public bool GetLegendaryQuest() => isLegendaryQuest;
     public bool GetTidebite3() => isTidebiteLevel3;

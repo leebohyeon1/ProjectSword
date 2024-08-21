@@ -55,10 +55,8 @@ public class PlayerController : MonoBehaviour, IListener
                         StartCoroutine(FlowerAttack());
                     }
                     else
-                    {
-                   
-                            ExtraAttacK();
-
+                    {        
+                         ExtraAttacK();
                     }
                 flowerCount = 0;
                  }

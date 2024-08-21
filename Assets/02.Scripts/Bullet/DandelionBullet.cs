@@ -114,7 +114,10 @@ public class DandelionBullet : BulletController
     {
         base.IncreaseDamage(damage);
     }
-
+    public override void SetTwinSwap(bool bo)
+    {
+        base.SetTwinSwap(bo);
+    }
     public override void SetTwinflip3(bool twinflip3)
     {
         base.SetTwinflip3(twinflip3);
@@ -149,7 +152,15 @@ public class DandelionBullet : BulletController
         if (collision.CompareTag("Enemy"))
         {
             EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
-            
+
+            if (!isCritical && isSubBullet && isTwinSwap)
+            {
+                if (Random.value < 0.2f)
+                {
+                    isCritical = true;
+                }
+            }
+
             if (enemyStat.GetIsIce())
             {
                 TotalDamage = (damage + damageUp) * damageRate;

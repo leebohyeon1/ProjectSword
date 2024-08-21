@@ -130,6 +130,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2d757c0635250645ac20fa2d894e487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swapBuffPower:
+  - 1
+  - 1.1
+  - 1.2
+  - 1.3
+  - 1.4
+  - 1.5
+  - 1.6
+  - 1.7
+  - 1.8
+  - 1.9
+  - 2
   bulletPrefab: {fileID: 2641036828859503304, guid: 48eb373d600ee0840baf7e8afb1cdc00, type: 3}
   bulletPoolTrans: {fileID: 7938155433540628794}
   poolSize: 20
@@ -142,11 +154,13 @@ MonoBehaviour:
   bulletPool: []
   firePos: {fileID: 0}
   buffLevel_: 0
+  evolutionLevel_: 0
   detectRadius: {x: 20, y: 5, z: 0}
   damageUp: 1
   buff2Slow: 20
   buff3DiffusionCount: 3
   buff4Damage: 4
+  skillGageUp: 0
 --- !u!114 &-8257161528908764260
 MonoBehaviour:
   m_ObjectHideFlags: 0

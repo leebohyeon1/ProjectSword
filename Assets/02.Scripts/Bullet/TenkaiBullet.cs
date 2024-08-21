@@ -174,7 +174,10 @@ public class TenkaiBullet : BulletController
     {
         return base.GetIce();
     }
-
+    public override void SetTwinSwap(bool bo)
+    {
+        base.SetTwinSwap(bo);
+    }
     public bool GetDiffusion()
     {
         return isDiffusionBullet;
@@ -193,6 +196,14 @@ public class TenkaiBullet : BulletController
         if (collision.CompareTag("Enemy"))
         {
             EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
+            
+            if (!isCritical && isSubBullet && isTwinSwap)
+            {
+                if (Random.value < 0.2f)
+                {
+                    isCritical = true;
+                }
+            }
 
             if (enemyStat.GetIsIce())
             {

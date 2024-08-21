@@ -235,14 +235,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bfc451a4f1c6541b83ba6483345fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 17
+  defaultHp: 17
   speed: 1.4
   damage: 20
   skillGage: 20
   swapGage: 50
-  blessRate: 5
-  isBless: 0
-  multiplyGage: 2
 --- !u!114 &-7740092943958659329
 MonoBehaviour:
   m_ObjectHideFlags: 0

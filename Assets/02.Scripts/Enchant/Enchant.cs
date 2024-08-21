@@ -38,5 +38,6 @@ public class Enchant : ScriptableObject
 
     public int evolutionRune = 0;
 
+    public bool isLegedary = false;
     public string enchantName;
 }
