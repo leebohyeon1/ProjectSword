@@ -20,7 +20,6 @@ public class Enchant : ScriptableObject
     public float skillCoolDown = 0f;
     [Space(20f)]
 
-    public int skillBuff = 0;
     public int swapBuff = 0;
     public int petUpgrade = 0;
     [Space(20f)]

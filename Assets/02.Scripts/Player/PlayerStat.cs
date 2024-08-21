@@ -101,7 +101,6 @@ public class PlayerStat : MonoBehaviour, IListener
     public float[] upAttackSpeed = new float[2];
     public float[] upBulletSpeed = new float[2];
     public float[] upSkillDamage = new float[2];
-    public int[] skillBuff = new int[2];
     public int[] swapBuff = new int[2];
     public float skillCoolDown = 0f;
     public float swapDamage = 0f;
@@ -472,7 +471,6 @@ public class PlayerStat : MonoBehaviour, IListener
         upAttackSpeed[index] += enchant.attackSpeed;
         upBulletSpeed[index] += enchant.bulletSpeed;
         upSkillDamage[index] += enchant.skillDamage;
-        skillBuff[index] += enchant.skillBuff;
         swapBuff[index] += enchant.swapBuff;
         if (enchant.petUpgrade != 0)
         {
