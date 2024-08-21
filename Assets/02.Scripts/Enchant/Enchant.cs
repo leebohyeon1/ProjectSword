@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "Enchant", menuName = "Enchant")]
+[CreateAssetMenu(fileName = "Enchant", menuName = "ScriptableObjects/Enchant")]
 public class Enchant : ScriptableObject
 {
     public bool isMain;
