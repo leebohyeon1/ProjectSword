@@ -106,12 +106,17 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
-  skillDamageUp: 9
+  skillLevel: 0
+  aPower: []
+  bPower:
+  - firstLenDamage: 1
+    SecondLentDamage: 2
+    thirdLenDamage: 3
+    fourthLenDamage: 4
+    lastMultiplyDamage: 2
   duration:
   - 1
   - 10
-  isBuff: 0
-  slowRate: 50
   bulletSpeedSlow: 1
   Panel: {fileID: 8251858154578419569, guid: aa95c3f9e743da2419e5c09fe13f3a88, type: 3}
 --- !u!114 &-5001709836024687580

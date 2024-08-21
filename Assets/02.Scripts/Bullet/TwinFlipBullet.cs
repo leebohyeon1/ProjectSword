@@ -48,7 +48,7 @@ public class TwinFlipBullet : BulletController
         }
         else
         {
-            TotalDamage *= 2;
+            TotalDamage *= upDamage[4];
         }
         Debug.Log("µ¥¹ÌÁö: " + TotalDamage);
         return (int)TotalDamage;
@@ -117,6 +117,15 @@ public class TwinFlipBullet : BulletController
     public override void SetTwinSwap(bool bo)
     {
         base.SetTwinSwap(bo);
+    }
+
+    public void DamageUp(LengthDamage damage)
+    {
+        upDamage[0] = damage.firstLenDamage;
+        upDamage[1] = damage.SecondLentDamage;
+        upDamage[2] = damage.thirdLenDamage;
+        upDamage[3] = damage.fourthLenDamage;
+        upDamage[4] = damage.lastMultiplyDamage;
     }
     //=============================================================================
 

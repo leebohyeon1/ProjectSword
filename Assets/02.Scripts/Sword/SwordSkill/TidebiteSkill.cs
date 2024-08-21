@@ -7,13 +7,24 @@ public class TidebiteSkill : SwordSkill
     PlayerStat playerStat;
 
     [Header("½ºÅ³")]
-    [SerializeField] private float[] power;
+    [SerializeField] private float[] aPower;
+    [SerializeField] private float[] bPower;
 
+    int index = 0;
     //==================================================================================
 
     void Start()
     {
         playerStat = FindObjectOfType<PlayerStat>();
+
+        for (int i = 0; i < 2; i++)
+        {
+            if (playerStat.GetSwords()[i].GetComponent<Tidebite>() == this)
+            {
+                index = i;
+                break;
+            }
+        }
     }
 
     //==================================================================================
@@ -44,11 +55,11 @@ public class TidebiteSkill : SwordSkill
                 {
                     if(GameManager.Instance.GetTidebite3())
                     {
-                        enemyStat.TakeDamage((int)((power[0] + skillDamageUp)*2));
+                        enemyStat.TakeDamage((int)((aPower[skillLevel])*2));
                     }
                     else
                     {
-                        enemyStat.TakeDamage((int)(power[0] + skillDamageUp));
+                        enemyStat.TakeDamage((int)(aPower[skillLevel]));
                     }
                     
                 }
@@ -62,7 +73,7 @@ public class TidebiteSkill : SwordSkill
 
         GameObject BigBullet =  Instantiate(Bullet,new Vector2(skillPoint.position.x,playerStat.transform.position.y - 5f),Quaternion.identity);
         BigBullet.transform.localScale *= 2;
-        BigBullet.GetComponent<BulletController>().SetDamage((int)(power[1] + skillDamageUp));
+        BigBullet.GetComponent<BulletController>().SetDamage((int)(bPower[skillLevel]));
         //BigBullet.GetComponent<BulletController>().damageRate = 1f;
         BigBullet.GetComponent<BulletController>().SetSubBullet();
        BigBullet.GetComponent<Rigidbody2D>().velocity = Vector2.up * playerStat.bulletSpeed* 1.2f;
@@ -83,8 +94,13 @@ public class TidebiteSkill : SwordSkill
         return base.GetSkillSize();
     }
 
-    public override void SetSkillDamage(float Damage)
+    public override void SetSkillLevel(int Damage)
     {
-        base.SetSkillDamage(Damage);
+        base.SetSkillLevel(Damage);
+    }
+
+    public override void SkillBuff()
+    {
+        base.SkillBuff();
     }
 }

@@ -153,7 +153,6 @@ public class Twinflip : MagicSword
 
     private void Buff1()
     {
-        GetComponent<TwinFlipSkill>().SetBuff(true);
         isBuff[2] = true;
         index = playerStat.GetWeaponIndex();
         if (isBuff[1] || isBuff[2])

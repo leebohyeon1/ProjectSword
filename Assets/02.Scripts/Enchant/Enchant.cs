@@ -16,7 +16,7 @@ public class Enchant : ScriptableObject
     public float bulletSpeed = 0f;
     [Space(20f)]
 
-    public float skillDamage = 0f;
+    public int skillLevel = 0;
     public float skillCoolDown = 0f;
     [Space(20f)]
 
