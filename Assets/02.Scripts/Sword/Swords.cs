@@ -15,6 +15,11 @@ public class Swords : ScriptableObject
     [Header("스킬")]
     public float skillCost;
     public float skillCool;
+    public int AskillLevel;
+    public float[] AskillDamage;
+    public int BskillLevel;
+    public float[] BskillDamage;
+    public float SwapDamage;
 
     [Header("탄막")]
     public float bulletSpeed;
@@ -27,5 +32,21 @@ public class Swords : ScriptableObject
     public float swordBulletSpeed;
 
     [Header("이미지")]
-    public Sprite skillImage;
+    public Sprite skillBarImage;
+    public Sprite characterProfile;
+    public Sprite swordProfile;
+    public Sprite skillAImage;
+    public Sprite skillBImage;
+
+    [Header("설명")]
+    public string ASkillName;
+    public string ASkillType;
+    public string ASkillArea;
+    public string ASkillInformation;
+
+    [Space(20f)]
+    public string BSkillName;
+    public string BSkillType;
+    public string BSkillArea;
+    public string BSkillInformation;
 }
