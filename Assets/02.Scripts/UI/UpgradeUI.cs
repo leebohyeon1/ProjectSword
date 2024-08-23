@@ -16,20 +16,27 @@ public class UpgradeUI : MonoBehaviour
     public Image[] Illustration;
 
     //강화
+    public Button[] SetInformationBtn;
     public Button[] upgradeBtn;
     public Image[] skillIcon;
-    void Start()
+
+    void OnEnable()
     {
         foreach (var button in characterSelectBtn)
         {
             button.onClick.AddListener(() => SelectCharacter(button));
         }
+        for(int i =0; i < swords.Length; i++)
+        {
+            characterSelectBtn[i].transform.GetChild(0).GetComponent<Image>().sprite = swords[i].skillBarImage;
+        }
+
         illustrationChageBtn.onClick.AddListener(() => ChangeIllustration());
             // 버튼 크기를 초기화합니다.
             var firstButtonRectTransform = characterSelectBtn[0].GetComponent<RectTransform>();
         defaultButtonSize = firstButtonRectTransform.sizeDelta;
         selectedButtonSize = new Vector2(defaultButtonSize.x, 210);
-
+        SetUI();
     }
 
     // Update is called once per frame
@@ -42,7 +49,14 @@ public class UpgradeUI : MonoBehaviour
     public void SetUI()
     {
         Illustration[0].sprite = swords[curSwordIndex].characterProfile;
-        Illustration[1].sprite = swords[curSwordIndex].swordProfile; 
+        Illustration[0].SetNativeSize();
+        Illustration[0].transform.localScale = new Vector3(0.6f,0.6f,1);
+        Illustration[1].sprite = swords[curSwordIndex].swordProfile;
+        Illustration[1].SetNativeSize();
+        Illustration[1].transform.localScale = new Vector3(0.9f, 0.9f, 1);
+        skillIcon[0].sprite = swords[curSwordIndex].skillAImage;
+        skillIcon[1].sprite = swords[curSwordIndex].skillBImage;
+        
     }
 
     public void SelectCharacter(Button clickedButton)
@@ -58,6 +72,7 @@ public class UpgradeUI : MonoBehaviour
                 buttonRectTransform.sizeDelta = selectedButtonSize; // 버튼 크기 확대
                 button.transform.GetChild(2).gameObject.SetActive(true); // 활성화 아이콘 표시
                 curSwordIndex = i;
+                SetUI();
             }
             else
             {
