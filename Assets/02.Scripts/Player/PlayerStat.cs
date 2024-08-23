@@ -382,8 +382,8 @@ public class PlayerStat : MonoBehaviour, IListener
             skillSize[i] = weapon[weaponIndex].swordPrefab.GetComponent<SwordSkill>().GetSkillSize()[i];
         }
 
-        GameUIManager.Instance.SetSkillImage(weapon[weaponIndex].skillImage);
-        GameUIManager.Instance.SetSwapUIImage(weapon[0].skillImage, weapon[1].skillImage);
+        GameUIManager.Instance.SetSkillImage(weapon[weaponIndex].skillBarImage);
+        GameUIManager.Instance.SetSwapUIImage(weapon[0].skillBarImage, weapon[1].skillBarImage);
     }
 
     public Vector2 SetWeaponSize(int i) => skillSize[i];
