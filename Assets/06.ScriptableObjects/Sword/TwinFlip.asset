@@ -28,11 +28,11 @@ MonoBehaviour:
   swordAttackPower: 0
   swordAttackSpeed: 10
   swordBulletSpeed: 0
-  skillBarImage: {fileID: 0}
+  skillBarImage: {fileID: 21300000, guid: 4a15aad8540d849e7a699a11e3f0913d, type: 3}
   characterProfile: {fileID: 21300000, guid: 7c2b3f5811c430b4586d57c7067b0ff3, type: 3}
   swordProfile: {fileID: 21300000, guid: c9d17f3f98b3db34f98951698e0d454f, type: 3}
-  skillAImage: {fileID: 0}
-  skillBImage: {fileID: 0}
+  skillAImage: {fileID: 21300000, guid: 1f1a6d58b41114e1f8f646f570691e18, type: 3}
+  skillBImage: {fileID: 21300000, guid: ee2e1250beba7412fa227f43c95d1b37, type: 3}
   ASkillName: 
   ASkillType: 
   ASkillArea: 
