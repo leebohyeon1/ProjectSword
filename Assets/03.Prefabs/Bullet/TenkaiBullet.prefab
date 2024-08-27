@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2641036828859503304}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.08, y: -0.6021, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2401, y: 0.2401, z: 0.2401}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -162,14 +162,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  criticalDamage: 0
   damageRate: 0
   TotalDamage: 0
   bulletType: 4
   isSkillBullet: 0
   isSubBullet: 0
+  isIce: 0
+  isTwinflip3: 0
+  isCritical: 0
+  isTwinSwap: 0
+  slowRate: 0
+  damageUp: 0
+  isDiffusionBullet: 0
   diffusionCount: 1
   detectionRadius: 2
   enemyLayer:
     serializedVersion: 2
     m_Bits: 256
   target: {fileID: 0}
+  lightningPrefab: {fileID: 5682977999862951314, guid: a3b322c502e7ff94691bb0761834edee, type: 3}

@@ -36,6 +36,7 @@ public class Tenkai : MagicSword
     private bool isLevel4;
     int index;
 
+    public GameObject lightningPrefab;
     //================================================================================================
 
     void Start()
@@ -272,6 +273,8 @@ public class Tenkai : MagicSword
 
             //Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
             bullet.transform.position = closestEnemy.position;
+
+            SpawnLightning(transform.position, bullet.transform.position);
         }
     }
 
@@ -319,7 +322,20 @@ public class Tenkai : MagicSword
         }
     }
 
+    public void SpawnLightning(Vector3 startPosition, Vector3 targetPosition)
+    {
+        // 라이트닝 프리팹 생성
+        GameObject lightning = Instantiate(lightningPrefab, startPosition, Quaternion.identity);
 
+        // 라인 렌더러 설정
+        LineRenderer lineRenderer = lightning.GetComponent<LineRenderer>();
+        lineRenderer.positionCount = 2;
+        lineRenderer.SetPosition(0, startPosition);
+        lineRenderer.SetPosition(1, targetPosition);
+
+        Destroy(lightning, 0.1f);
+        // 애니메이션 또는 추가 효과를 위한 다른 설정 가능
+    }
     //================================================================================================
 
     private void OnDrawGizmosSelected()

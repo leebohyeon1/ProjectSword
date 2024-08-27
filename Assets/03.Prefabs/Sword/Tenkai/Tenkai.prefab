@@ -162,6 +162,7 @@ MonoBehaviour:
   buff3DiffusionCount: 3
   buff4Damage: 4
   skillGageUp: 0
+  lightningPrefab: {fileID: 5682977999862951314, guid: a3b322c502e7ff94691bb0761834edee, type: 3}
 --- !u!114 &-8257161528908764260
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -79,6 +79,7 @@ public class TenkaiFire : SwordFire
                 
             //Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
             bullet.transform.position = closestEnemy.position;
+            tenkai.SpawnLightning(transform.position, bullet.transform.position);
         }
         EventManager.Instance.PostNotification(EVENT_TYPE.FIRE, this);
     }

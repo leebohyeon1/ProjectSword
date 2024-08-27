@@ -20,19 +20,25 @@ public class TenkaiBullet : BulletController
     private int buff4Damage;
 
     private float skillGageUp = 0f;
+
+    public GameObject lightningPrefab; // 라이트닝 오브젝트 프리팹
+
     //=============================================================================
 
     void Start()
     {
         playerStat = FindFirstObjectByType<PlayerStat>();
+
         damageRate = 1f;
 
-        Invoke("NoCollision",1f);
+
     }
 
     private void OnEnable()
     {
         diffusionCount_ = diffusionCount;
+        Invoke("NoCollision", 1f);
+        //SpawnLightning(playerStat.transform.position, transform.position);
     }
 
     //=============================================================================
@@ -86,6 +92,7 @@ public class TenkaiBullet : BulletController
         }
         else
         {
+            target = closestEnemy.gameObject;
             transform.position = closestEnemy.position;
         }     
     }
@@ -129,6 +136,20 @@ public class TenkaiBullet : BulletController
         gameObject.SetActive(false);
     }
 
+    void SpawnLightning(Vector3 startPosition, Vector3 targetPosition)
+    {
+        // 라이트닝 프리팹 생성
+        GameObject lightning = Instantiate(lightningPrefab, startPosition, Quaternion.identity);
+
+        // 라인 렌더러 설정
+        LineRenderer lineRenderer = lightning.GetComponent<LineRenderer>();
+        lineRenderer.positionCount = 2;
+        lineRenderer.SetPosition(0, startPosition);
+        lineRenderer.SetPosition(1, targetPosition);
+
+        Destroy(lightning, 0.1f);
+        // 애니메이션 또는 추가 효과를 위한 다른 설정 가능
+    }
 
     //=============================================================================
 
@@ -195,6 +216,7 @@ public class TenkaiBullet : BulletController
 
         if (collision.CompareTag("Enemy"))
         {
+
             EnemyStat enemyStat = collision.GetComponent<EnemyStat>();
             
             if (!isCritical && isSubBullet && isTwinSwap)
@@ -280,6 +302,11 @@ public class TenkaiBullet : BulletController
             if (diffusionCount_ > 0)
             {
                 FindNextTarget(collision);
+                if(target != null)
+                {
+                    SpawnLightning(collision.transform.position, target.transform.position);
+                    target = null;
+                }
             }
             else
             {
@@ -314,6 +341,9 @@ public class TenkaiBullet : BulletController
             }
 
             diffusionCount_--;
+
+
+
         }
     }
 
