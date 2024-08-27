@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tenkai
   m_EditorClassIdentifier: 
   attackdamage: 1
-  attackSpeed: 4
+  attackSpeed: 2
   swapDamage: 1
   skillCost: 40
   skillCool: 7
