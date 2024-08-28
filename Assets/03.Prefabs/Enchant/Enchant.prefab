@@ -91,8 +91,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: b52ff058d1a220848b7299a5662f5d89, type: 2}
     - {fileID: 11400000, guid: 8d4726ae8e21c084784765c4bf75c963, type: 2}
     enchantsSecond:
-    - {fileID: 11400000, guid: b8137273227e4d74587d44569f95dbd8, type: 2}
-    - {fileID: 11400000, guid: fed5d16548baebd4eb616a1a28d7d758, type: 2}
     - {fileID: 11400000, guid: 581b3604e12ad1046be254b3148b636a, type: 2}
     - {fileID: 11400000, guid: cff4b1dd8b08b1c48a14749fd71eb612, type: 2}
     enchantsThird:
