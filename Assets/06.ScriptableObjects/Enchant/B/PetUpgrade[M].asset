@@ -17,9 +17,8 @@ MonoBehaviour:
   attackDamage: 0
   attackSpeed: 0
   bulletSpeed: 0
-  skillDamage: 0
+  skillLevel: 0
   skillCoolDown: 0
-  skillBuff: 0
   swapBuff: 0
   petUpgrade: 1
   hpUp: 0
@@ -28,4 +27,6 @@ MonoBehaviour:
   swapRecovery: 0
   skillRecovery: 0
   swapDamage: 0
-  enchantName: 
+  evolutionRune: 0
+  isLegedary: 0
+  enchantName: PetUpgrade(M)
