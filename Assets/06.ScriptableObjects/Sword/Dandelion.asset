@@ -12,29 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862fa96b88725d349aa7d0d959eec9ee, type: 3}
   m_Name: Dandelion
   m_EditorClassIdentifier: 
-  basicAttackLevel: 0
-  attackLevel: 0
-  attackSpeedLevel: 0
-  BasicAttackDamageByLevel: []
-  AttackDamageByLevel: 
   attackdamage: 2
-  AttackSpeedByLevel: []
   attackSpeed: 2
   swapDamage: 1
   skillCost: 40
   skillCool: 7
   AskillLevel: 0
-  AskillDamageByLevel: []
-  AskillDamage: 0
+  AskillDamage: []
   BskillLevel: 0
-  BskillDamageByLevel: []
-  BskillDamage: 0
+  BskillDamage: []
   SwapDamage: 0
   bulletSpeed: 4
   bulletType: 0
-  swordLevel: 0
-  SwordAttackDamageByLevel: []
-  SwordAttackSpeedByLevel: []
   swordPrefab: {fileID: 2341837304568887784, guid: 9f59953c12c741b419bc63df8785477e, type: 3}
   swordAttackPower: 2
   swordAttackSpeed: 2
@@ -44,14 +33,11 @@ MonoBehaviour:
   swordProfile: {fileID: 21300000, guid: deb1c21eee7cb98469fbe10665ae97bc, type: 3}
   skillAImage: {fileID: 21300000, guid: f3b7e31eb60b84b17870d0b5d926cfad, type: 3}
   skillBImage: {fileID: 21300000, guid: b76446236559e4a7ebfbdc6519fa9d07, type: 3}
-  BasicAtkName: BasicAtk
-  BasicAtkType: Wind
-  BasicAtkInformation: BasicAtk
-  ASkillName: 111
-  ASkillType: 111
-  ASkillArea: 111
-  ASkillInformation: 111
-  BSkillName: 111
-  BSkillType: 111
-  BSkillArea: 111
-  BSkillInformation: 111
+  ASkillName: 
+  ASkillType: 
+  ASkillArea: 
+  ASkillInformation: 
+  BSkillName: 
+  BSkillType: 
+  BSkillArea: 
+  BSkillInformation: 
