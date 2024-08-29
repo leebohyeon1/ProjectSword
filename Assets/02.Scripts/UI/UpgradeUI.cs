@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,8 +18,14 @@ public class UpgradeUI : MonoBehaviour
 
     //강화
     public Button[] SetInformationBtn;
-    public Button[] upgradeBtn;
+    public Button[] upgradeOnBtn;
     public Image[] skillIcon;
+
+    public GameObject UpgradePanel;
+
+    //설명 창
+    public Image informationIcon;
+    public TMP_Text[] informationText;
 
     void OnEnable()
     {
@@ -26,10 +33,13 @@ public class UpgradeUI : MonoBehaviour
         {
             button.onClick.AddListener(() => SelectCharacter(button));
         }
-        for(int i =0; i < swords.Length; i++)
+
+
+        for (int i =0; i < swords.Length; i++)
         {
             characterSelectBtn[i].transform.GetChild(0).GetComponent<Image>().sprite = swords[i].skillBarImage;
         }
+
 
         illustrationChageBtn.onClick.AddListener(() => ChangeIllustration());
             // 버튼 크기를 초기화합니다.
@@ -54,13 +64,15 @@ public class UpgradeUI : MonoBehaviour
         Illustration[1].sprite = swords[curSwordIndex].swordProfile;
         Illustration[1].SetNativeSize();
         Illustration[1].transform.localScale = new Vector3(0.9f, 0.9f, 1);
-        skillIcon[0].sprite = swords[curSwordIndex].skillAImage;
-        skillIcon[1].sprite = swords[curSwordIndex].skillBImage;
+        skillIcon[1].sprite = swords[curSwordIndex].skillAImage;
+        skillIcon[2].sprite = swords[curSwordIndex].skillBImage;
         
     }
 
     public void SelectCharacter(Button clickedButton)
     {
+        UpgradePanel.SetActive(false);
+
         for (int i = 0; i < characterSelectBtn.Length; i++)
         {
             Button button = characterSelectBtn[i];
@@ -95,5 +107,63 @@ public class UpgradeUI : MonoBehaviour
                 Illustration[i].gameObject.SetActive(true);
             }
         }
+    }
+
+    public void SetInformation(int index)
+    {
+        UpgradePanel.SetActive(false);
+        informationIcon.sprite = skillIcon[index].sprite;
+
+        switch (index)
+        {
+            case 0:
+                informationText[0].text  = swords[curSwordIndex].BasicAtkInformation;
+                informationText[1].text  = swords[curSwordIndex].BasicAtkName;
+                informationText[2].text  = swords[curSwordIndex].BasicAtkType;
+                informationText[3].text  = " ";
+                break;
+            case 1:
+                informationText[0].text = swords[curSwordIndex].ASkillInformation;
+                informationText[1].text = swords[curSwordIndex].ASkillName;
+                informationText[2].text = swords[curSwordIndex].ASkillType;
+                informationText[3].text = swords[curSwordIndex].ASkillArea;
+                break;
+            case 2:
+                informationText[0].text = swords[curSwordIndex].BSkillInformation;
+                informationText[1].text = swords[curSwordIndex].BSkillName;
+                informationText[2].text = swords[curSwordIndex].BSkillName;
+                informationText[3].text = swords[curSwordIndex].BSkillArea;
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                informationText[0].text = swords[curSwordIndex].petInformation;
+                informationText[1].text = swords[curSwordIndex].petName;
+                informationText[2].text = swords[curSwordIndex].petType;
+                informationText[3].text = swords[curSwordIndex].petArea;
+                break;
+
+
+        }
+    }
+
+    public void UpgradeOn()
+    {
+        if (UpgradePanel.activeSelf)
+        {
+            UpgradePanel.SetActive(false);
+        }
+        else
+        {
+            UpgradePanel.SetActive(true);
+        }
+
+    }
+
+    public void Upgrade()
+    {
+
     }
 }
