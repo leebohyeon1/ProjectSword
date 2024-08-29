@@ -425,7 +425,7 @@ Transform:
   m_GameObject: {fileID: 1006476396}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.029487973}
+  m_LocalPosition: {x: 0, y: 0, z: -0.02948797}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1071,7 +1071,11 @@ PrefabInstance:
     - target: {fileID: 2284149096743789701, guid: 0b8212a35d4d25949947906a993013e6, type: 3}
       propertyPath: weapon.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: b9dcf57cc06a3ce45b0d0a93b84585de, type: 2}
+      objectReference: {fileID: 11400000, guid: e8b5b50667831844985ba65a768de597, type: 2}
+    - target: {fileID: 2284149096743789701, guid: 0b8212a35d4d25949947906a993013e6, type: 3}
+      propertyPath: weapon.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: a73a29ea3ae198145ab80d4df4d636c3, type: 2}
     - target: {fileID: 8742065283235666737, guid: 0b8212a35d4d25949947906a993013e6, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1209,7 +1213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5745429246865852537, guid: f02afcd5aeaac8e43b6290a1dbbcdbbb, type: 3}
       propertyPath: orthographic size
-      value: 1.9975829
+      value: 5.7
       objectReference: {fileID: 0}
     - target: {fileID: 5745429246865852537, guid: f02afcd5aeaac8e43b6290a1dbbcdbbb, type: 3}
       propertyPath: m_NormalizedViewPortRect.y
