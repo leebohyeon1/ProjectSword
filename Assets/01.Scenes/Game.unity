@@ -762,6 +762,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5723473412610192112, guid: af85133432b1d8e44aad0969b242ccfb, type: 3}
+      propertyPath: skillMask
+      value: 
+      objectReference: {fileID: 1646440334}
+    - target: {fileID: 5723473412610192112, guid: af85133432b1d8e44aad0969b242ccfb, type: 3}
+      propertyPath: darkOverlay
+      value: 
+      objectReference: {fileID: 794217824}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

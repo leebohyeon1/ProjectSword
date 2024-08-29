@@ -12,18 +12,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862fa96b88725d349aa7d0d959eec9ee, type: 3}
   m_Name: Tidebite
   m_EditorClassIdentifier: 
+  basicAttackLevel: 0
+  attackLevel: 0
+  attackSpeedLevel: 0
+  BasicAttackDamageByLevel:
+  - 0
+  - 0
+  - 0
+  - 0
+  AttackDamageByLevel: 00000000000000000000000000000000
   attackdamage: 5
+  AttackSpeedByLevel:
+  - 0
+  - 0
+  - 0
+  - 0
   attackSpeed: 4
   swapDamage: 1
   skillCost: 40
   skillCool: 10
   AskillLevel: 0
-  AskillDamage: []
+  AskillDamageByLevel:
+  - 0
+  - 0
+  - 0
+  - 0
+  AskillDamage: 0
   BskillLevel: 0
-  BskillDamage: []
+  BskillDamageByLevel:
+  - 0
+  - 0
+  - 0
+  - 0
+  BskillDamage: 0
   SwapDamage: 0
   bulletSpeed: 3
   bulletType: 3
+  swordLevel: 0
+  SwordAttackDamageByLevel: []
+  SwordAttackSpeedByLevel: []
   swordPrefab: {fileID: 1755657448561907817, guid: beb1091226ef7b6438e437a6e89d6263, type: 3}
   swordAttackPower: 5
   swordAttackSpeed: 4
@@ -33,6 +60,9 @@ MonoBehaviour:
   swordProfile: {fileID: 21300000, guid: 87ab8cf6b30803948bd2a305d4903b02, type: 3}
   skillAImage: {fileID: 21300000, guid: 2e6ee9359802d4b4fa8184b1fcb28b5f, type: 3}
   skillBImage: {fileID: 21300000, guid: 658505b375c294138950303e35436ab1, type: 3}
+  BasicAtkName: 
+  BasicAtkType: 
+  BasicAtkInformation: 
   ASkillName: 
   ASkillType: 
   ASkillArea: 
@@ -41,3 +71,7 @@ MonoBehaviour:
   BSkillType: 
   BSkillArea: 
   BSkillInformation: 
+  petName: 
+  petType: 
+  petArea: 
+  petInformation: 
