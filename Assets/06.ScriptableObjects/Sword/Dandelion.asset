@@ -15,19 +15,35 @@ MonoBehaviour:
   basicAttackLevel: 0
   attackLevel: 0
   attackSpeedLevel: 0
-  BasicAttackDamageByLevel: []
-  AttackDamageByLevel: 
+  BasicAttackDamageByLevel:
+  - 0
+  - 0
+  - 0
+  - 0
+  AttackDamageByLevel: 00000000000000000000000000000000
   attackdamage: 2
-  AttackSpeedByLevel: []
+  AttackSpeedByLevel:
+  - 0
+  - 0
+  - 0
+  - 0
   attackSpeed: 2
   swapDamage: 1
   skillCost: 40
   skillCool: 7
   AskillLevel: 0
-  AskillDamageByLevel: []
+  AskillDamageByLevel:
+  - 0
+  - 0
+  - 0
+  - 0
   AskillDamage: 0
   BskillLevel: 0
-  BskillDamageByLevel: []
+  BskillDamageByLevel:
+  - 0
+  - 0
+  - 0
+  - 0
   BskillDamage: 0
   SwapDamage: 0
   bulletSpeed: 4
@@ -55,3 +71,7 @@ MonoBehaviour:
   BSkillType: 111
   BSkillArea: 111
   BSkillInformation: 111
+  petName: 
+  petType: 
+  petArea: 
+  petInformation: 

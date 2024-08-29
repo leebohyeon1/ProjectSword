@@ -12,18 +12,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862fa96b88725d349aa7d0d959eec9ee, type: 3}
   m_Name: Tenkai
   m_EditorClassIdentifier: 
+  basicAttackLevel: 0
+  attackLevel: 0
+  attackSpeedLevel: 0
+  BasicAttackDamageByLevel:
+  - 0
+  - 0
+  - 0
+  - 0
+  AttackDamageByLevel: 00000000000000000000000000000000
   attackdamage: 1
+  AttackSpeedByLevel:
+  - 0
+  - 0
+  - 0
+  - 0
   attackSpeed: 2
   swapDamage: 1
   skillCost: 40
   skillCool: 7
   AskillLevel: 0
-  AskillDamage: []
+  AskillDamageByLevel:
+  - 0
+  - 0
+  - 0
+  - 0
+  AskillDamage: 0
   BskillLevel: 0
-  BskillDamage: []
+  BskillDamageByLevel:
+  - 0
+  - 0
+  - 0
+  - 0
+  BskillDamage: 0
   SwapDamage: 0
   bulletSpeed: 0
   bulletType: 4
+  swordLevel: 0
+  SwordAttackDamageByLevel: []
+  SwordAttackSpeedByLevel: []
   swordPrefab: {fileID: 1755657448561907817, guid: 6b6595ac0c3e5e94bbb0c15f50c1d0b6, type: 3}
   swordAttackPower: 1
   swordAttackSpeed: 4
@@ -33,6 +60,9 @@ MonoBehaviour:
   swordProfile: {fileID: 21300000, guid: e904c3b417312234cb80eb529ec956fb, type: 3}
   skillAImage: {fileID: 21300000, guid: f78945c7002984ba9acd74eb5464e0ce, type: 3}
   skillBImage: {fileID: 21300000, guid: 0aeb712289b674329ab2ec1681dbfd5e, type: 3}
+  BasicAtkName: 
+  BasicAtkType: 
+  BasicAtkInformation: 
   ASkillName: 
   ASkillType: 
   ASkillArea: 
@@ -41,3 +71,7 @@ MonoBehaviour:
   BSkillType: 
   BSkillArea: 
   BSkillInformation: 
+  petName: 
+  petType: 
+  petArea: 
+  petInformation: 
