@@ -57,6 +57,10 @@ public class Twinflip : MagicSword
 
     BulletType type;
     int swapDamage;
+
+
+    [Header("ÀÌ¹ÌÁö")]
+    [SerializeField] private GameObject Circle;
     //==================================================================================
 
     private void Awake()
@@ -355,10 +359,12 @@ public class Twinflip : MagicSword
 
             if (isFireBuff)
             {
+                Circle.SetActive(true);
                 FireBuff();
             }
             else
             {
+                Circle.SetActive(true);
                 IceBuff();
             }
 
@@ -370,6 +376,7 @@ public class Twinflip : MagicSword
             fireBuffTimer += Time.deltaTime;
             if (fireBuffTimer >= duration)
             {
+                Circle.SetActive(false);
                 FireBuffOff();
             }
         }
@@ -379,6 +386,7 @@ public class Twinflip : MagicSword
             iceBuffTimer += Time.deltaTime;
             if (iceBuffTimer >= duration)
             {
+                Circle.SetActive(false);
                 IceBuffOff();
             }
         }
