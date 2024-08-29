@@ -55,6 +55,9 @@ public class PlayerStat : MonoBehaviour, IListener
         }
     }
 
+    private int AskillDamage;
+    private int BskillDamage;
+
     [Header("½º¿Ò")]
     public float maxSwapCount = 100f;
     private float swapCount_;
@@ -368,6 +371,16 @@ public class PlayerStat : MonoBehaviour, IListener
     void SetWeapon()
     {
         var currentWeapon = weapon[weaponIndex];
+        currentWeapon.attackdamage = (int)(currentWeapon.AttackDamageByLevel[currentWeapon.attackLevel] * 
+                                        currentWeapon.BasicAttackDamageByLevel[currentWeapon.basicAttackLevel]);
+        currentWeapon.attackSpeed = (currentWeapon.AttackSpeedByLevel[currentWeapon.attackSpeedLevel]);
+
+        currentWeapon.AskillDamage = (int)(currentWeapon.AttackDamageByLevel[currentWeapon.attackLevel] *
+                                             currentWeapon.AskillDamageByLevel[currentWeapon.AskillLevel]);
+        currentWeapon.BskillDamage = (int)(currentWeapon.AttackDamageByLevel[currentWeapon.attackLevel] *
+                                             currentWeapon.BskillDamageByLevel[currentWeapon.BskillLevel]);
+        
+        
         attackDamage = currentWeapon.attackdamage;
         attackSpeed = currentWeapon.attackSpeed;
         skillCool = currentWeapon.skillCool;
