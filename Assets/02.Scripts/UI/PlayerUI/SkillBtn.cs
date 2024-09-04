@@ -68,7 +68,7 @@ public class SkillBtn : MonoBehaviour,
             Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(null, worldPoint);
 
             Vector3 targetPosition;
-            if (RectTransformUtility.ScreenPointToWorldPointInRectangle(canvasRectTransform, new Vector2(screenPoint.x + 75, screenPoint.y + 75), Camera.main, out targetPosition))
+            if (RectTransformUtility.ScreenPointToWorldPointInRectangle(canvasRectTransform, new Vector2(screenPoint.x , screenPoint.y ), Camera.main, out targetPosition))
             {
                 skillMask.transform.position = targetPosition;
             }

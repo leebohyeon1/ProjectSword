@@ -330,7 +330,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &794217825
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -490,8 +490,8 @@ Transform:
   m_GameObject: {fileID: 1295077262}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0}
-  m_LocalScale: {x: 1, y: 0.5, z: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 794217826}
@@ -605,8 +605,8 @@ Transform:
   m_GameObject: {fileID: 1646440334}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0053, y: 0.0456, z: 0}
-  m_LocalScale: {x: 0.11, y: 1.83, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: -0.07, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 794217826}
@@ -653,7 +653,7 @@ SpriteMask:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_MaskAlphaCutoff: 0.148
+  m_MaskAlphaCutoff: 0.137
   m_FrontSortingLayerID: 0
   m_BackSortingLayerID: 0
   m_FrontSortingLayer: 0
@@ -670,6 +670,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 196857166928719064, guid: af85133432b1d8e44aad0969b242ccfb, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 220
+      objectReference: {fileID: 0}
     - target: {fileID: 579619823885751240, guid: af85133432b1d8e44aad0969b242ccfb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -761,6 +765,10 @@ PrefabInstance:
     - target: {fileID: 3659441088531323729, guid: af85133432b1d8e44aad0969b242ccfb, type: 3}
       propertyPath: m_Name
       value: UIManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4358346189305434283, guid: af85133432b1d8e44aad0969b242ccfb, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5723473412610192112, guid: af85133432b1d8e44aad0969b242ccfb, type: 3}
       propertyPath: skillMask

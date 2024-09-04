@@ -109,8 +109,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   skillLevel: 0
-  aPower: []
-  bPower: []
+  aPower:
+  - 0
+  - 0
+  bPower:
+  - 0
+  - 0
 --- !u!114 &5666302722046572699
 MonoBehaviour:
   m_ObjectHideFlags: 0
